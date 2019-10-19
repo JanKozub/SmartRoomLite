@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "angular.server.ip",
+      "type": "java.lang.String",
+      "description": "Ip of angualr server"
+    }
+  ]
+}

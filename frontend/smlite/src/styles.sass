@@ -9,14 +9,31 @@ body
   margin: 2%
 
 .switch:active
-  transition: 40ms
+  transition: 80ms
   transition-timing-function: ease-in-out
-  background-color: rgba(0, 0, 0, 0.46)
+  background-color: rgba(0, 0, 0, 0.30)
 
 .icon
-  color: #ff8b00
   position: relative
   top: 20%
   left: 20%
   width: 60%
   height: 60%
+
+.icon--light
+  @extend .icon
+
+.icon--clock
+  @extend .icon
+
+.icon--lock
+  @extend .icon
+
+.icon--blinds
+  @extend .icon
+
+.icon--music
+  @extend .icon
+
+.icon--settings
+  @extend .icon
