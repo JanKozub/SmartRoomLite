@@ -14,16 +14,21 @@ export class DataService {
   updateState(serviceType: ServiceType) {
     let className: String = '.icon--' + serviceType;
     this.booleanService.getState(serviceType)
-      .subscribe(data => {
-        if (data) $(className).css("color", "#ff8b00");
-        else $(className).css("color", "rgba(0,0,0,0.46)");
-      }, error => console.log(error));
+      .subscribe(data =>
+          this.setColor(data, className),
+        error => console.log(error));
   }
 
   changeState(serviceType: ServiceType) {
+    let className: String = '.icon--' + serviceType;
     this.booleanService.changeState(serviceType)
-      .subscribe(data => console.log(data),
+      .subscribe(data =>
+          this.setColor(data, className),
         error => console.log(error));
-    this.updateState(serviceType);
+  }
+
+  setColor(data: Object, className: String) {
+    if (data) $(className).css("color", "#ff8b00");
+    else $(className).css("color", "rgba(0,0,0,0.46)");
   }
 }

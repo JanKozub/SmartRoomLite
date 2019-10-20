@@ -19,9 +19,10 @@ public class LightController implements Switch {
 
     @Override
     @PostMapping("")
-    public void setState(@Valid @RequestBody String body) {
+    public boolean setState(@Valid @RequestBody String body) {
         if (body.equals("CHANGE")) {
             state = !state;
         }
+        return state;
     }
 }

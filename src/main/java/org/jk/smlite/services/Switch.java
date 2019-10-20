@@ -7,5 +7,5 @@ import javax.validation.Valid;
 public interface Switch {
     boolean getState();
 
-    void setState(@Valid @RequestBody String body);
+    boolean setState(@Valid @RequestBody String body);
 }
