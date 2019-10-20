@@ -19,10 +19,10 @@ export class LockSwitchComponent implements OnInit, Switch {
   }
 
   getState(): void {
-    this.dataService.updateState(ServiceType.Lock);
+    this.dataService.updateState(ServiceType.Door);
   }
 
   changeState(): void {
-    this.dataService.changeState(ServiceType.Lock);
+    this.dataService.changeState(ServiceType.Door);
   }
 }

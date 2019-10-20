@@ -1,6 +1,8 @@
 package org.jk.smlite.controller;
 
 import org.jk.smlite.services.Switch;
+import org.jk.smlite.services.device.DeviceManager;
+import org.jk.smlite.services.device.DeviceType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -9,20 +11,23 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/clock")
 public class ClockController implements Switch {
-    private boolean state = true;
+    private DeviceManager deviceManager;
+
+    public ClockController(DeviceManager deviceManager) {
+        this.deviceManager = deviceManager;
+    }
 
     @Override
     @GetMapping("/state")
     public boolean getState() {
-        return state;
+        return deviceManager.getState(DeviceType.CLOCK).isEnabled();
     }
 
     @Override
     @PostMapping("")
     public boolean setState(@Valid @RequestBody String body) {
-        if (body.equals("CHANGE")) {
-            state = !state;
-        }
-        return state;
+        if (body.equals("CHANGE"))
+            deviceManager.toggleDevice(DeviceType.CLOCK);
+        return deviceManager.getState(DeviceType.CLOCK).isEnabled();
     }
 }

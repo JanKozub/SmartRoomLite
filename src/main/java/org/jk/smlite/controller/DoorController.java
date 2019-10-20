@@ -9,24 +9,25 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "${angular.server.ip}")
 @RestController
-@RequestMapping("/light")
-public class LightController implements Switch {
+@RequestMapping("/door")
+public class DoorController implements Switch {
+    private DeviceManager deviceManager;
 
-    private final DeviceManager deviceManager;
-
-    public LightController(DeviceManager deviceManager) {
+    public DoorController(DeviceManager deviceManager) {
         this.deviceManager = deviceManager;
     }
 
     @Override
     @GetMapping("/state")
     public boolean getState() {
-        return deviceManager.getState(DeviceType.LIGHT).isEnabled();
+        return deviceManager.getState(DeviceType.DOOR).isEnabled();
     }
 
     @Override
     @PostMapping("")
     public boolean setState(@Valid @RequestBody String body) {
-        return deviceManager.toggleDevice(DeviceType.LIGHT);
+        if (body.equals("CHANGE"))
+            deviceManager.toggleDevice(DeviceType.DOOR);
+        return deviceManager.getState(DeviceType.DOOR).isEnabled();
     }
 }

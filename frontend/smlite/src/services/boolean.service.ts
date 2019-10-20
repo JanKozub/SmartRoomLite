@@ -20,7 +20,7 @@ export class BooleanService {
         return this.http.get(`${url}`);
       case ServiceType.Clock:
         return this.http.get(`${url}`);
-      case ServiceType.Lock:
+      case ServiceType.Door:
         return this.http.get(`${url}`);
     }
   }
