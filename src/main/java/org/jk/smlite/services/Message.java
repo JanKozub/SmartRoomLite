@@ -71,4 +71,15 @@ public class Message {
         return returnMessage;
     }
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "time=" + time +
+                ", topic='" + topic + '\'' +
+                ", state=" + state +
+                ", message='" + message + '\'' +
+                ", returnMessage='" + returnMessage + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }

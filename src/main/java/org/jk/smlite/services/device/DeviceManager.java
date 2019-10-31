@@ -2,6 +2,7 @@ package org.jk.smlite.services.device;
 
 import org.jk.smlite.services.Message;
 import org.jk.smlite.services.connection.CommService;
+import org.jk.smlite.services.connection.MessageListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 @Component
@@ -20,6 +24,8 @@ public class DeviceManager {
 
     private final Map<DeviceType, DeviceState> deviceStates = new HashMap<>();
     private final CommService commService;
+
+    private final Map<DeviceType, Lock> locks = new ConcurrentHashMap<>();
 
     DeviceManager(CommService commService) {
         this.commService = commService;
@@ -42,13 +48,33 @@ public class DeviceManager {
 
     public boolean toggleDevice(DeviceType deviceType) {
         log.info("TOGGLED DEVICE {}", deviceType);
-        commService.sendMessage(deviceType.getPubTopic(), "TOGGLE");
-        try {
-            Thread.sleep(250);
-        } catch (InterruptedException ex) {
 
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        MessageListener listener = message -> {
+            if (message.getType() == deviceType) {
+                log.info("Light state: {}", message);
+                future.complete(message.isState());
+            }
+        };
+
+        Lock lock = locks.computeIfAbsent(deviceType, k -> new ReentrantLock());
+        lock.lock();
+        try {
+            commService.register(listener);
+            try {
+                commService.sendMessage(deviceType.getPubTopic(), "TOGGLE");
+                return future.get(10, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new RuntimeException();
+            } catch (ExecutionException | TimeoutException e) {
+                throw new RuntimeException(e);
+            } finally {
+                commService.unregister(listener);
+            }
+        } finally {
+            lock.unlock();
         }
-        return getState(DeviceType.LIGHT).isEnabled();
     }
 
     public void sendMessage(DeviceType deviceType, String msg) {

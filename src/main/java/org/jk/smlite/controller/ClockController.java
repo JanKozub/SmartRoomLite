@@ -18,16 +18,14 @@ public class ClockController implements Switch {
     }
 
     @Override
-    @GetMapping("/state")
+    @GetMapping("/getState")
     public boolean getState() {
         return deviceManager.getState(DeviceType.CLOCK).isEnabled();
     }
 
     @Override
-    @PostMapping("")
+    @PostMapping("/setState")
     public boolean setState(@Valid @RequestBody String body) {
-        if (body.equals("CHANGE"))
-            deviceManager.toggleDevice(DeviceType.CLOCK);
-        return deviceManager.getState(DeviceType.CLOCK).isEnabled();
+        return deviceManager.toggleDevice(DeviceType.CLOCK);
     }
 }

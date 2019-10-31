@@ -14,7 +14,7 @@ export class BooleanService {
   }
 
   getState(serviceType: ServiceType) {
-    let url: String = this.baseUrl + serviceType.toString() + "/state";
+    let url: String = this.baseUrl + serviceType.toString() + "/getState";
     switch (serviceType) {
       case ServiceType.Light:
         return this.http.get(`${url}`);
@@ -26,7 +26,7 @@ export class BooleanService {
   }
 
   changeState(serviceType: ServiceType): Observable<Object> {
-    let url: String = this.baseUrl + serviceType;
+    let url: String = this.baseUrl + serviceType.toString() + "/setState";
     return this.http.post(`${url}`, "CHANGE");
   }
 }

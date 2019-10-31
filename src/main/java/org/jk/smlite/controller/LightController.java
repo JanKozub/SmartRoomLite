@@ -19,13 +19,13 @@ public class LightController implements Switch {
     }
 
     @Override
-    @GetMapping("/state")
+    @GetMapping("/getState")
     public boolean getState() {
         return deviceManager.getState(DeviceType.LIGHT).isEnabled();
     }
 
     @Override
-    @PostMapping("")
+    @PostMapping("/setState")
     public boolean setState(@Valid @RequestBody String body) {
         return deviceManager.toggleDevice(DeviceType.LIGHT);
     }

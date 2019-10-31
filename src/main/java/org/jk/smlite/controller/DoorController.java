@@ -18,16 +18,14 @@ public class DoorController implements Switch {
     }
 
     @Override
-    @GetMapping("/state")
+    @GetMapping("/getState")
     public boolean getState() {
         return deviceManager.getState(DeviceType.DOOR).isEnabled();
     }
 
     @Override
-    @PostMapping("")
+    @PostMapping("/setState")
     public boolean setState(@Valid @RequestBody String body) {
-        if (body.equals("CHANGE"))
-            deviceManager.toggleDevice(DeviceType.DOOR);
-        return deviceManager.getState(DeviceType.DOOR).isEnabled();
+        return deviceManager.toggleDevice(DeviceType.DOOR);
     }
 }

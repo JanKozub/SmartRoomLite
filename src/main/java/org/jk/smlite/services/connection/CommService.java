@@ -7,4 +7,6 @@ public interface CommService {
     void sendMessage(String topic, String message);
 
     void register(MessageListener listener);
+
+    void unregister(MessageListener listener);
 }
