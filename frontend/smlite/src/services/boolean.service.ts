@@ -10,6 +10,8 @@ export class BooleanService {
 
   private baseUrl: string = 'http://localhost:8080/smlite-rest/';
 
+  // private baseUrl: string = 'http://10.0.98.125:8080/smlite-rest/';
+
   constructor(private http: HttpClient) {
   }
 
