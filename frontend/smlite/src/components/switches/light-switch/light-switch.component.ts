@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import '@vaadin/vaadin-icons';
-import {ServiceType} from "../../services/serviceType";
+import {ServiceType} from "../../../services/serviceType";
 import {Switch} from "../switch";
-import {DataService} from "../../services/data.service";
+import {DataService} from "../../../services/data.service";
 
 @Component({
   selector: 'app-light-switch',

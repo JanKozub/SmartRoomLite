@@ -22,6 +22,7 @@
     "@angular/router": "~8.2.9",
     "@angular/service-worker": "~8.2.9",
     "@vaadin/vaadin-icons": "^4.3.1",
+    "angularjs-slider": "^7.0.0",
     "classlist.js": "^1.1.20150312",
     "jquery": "^3.4.1",
     "rxjs": "~6.4.0",

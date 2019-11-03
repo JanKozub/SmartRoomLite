@@ -1,6 +1,6 @@
 body
   background-color: rgba(0, 0, 0, 0.8)
-
+  overflow: hidden
 .switch
   width: 96%
   height: 180px
@@ -9,6 +9,19 @@ body
   margin: 2%
 
 .switch:active
+  transition: 80ms
+  transition-timing-function: ease-in-out
+  background-color: rgba(0, 0, 0, 0.30)
+
+.navBack
+  @extend .switch
+  position: absolute
+  top: 82%
+  width: 96%
+  height: 16%
+  margin: 0
+
+.navBack:active
   transition: 80ms
   transition-timing-function: ease-in-out
   background-color: rgba(0, 0, 0, 0.30)
@@ -31,9 +44,12 @@ body
 
 .icon--blinds
   @extend .icon
+  color: rgb(255, 139, 0)
 
 .icon--music
   @extend .icon
+  color: rgb(255, 139, 0)
 
-.icon--settings
+.icon--video
   @extend .icon
+  color: rgb(255, 139, 0)

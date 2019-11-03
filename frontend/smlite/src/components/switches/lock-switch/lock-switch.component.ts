@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import '@vaadin/vaadin-icons';
 import {Switch} from "../switch";
-import {DataService} from "../../services/data.service";
-import {ServiceType} from "../../services/serviceType";
+import {DataService} from "../../../services/data.service";
+import {ServiceType} from "../../../services/serviceType";
 
 @Component({
   selector: 'app-lock-switch',

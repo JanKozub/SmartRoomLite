@@ -1,0 +1,4 @@
+PC view
+better layout for mobile
+add settings
+blinds slider
