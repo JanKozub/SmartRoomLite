@@ -1,6 +1,7 @@
+import '../polyfills';
+
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from "@angular/common/http";
@@ -21,34 +22,44 @@ import {MusicPageComponent} from '../pages/music-page/music-page.component';
 import {VideoPageComponent} from '../pages/video-page/video-page.component';
 import {SettingsPageComponent} from '../pages/settings-page/settings-page.component';
 import {NavBackComponent} from '../components/nav-back/nav-back.component';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatNativeDateModule} from '@angular/material/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MaterialModule} from '../app/material-module';
+import { SliderComponent } from '../components/slider/slider.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LightSwitchComponent,
-    ClockSwitchComponent,
-    LockSwitchComponent,
-    MusicSwitchComponent,
-    BlindsSwitchComponent,
-    SettingsSwitchComponent,
-    VideoSwitchComponent,
-    BlindsPageComponent,
-    MainPageComponent,
-    MusicPageComponent,
-    VideoPageComponent,
-    SettingsPageComponent,
-    NavBackComponent
-  ],
   imports: [BrowserModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}), RouterModule],
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    MaterialModule,
+    RouterModule],
+  declarations: [
+      AppComponent,
+      LightSwitchComponent,
+      ClockSwitchComponent,
+      LockSwitchComponent,
+      MusicSwitchComponent,
+      BlindsSwitchComponent,
+      SettingsSwitchComponent,
+      VideoSwitchComponent,
+      BlindsPageComponent,
+      MainPageComponent,
+      MusicPageComponent,
+      VideoPageComponent,
+      SettingsPageComponent,
+      NavBackComponent,
+      SliderComponent
+    ],
+  entryComponents: [SliderComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: []
 })
 export class AppModule {
 }
