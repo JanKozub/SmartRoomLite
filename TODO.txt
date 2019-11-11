@@ -1,4 +1,4 @@
 PC view
 better layout for mobile
 add settings
-blinds slider
+smooth blinds slider

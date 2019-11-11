@@ -1,6 +1,6 @@
 {
-  "name": "smartRoom",
-  "short_name": "smartRoom",
+  "name": "SmartRoom",
+  "short_name": "SmartRoom",
   "theme_color": "#ff8b00",
   "background_color": "rgba(0,0,0,0.46)",
   "display": "standalone",
