@@ -2,6 +2,7 @@ package org.jk.smlite.services.connection;
 
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.jk.smlite.exceptions.DeviceNotRecognizedException;
 import org.jk.smlite.services.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +74,13 @@ public class MqttService implements MqttCallback, CommService {
     @Override
     public void messageArrived(String topic, MqttMessage message) {
         log.debug("Received message from {}: {}", topic, message);
-        listeners.forEach(l -> l.messageArrived(new Message(Instant.now(), topic, message.toString())));
+        listeners.forEach(l -> {
+            try {
+                l.messageArrived(new Message(Instant.now(), topic, message.toString()));
+            } catch (DeviceNotRecognizedException ex) {
+                log.error("message arrived with error syntax {}", ex.getMessage());
+            }
+        });
     }
 
     @Override

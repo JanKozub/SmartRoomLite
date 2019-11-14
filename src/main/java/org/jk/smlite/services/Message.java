@@ -1,5 +1,6 @@
 package org.jk.smlite.services;
 
+import org.jk.smlite.exceptions.DeviceNotRecognizedException;
 import org.jk.smlite.services.device.DeviceType;
 
 import java.time.Instant;
@@ -8,17 +9,16 @@ import java.time.LocalDateTime;
 public class Message {
     private final Instant time;
     private final String topic;
-    private final boolean state;
+    private final int state;
+    private final boolean isEnabled;
     private final String message;
     private final String returnMessage;
     private DeviceType type;
 
-    public Message(Instant time, String topic, String message) {
+    public Message(Instant time, String topic, String message) throws DeviceNotRecognizedException {
         this.time = time;
         this.topic = topic;
         this.message = message;
-
-        this.state = message.contains("1");
 
         if (message.contains("clock")) {
             this.type = DeviceType.CLOCK;
@@ -40,11 +40,17 @@ public class Message {
                 this.type = DeviceType.LIGHT;
             else if (message.contains("door"))
                 this.type = DeviceType.DOOR;
-            else if (message.contains("windoweast"))
-                this.type = DeviceType.WINDOW_EAST;
-            else if (message.contains("windowssouth"))
-                this.type = DeviceType.WINDOW_SOUTH;
+            else if (message.contains("win1"))
+                this.type = DeviceType.BLIND1;
+            else if (message.contains("win2"))
+                this.type = DeviceType.BLIND2;
+            else {
+                throw new DeviceNotRecognizedException("DEVICE NOT FOUND");
+            }
         }
+
+        this.state = Integer.parseInt(message.substring(type.getSubTopic().length()));
+        this.isEnabled = state == 1;
     }
 
     public Instant getTime() {
@@ -59,8 +65,12 @@ public class Message {
         return type;
     }
 
-    public boolean isState() {
+    public int getState() {
         return state;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
     public String getMessage() {

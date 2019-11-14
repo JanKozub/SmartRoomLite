@@ -33,6 +33,7 @@ public class DeviceManager {
         deviceStates.put(DeviceType.CLOCK, new DeviceState(DeviceType.CLOCK, Duration.ofSeconds(15)));
         deviceStates.put(DeviceType.LIGHT, new DeviceState(DeviceType.LIGHT, Duration.ofSeconds(15)));
         deviceStates.put(DeviceType.DOOR, new DeviceState(DeviceType.DOOR, Duration.ofSeconds(15)));
+        deviceStates.put(DeviceType.BLIND1, new DeviceState(DeviceType.BLIND1, Duration.ofSeconds(15)));
 
         deviceStates.keySet().stream().map(DeviceType::getSubTopic).forEach(commService::connect);
         commService.register(this::updateState);
@@ -47,33 +48,81 @@ public class DeviceManager {
     }
 
     public boolean toggleDevice(DeviceType deviceType) {
-        log.info("TOGGLED DEVICE {}", deviceType);
+        if (deviceType.getDataType() == DataType.BOOLEAN) {
+            log.info("TOGGLED DEVICE {}", deviceType);
 
-        CompletableFuture<Boolean> future = new CompletableFuture<>();
-        MessageListener listener = message -> {
-            if (message.getType() == deviceType) {
-                log.info("Light state: {}", message);
-                future.complete(message.isState());
-            }
-        };
+            CompletableFuture<Boolean> future = new CompletableFuture<>();
+            MessageListener listener = message -> {
+                if (message.getType() == deviceType) {
+                    log.info("Light state: {}", message);
+                    future.complete(message.isEnabled());
+                }
+            };
 
-        Lock lock = locks.computeIfAbsent(deviceType, k -> new ReentrantLock());
-        lock.lock();
-        try {
-            commService.register(listener);
+            Lock lock = locks.computeIfAbsent(deviceType, k -> new ReentrantLock());
+            lock.lock();
             try {
-                commService.sendMessage(deviceType.getPubTopic(), "TOGGLE");
-                return future.get(10, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                throw new RuntimeException();
-            } catch (ExecutionException | TimeoutException e) {
-                throw new RuntimeException(e);
+                commService.register(listener);
+                try {
+                    commService.sendMessage(deviceType.getPubTopic(), "TOGGLE");
+                    return future.get(10, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException();
+                } catch (ExecutionException | TimeoutException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    commService.unregister(listener);
+                }
             } finally {
-                commService.unregister(listener);
+                lock.unlock();
             }
-        } finally {
-            lock.unlock();
+        } else {
+            log.error("{} IS NOT A BOOLEAN TYPE DEVICE", deviceType);
+            return false;
+        }
+    }
+
+    public int setBlind(DeviceType deviceType, String position) {
+        if (deviceType.getDataType() == DataType.INTEGER) {
+            log.info("SETTING {} for {}", deviceType, position);
+            if (deviceType == DeviceType.BLIND1) {
+                CompletableFuture<Integer> future = new CompletableFuture<>();
+                MessageListener listener = message -> {
+                    if (message.getType() == deviceType) {
+                        log.info("Blind state: {}", message);
+                        future.complete(message.getState());
+                    }
+                };
+
+                Lock lock = locks.computeIfAbsent(deviceType, k -> new ReentrantLock());
+                lock.lock();
+                try {
+                    commService.register(listener);
+                    try {
+                        commService.sendMessage(deviceType.getPubTopic(), position);
+                        return future.get(500, TimeUnit.MILLISECONDS);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException();
+                    } catch (ExecutionException | TimeoutException e) {
+                        throw new RuntimeException(e);
+                    } finally {
+                        commService.unregister(listener);
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            } else {
+                if (deviceType == DeviceType.BLIND2) {
+                    //TODO 2ND BLIND
+                }
+                log.error("{} MADE A UNHANDLED REQUEST", deviceType);
+                return -1;
+            }
+        } else {
+            log.error("{} IS NOT A BOOLEAN TYPE DEVICE", deviceType);
+            return -1;
         }
     }
 
@@ -87,7 +136,7 @@ public class DeviceManager {
     }
 
     private void updateState(Message message) {
-        boolean state = message.isState();
+        int state = message.getState();
         DeviceType type = message.getType();
         sendMessage(type, message.getReturnMessage());
 
@@ -109,7 +158,6 @@ public class DeviceManager {
         String message = deviceStates.values().stream()
                 .map(Object::toString)
                 .collect(Collectors.joining("\n", "\nDevice statuses:\n", ""));
-
         log.info(message);
 
         LocalDateTime time = LocalDateTime.now();

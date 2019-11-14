@@ -17,14 +17,7 @@ export class BooleanService {
 
   getState(serviceType: ServiceType) {
     let url: String = this.baseUrl + serviceType.toString() + "/getState";
-    switch (serviceType) {
-      case ServiceType.Light:
-        return this.http.get(`${url}`);
-      case ServiceType.Clock:
-        return this.http.get(`${url}`);
-      case ServiceType.Door:
-        return this.http.get(`${url}`);
-    }
+    return this.http.get(`${url}`);
   }
 
   changeState(serviceType: ServiceType): Observable<Object> {
