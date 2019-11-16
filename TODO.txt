@@ -1,4 +1,9 @@
-PC view
-better layout for mobile
-add settings
-smooth blinds slider
+-PC view
+-better layout for mobile
+-add settings
+-smooth blinds slider
+-repair clock digit 
+-reprogram door
+-reprint door elements
+-rewire door
+-design 2nd window

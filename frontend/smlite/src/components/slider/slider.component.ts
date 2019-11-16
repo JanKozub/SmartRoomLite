@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {BlindsService} from "../../services/blinds.service";
 import {ServiceType} from "../../services/serviceType";
 
@@ -7,21 +7,36 @@ import {ServiceType} from "../../services/serviceType";
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.sass']
 })
+
 export class SliderComponent implements OnInit{
-  value = 0;
+
+  @Input() id: number;
+
+  serviceType: ServiceType;
+  value: number;
+
+  updateValue(event) {
+    this.setPosition(this.serviceType, this.value);
+  }
 
   constructor(private blindsService: BlindsService) {
   }
 
   ngOnInit() {
-
+    if(this.id == 1) this.serviceType = ServiceType.Blind1;
+    else this.serviceType = ServiceType.Blind2;
+    this.getPosition(this.serviceType);
   }
 
-  getPosition(): void {
-    this.blindsService.getPosition(ServiceType.Blind1);
+  getPosition(serviceType: ServiceType) {
+    this.blindsService.getPosition(serviceType)
+      .subscribe(data => this.value = Number(data),
+      error => console.log(error));
   }
 
-  setPosition(): void {
-    this.blindsService.setPosition(ServiceType.Blind2, this.value.toString());
+  setPosition(serviceType: ServiceType, newValue: number): void {
+    this.blindsService.setPosition(serviceType, newValue.toString())
+    .subscribe(data => console.log(),
+    error => console.log(error));
   }
 }

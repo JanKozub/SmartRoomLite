@@ -40,9 +40,9 @@ public class Message {
                 this.type = DeviceType.LIGHT;
             else if (message.contains("door"))
                 this.type = DeviceType.DOOR;
-            else if (message.contains("win1"))
+            else if (message.contains("blind1"))
                 this.type = DeviceType.BLIND1;
-            else if (message.contains("win2"))
+            else if (message.contains("blind2"))
                 this.type = DeviceType.BLIND2;
             else {
                 throw new DeviceNotRecognizedException("DEVICE NOT FOUND");

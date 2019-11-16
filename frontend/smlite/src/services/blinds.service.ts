@@ -16,12 +16,12 @@ export class BlindsService {
   }
 
   getPosition(serviceType: ServiceType) {
-    let url: string = this.baseUrl + serviceType.toString() + "/getState";
+    let url: string = this.baseUrl + serviceType.toString() + "/getPosition";
     return this.http.get(`${url}`);
   }
 
   setPosition(serviceType: ServiceType, position: string): Observable<Object> {
-    let url: String = this.baseUrl + serviceType.toString() + "/setState";
+    let url: String = this.baseUrl + serviceType.toString() + "/setPosition";
     return this.http.post(`${url}`, position);
   }
 }

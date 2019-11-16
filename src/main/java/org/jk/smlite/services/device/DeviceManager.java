@@ -85,34 +85,17 @@ public class DeviceManager {
 
     public int setBlind(DeviceType deviceType, String position) {
         if (deviceType.getDataType() == DataType.INTEGER) {
-            log.info("SETTING {} for {}", deviceType, position);
+            log.info("SETTING {} TO {}", deviceType, position);
             if (deviceType == DeviceType.BLIND1) {
-                CompletableFuture<Integer> future = new CompletableFuture<>();
                 MessageListener listener = message -> {
                     if (message.getType() == deviceType) {
-                        log.info("Blind state: {}", message);
-                        future.complete(message.getState());
+                        log.info("Blind position: {}", message.getState());
                     }
                 };
-
-                Lock lock = locks.computeIfAbsent(deviceType, k -> new ReentrantLock());
-                lock.lock();
-                try {
-                    commService.register(listener);
-                    try {
-                        commService.sendMessage(deviceType.getPubTopic(), position);
-                        return future.get(500, TimeUnit.MILLISECONDS);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        throw new RuntimeException();
-                    } catch (ExecutionException | TimeoutException e) {
-                        throw new RuntimeException(e);
-                    } finally {
-                        commService.unregister(listener);
-                    }
-                } finally {
-                    lock.unlock();
-                }
+                commService.register(listener);
+                commService.sendMessage(deviceType.getPubTopic(), position);
+                commService.unregister(listener);
+                return Integer.parseInt(position);
             } else {
                 if (deviceType == DeviceType.BLIND2) {
                     //TODO 2ND BLIND
@@ -126,7 +109,7 @@ public class DeviceManager {
         }
     }
 
-    public void sendMessage(DeviceType deviceType, String msg) {
+    private void sendMessage(DeviceType deviceType, String msg) {
         commService.sendMessage(deviceType.getPubTopic(), msg);
     }
 
