@@ -2,15 +2,14 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ServiceType} from "./serviceType";
+import properties from '../assets/properties.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlindsService {
 
-  private baseUrl: string = 'http://localhost:8080/smlite-rest/';
-
-  // private baseUrl: string = 'http://10.0.98.125:8080/smlite-rest/';
+  private baseUrl: string = properties.baseUrl;
 
   constructor(private http: HttpClient) {
   }
