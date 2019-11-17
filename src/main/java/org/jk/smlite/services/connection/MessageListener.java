@@ -1,6 +1,6 @@
 package org.jk.smlite.services.connection;
 
-import org.jk.smlite.services.Message;
+import org.jk.smlite.model.Message;
 
 public interface MessageListener {
 

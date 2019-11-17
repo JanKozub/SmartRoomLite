@@ -1,0 +1,34 @@
+package org.jk.smlite.model;
+
+import org.jk.smlite.services.device.DeviceState;
+import org.jk.smlite.services.device.DeviceType;
+
+import java.time.Duration;
+
+public class Device {
+    private final DeviceType deviceType;
+    private final DeviceState deviceState;
+
+    public Device(DeviceType deviceType) {
+        this.deviceType = deviceType;
+        this.deviceState = new DeviceState(this, Duration.ofSeconds(15));
+    }
+
+    public Device(DeviceType deviceType, Duration timeout) {
+        this.deviceType = deviceType;
+        this.deviceState = new DeviceState(this, timeout);
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
+    }
+
+    public DeviceState getDeviceState() {
+        return deviceState;
+    }
+
+    @Override
+    public String toString() {
+        return deviceState.toString();
+    }
+}

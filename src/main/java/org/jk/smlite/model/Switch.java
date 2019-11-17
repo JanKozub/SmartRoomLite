@@ -1,4 +1,4 @@
-package org.jk.smlite.services;
+package org.jk.smlite.model;
 
 import org.springframework.web.bind.annotation.RequestBody;
 

@@ -2,26 +2,27 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ServiceType} from "./serviceType";
+import properties from '../assets/properties.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BooleanService {
 
-  private baseUrl: string = 'http://localhost:8080/smlite-rest/';
-
-  // private baseUrl: string = 'http://10.0.98.125:8080/smlite-rest/';
+  private url: string = properties.baseUrl;
 
   constructor(private http: HttpClient) {
   }
 
   getState(serviceType: ServiceType) {
-    let url: String = this.baseUrl + serviceType.toString() + "/getState";
+
+    let url: String = this.url + serviceType.toString() + "/getState";
     return this.http.get(`${url}`);
   }
 
   changeState(serviceType: ServiceType): Observable<Object> {
-    let url: String = this.baseUrl + serviceType.toString() + "/setState";
+    console.log(this.url);
+    let url: String = this.url + serviceType.toString() + "/setState";
     return this.http.post(`${url}`, "CHANGE");
   }
 }

@@ -1,7 +1,6 @@
-package org.jk.smlite.controller;
+package org.jk.smlite.controller.blinds;
 
 import org.jk.smlite.services.device.DeviceManager;
-import org.jk.smlite.services.device.DeviceType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +25,7 @@ public class Blind2Controller {
 
     @PostMapping("/setPosition")
     public boolean setBlind2Position(@Valid @RequestBody String value) {
-        return deviceManager.setBlind(DeviceType.BLIND2, value) != -1;
+        return true;
+//        return deviceManager.setBlind(DeviceType.BLIND2, value) != -1;
     }
 }

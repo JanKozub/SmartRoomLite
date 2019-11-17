@@ -1,5 +1,7 @@
 package org.jk.smlite.services.device;
 
+import org.jk.smlite.model.DataType;
+
 public enum DeviceType {
     LIGHT("relay", "relaySub", DataType.BOOLEAN),
     DOOR("door", "doorSub", DataType.BOOLEAN),

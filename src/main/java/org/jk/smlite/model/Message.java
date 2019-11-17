@@ -1,4 +1,4 @@
-package org.jk.smlite.services;
+package org.jk.smlite.model;
 
 import org.jk.smlite.exceptions.DeviceNotRecognizedException;
 import org.jk.smlite.services.device.DeviceType;
@@ -13,7 +13,7 @@ public class Message {
     private final boolean isEnabled;
     private final String message;
     private final String returnMessage;
-    private DeviceType type;
+    private DeviceType deviceType;
 
     public Message(Instant time, String topic, String message) throws DeviceNotRecognizedException {
         this.time = time;
@@ -21,7 +21,7 @@ public class Message {
         this.message = message;
 
         if (message.contains("clock")) {
-            this.type = DeviceType.CLOCK;
+            this.deviceType = DeviceType.CLOCK;
 
             String msg = "";
             LocalDateTime now = LocalDateTime.now();
@@ -37,19 +37,19 @@ public class Message {
         } else {
             this.returnMessage = "ACTIVE";
             if (message.contains("relay"))
-                this.type = DeviceType.LIGHT;
+                this.deviceType = DeviceType.LIGHT;
             else if (message.contains("door"))
-                this.type = DeviceType.DOOR;
+                this.deviceType = DeviceType.DOOR;
             else if (message.contains("blind1"))
-                this.type = DeviceType.BLIND1;
+                this.deviceType = DeviceType.BLIND1;
             else if (message.contains("blind2"))
-                this.type = DeviceType.BLIND2;
+                this.deviceType = DeviceType.BLIND2;
             else {
                 throw new DeviceNotRecognizedException("DEVICE NOT FOUND");
             }
         }
 
-        this.state = Integer.parseInt(message.substring(type.getSubTopic().length()));
+        this.state = Integer.parseInt(message.substring(deviceType.getSubTopic().length()));
         this.isEnabled = state == 1;
     }
 
@@ -61,8 +61,8 @@ public class Message {
         return topic;
     }
 
-    public DeviceType getType() {
-        return type;
+    public DeviceType getDeviceType() {
+        return deviceType;
     }
 
     public int getState() {
@@ -89,7 +89,7 @@ public class Message {
                 ", state=" + state +
                 ", message='" + message + '\'' +
                 ", returnMessage='" + returnMessage + '\'' +
-                ", type=" + type +
+                ", type=" + deviceType +
                 '}';
     }
 }

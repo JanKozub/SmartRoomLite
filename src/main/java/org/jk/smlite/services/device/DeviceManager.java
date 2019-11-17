@@ -1,18 +1,17 @@
 package org.jk.smlite.services.device;
 
-import org.jk.smlite.services.Message;
+import org.jk.smlite.exceptions.DeviceNotFoundException;
+import org.jk.smlite.model.DataType;
+import org.jk.smlite.model.Device;
+import org.jk.smlite.model.Message;
 import org.jk.smlite.services.connection.CommService;
 import org.jk.smlite.services.connection.MessageListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -22,20 +21,21 @@ import java.util.stream.Collectors;
 public class DeviceManager {
     private static final Logger log = LoggerFactory.getLogger(DeviceManager.class);
 
-    private final Map<DeviceType, DeviceState> deviceStates = new HashMap<>();
     private final CommService commService;
 
     private final Map<DeviceType, Lock> locks = new ConcurrentHashMap<>();
 
+    private List<Device> devices = new ArrayList<>();
+
     DeviceManager(CommService commService) {
         this.commService = commService;
 
-        deviceStates.put(DeviceType.CLOCK, new DeviceState(DeviceType.CLOCK, Duration.ofSeconds(15)));
-        deviceStates.put(DeviceType.LIGHT, new DeviceState(DeviceType.LIGHT, Duration.ofSeconds(15)));
-        deviceStates.put(DeviceType.DOOR, new DeviceState(DeviceType.DOOR, Duration.ofSeconds(15)));
-        deviceStates.put(DeviceType.BLIND1, new DeviceState(DeviceType.BLIND1, Duration.ofSeconds(15)));
+        devices.add(new Device(DeviceType.CLOCK));
+        devices.add(new Device(DeviceType.LIGHT));
+        devices.add(new Device(DeviceType.DOOR));
+        devices.add(new Device(DeviceType.BLIND1));
 
-        deviceStates.keySet().stream().map(DeviceType::getSubTopic).forEach(commService::connect);
+        devices.stream().map(device -> device.getDeviceType().getSubTopic()).forEach(commService::connect);
         commService.register(this::updateState);
 
         Timer timer = new Timer();
@@ -53,7 +53,7 @@ public class DeviceManager {
 
             CompletableFuture<Boolean> future = new CompletableFuture<>();
             MessageListener listener = message -> {
-                if (message.getType() == deviceType) {
+                if (message.getDeviceType() == deviceType) {
                     log.info("Light state: {}", message);
                     future.complete(message.isEnabled());
                 }
@@ -87,14 +87,18 @@ public class DeviceManager {
         if (deviceType.getDataType() == DataType.INTEGER) {
             log.info("SETTING {} TO {}", deviceType, position);
             if (deviceType == DeviceType.BLIND1) {
-                MessageListener listener = message -> {
-                    if (message.getType() == deviceType) {
-                        log.info("Blind position: {}", message.getState());
+                MessageListener listener = new MessageListener() {
+                    @Override
+                    public void messageArrived(Message message) {
+                        if (message.getDeviceType() == deviceType) {
+                            log.info("Blind position: {}", message.getState());
+                            commService.unregister(this);
+                        }
                     }
                 };
                 commService.register(listener);
                 commService.sendMessage(deviceType.getPubTopic(), position);
-                commService.unregister(listener);
+
                 return Integer.parseInt(position);
             } else {
                 if (deviceType == DeviceType.BLIND2) {
@@ -104,7 +108,7 @@ public class DeviceManager {
                 return -1;
             }
         } else {
-            log.error("{} IS NOT A BOOLEAN TYPE DEVICE", deviceType);
+            log.error("{} IS NOT A INTEGER TYPE DEVICE", deviceType);
             return -1;
         }
     }
@@ -115,39 +119,55 @@ public class DeviceManager {
 
     public DeviceState getState(DeviceType deviceType) {
         log.info("GETTING STATE OF {}", deviceType);
-        return deviceStates.get(deviceType);
+        return getDeviceState(deviceType);
     }
 
     private void updateState(Message message) {
         int state = message.getState();
-        DeviceType type = message.getType();
-        sendMessage(type, message.getReturnMessage());
+        DeviceType deviceType = message.getDeviceType();
+        sendMessage(deviceType, message.getReturnMessage());
 
-        log.debug("Updating state of {} to {}", type, state);
+        log.debug("Updating state of {} to {}", deviceType, state);
+        DeviceState deviceState = getDeviceState(deviceType);
 
-        DeviceState deviceState = deviceStates.get(type);
         if (deviceState != null) {
             if (deviceState.update(state)) {
-                log.info("State changed for {} to {}. Notifying listeners", type, state);
+                log.info("State changed for {} to {}. Notifying listeners", deviceType, state);
             } else {
-                log.debug("State not changed for {}.", type);
+                log.debug("State not changed for {}.", deviceType);
             }
         } else {
-            log.warn("Unsupported device type {}", type);
+            log.warn("Unsupported device type {}", deviceType);
         }
     }
 
     private void validateStates() {
-        String message = deviceStates.values().stream()
+        String message = devices.stream()
                 .map(Object::toString)
                 .collect(Collectors.joining("\n", "\nDevice statuses:\n", ""));
         log.info(message);
 
         LocalDateTime time = LocalDateTime.now();
+
         if (time.getHour() == 5 && time.getMinute() == 0 && time.getSecond() > 0 && time.getSecond() <= 5) {
-            if (!deviceStates.get(DeviceType.CLOCK).isEnabled()) {
-                sendMessage(DeviceType.CLOCK, "TOGGLE");
+            DeviceState deviceState = getDeviceState(DeviceType.CLOCK);
+            if (deviceState != null) {
+                if (!deviceState.isEnabled()) {
+                    sendMessage(DeviceType.CLOCK, "TOGGLE");
+                }
             }
+        }
+    }
+
+    private DeviceState getDeviceState(DeviceType deviceType) {
+        try {
+            return devices.stream()
+                    .filter(device -> device.getDeviceType() == deviceType)
+                    .findAny().orElseThrow(DeviceNotFoundException::new)
+                    .getDeviceState();
+        } catch (DeviceNotFoundException ex) {
+            log.error(ex.getMessage());
+            return null;
         }
     }
 }

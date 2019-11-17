@@ -1,4 +1,4 @@
-package org.jk.smlite.controller;
+package org.jk.smlite.controller.blinds;
 
 import org.jk.smlite.services.device.DeviceManager;
 import org.jk.smlite.services.device.DeviceType;

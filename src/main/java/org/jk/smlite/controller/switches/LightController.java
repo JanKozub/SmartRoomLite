@@ -1,6 +1,6 @@
-package org.jk.smlite.controller;
+package org.jk.smlite.controller.switches;
 
-import org.jk.smlite.services.Switch;
+import org.jk.smlite.model.Switch;
 import org.jk.smlite.services.device.DeviceManager;
 import org.jk.smlite.services.device.DeviceType;
 import org.springframework.web.bind.annotation.*;

@@ -3,7 +3,7 @@ package org.jk.smlite.services.connection;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.jk.smlite.exceptions.DeviceNotRecognizedException;
-import org.jk.smlite.services.Message;
+import org.jk.smlite.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
