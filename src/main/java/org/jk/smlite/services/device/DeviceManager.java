@@ -6,7 +6,6 @@ import org.jk.smlite.model.Device;
 import org.jk.smlite.model.Message;
 import org.jk.smlite.services.connection.CommService;
 import org.jk.smlite.services.connection.MessageListener;
-import org.jk.smlite.services.console.InputThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -38,8 +37,6 @@ public class DeviceManager {
 
         devices.stream().map(device -> device.getDeviceType().getSubTopic()).forEach(commService::connect);
         commService.register(this::updateState);
-
-        new Thread(new InputThread()).start();
 
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
