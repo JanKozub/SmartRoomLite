@@ -15,7 +15,6 @@ export class BooleanService {
   }
 
   getState(serviceType: ServiceType) {
-
     let url: String = this.url + serviceType.toString() + "/getState";
     return this.http.get(`${url}`);
   }
