@@ -32,12 +32,11 @@ public class DeviceState {
         return value;
     }
 
-    public boolean isConnected() {
-        return Duration.between(lastUpdated, Instant.now())
-                .compareTo(timeout) < 0;
+    private boolean isConnected() {
+        return Duration.between(lastUpdated, Instant.now()).compareTo(timeout) < 0;
     }
 
-    public Instant getLastUpdated() {
+    private Instant getLastUpdated() {
         return lastUpdated;
     }
 
@@ -54,7 +53,7 @@ public class DeviceState {
         return output;
     }
 
-    public boolean update(int state) {
+    boolean update(int state) {
         this.lastUpdated = Instant.now();
         if (getDevice().getDeviceType().getDataType() == DataType.BOOLEAN) {
             if (this.state != (state == 1)) {

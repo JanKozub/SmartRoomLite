@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {BooleanService} from "./boolean.service";
 import {ServiceType} from "./serviceType";
+// @ts-ignore
 import * as $ from 'jquery';
 
 @Injectable({

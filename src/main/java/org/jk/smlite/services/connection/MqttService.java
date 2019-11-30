@@ -16,7 +16,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class MqttService implements MqttCallback, CommService {
     private static final Logger log = LoggerFactory.getLogger(MqttService.class);
     private final List<MessageListener> listeners = new CopyOnWriteArrayList<>();
-    private final MqttClient client;
+
+    private MqttClient client;
 
     public MqttService() {
         String broker = "tcp://10.0.98.125:1883";
@@ -69,6 +70,9 @@ public class MqttService implements MqttCallback, CommService {
 
     @Override
     public void connectionLost(Throwable throwable) {
+        log.error("Connection lost rebooting system!");
+
+        System.exit(1);
     }
 
     @Override
@@ -85,6 +89,6 @@ public class MqttService implements MqttCallback, CommService {
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-        log.debug("Delivery to {} complete", iMqttDeliveryToken.getTopics());
+        log.debug("Delivery to {} complete", (Object) iMqttDeliveryToken.getTopics());
     }
 }

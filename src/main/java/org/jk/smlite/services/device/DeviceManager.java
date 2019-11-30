@@ -30,8 +30,8 @@ public class DeviceManager {
     DeviceManager(CommService commService) {
         this.commService = commService;
 
-        devices.add(new Device(DeviceType.CLOCK));
         devices.add(new Device(DeviceType.LIGHT));
+        devices.add(new Device(DeviceType.CLOCK));
         devices.add(new Device(DeviceType.DOOR));
         devices.add(new Device(DeviceType.BLIND1));
 

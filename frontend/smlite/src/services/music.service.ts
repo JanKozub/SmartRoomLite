@@ -1,13 +1,15 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+// @ts-ignore
+import properties from "../assets/properties.json";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MusicService {
 
-  private url = 'http://localhost:8080/smlite-rest/music';
+  private url: string = properties.baseUrl;
 
   constructor(private http: HttpClient) {
   }

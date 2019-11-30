@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ServiceType} from "./serviceType";
+// @ts-ignore
 import properties from '../assets/properties.json';
 
 @Injectable({
