@@ -10,23 +10,17 @@ import {environment} from '../environments/environment';
 import {LightSwitchComponent} from '../components/switches/light-switch/light-switch.component';
 import {ClockSwitchComponent} from '../components/switches/clock-switch/clock-switch.component';
 import {LockSwitchComponent} from '../components/switches/lock-switch/lock-switch.component';
-import {MusicSwitchComponent} from '../components/switches/music-switch/music-switch.component';
-import {BlindsSwitchComponent} from '../components/switches/blinds-switch/blinds-switch.component';
-import {SettingsSwitchComponent} from '../components/switches/settings-switch/settings-switch.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {VideoSwitchComponent} from '../components/switches/video-switch/video-switch.component';
 import {RouterModule} from "@angular/router";
-import {BlindsPageComponent} from '../pages/blinds-page/blinds-page.component';
 import {MainPageComponent} from '../pages/main-page/main-page.component';
 import {MusicPageComponent} from '../pages/music-page/music-page.component';
 import {VideoPageComponent} from '../pages/video-page/video-page.component';
 import {SettingsPageComponent} from '../pages/settings-page/settings-page.component';
 import {NavBackComponent} from '../components/nav-back/nav-back.component';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatNativeDateModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule} from '../app/material-module';
-import { SliderComponent } from '../components/slider/slider.component';
+import {MaterialModule} from './material-module';
+import {SliderComponent} from '../components/slider/slider.component';
+import {NightModeSwitchComponent} from '../components/switches/night-mode-switch/night-mode-switch.component';
 
 @NgModule({
   imports: [BrowserModule,
@@ -40,22 +34,18 @@ import { SliderComponent } from '../components/slider/slider.component';
     MaterialModule,
     RouterModule],
   declarations: [
-      AppComponent,
-      LightSwitchComponent,
-      ClockSwitchComponent,
-      LockSwitchComponent,
-      MusicSwitchComponent,
-      BlindsSwitchComponent,
-      SettingsSwitchComponent,
-      VideoSwitchComponent,
-      BlindsPageComponent,
-      MainPageComponent,
-      MusicPageComponent,
-      VideoPageComponent,
-      SettingsPageComponent,
-      NavBackComponent,
-      SliderComponent
-    ],
+    AppComponent,
+    LightSwitchComponent,
+    ClockSwitchComponent,
+    LockSwitchComponent,
+    MainPageComponent,
+    MusicPageComponent,
+    VideoPageComponent,
+    SettingsPageComponent,
+    NavBackComponent,
+    SliderComponent,
+    NightModeSwitchComponent
+  ],
   entryComponents: [SliderComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

@@ -30,6 +30,7 @@
     "classlist.js": "^1.1.20150312",
     "hammerjs": "^2.0.8",
     "jquery": "^3.4.1",
+    "ng-simple-slideshow": "^1.2.9",
     "ng5-slider": "^1.2.4",
     "rxjs": "^6.4.0",
     "tslib": "^1.10.0",

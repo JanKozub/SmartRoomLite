@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {BlindsPageComponent} from "../pages/blinds-page/blinds-page.component";
 import {MainPageComponent} from "../pages/main-page/main-page.component";
 import {MusicPageComponent} from "../pages/music-page/music-page.component";
 import {VideoPageComponent} from "../pages/video-page/video-page.component";
@@ -11,10 +10,6 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     component: MainPageComponent
-  },
-  {
-    path: 'blinds',
-    component: BlindsPageComponent,
   },
   {
     path: 'music',

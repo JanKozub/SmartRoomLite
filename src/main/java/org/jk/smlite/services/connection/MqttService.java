@@ -71,7 +71,7 @@ public class MqttService implements MqttCallback, CommService {
     @Override
     public void connectionLost(Throwable throwable) {
         log.error("Connection lost rebooting system!");
-        System.exit(1);
+        System.exit(1); //TODO ZAMYKAJ CONTEX SPRINGOWY ZAMYKAJ WSZYSTKIE| BEANY
     }
 
     @Override

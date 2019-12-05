@@ -3,58 +3,35 @@
 body
   background-color: rgba(0, 0, 0, 0.8)
   overflow: hidden
-  margin: 0px
-  padding: 0px
+  margin: 0
+  padding: 0
+  position: fixed
+
 .switch
-  width: 96%
-  height: 180px
+  width: calc((80vh - 32px) / 3)
+  height: calc((80vh - 32px) / 3)
   background-color: rgba(0, 0, 0, 0.63)
   border-radius: 20px
-  margin: 2%
+  position: relative
+  margin: 8px
 
 .switch:active
   transition: 80ms
   transition-timing-function: ease-in-out
   background-color: rgba(0, 0, 0, 0.30)
 
-.navBack
+.switch-light
   @extend .switch
-  position: absolute
-  top: 82%
-  width: 96%
-  height: 16%
-  margin: 0
-  left: 2%
+  left: calc((100vw - (((80vh - 32px) / 3) + 16px)) / 2)
 
-.navBack:active
-  transition: 80ms
-  transition-timing-function: ease-in-out
-  background-color: rgba(0, 0, 0, 0.30)
+.switch-lock
+  @extend .switch
+  left: calc((100vw - ((80vh - 32px) / 3)) / 2)
+  top: calc((80vh - ((80vh - 32px) / 3)) / 2)
 
 .icon
-  position: relative
-  top: 20%
-  left: 20%
-  width: 60%
-  height: 60%
-
-.icon--light
-  @extend .icon
-
-.icon--clock
-  @extend .icon
-
-.icon--lock
-  @extend .icon
-
-.icon--blinds
-  @extend .icon
-  color: rgb(255, 139, 0)
-
-.icon--music
-  @extend .icon
-  color: rgb(255, 139, 0)
-
-.icon--video
-  @extend .icon
-  color: rgb(255, 139, 0)
+  position: absolute
+  height: calc(((80vh - 32px) / 3) * 0.6)
+  width: calc(((80vh - 32px) / 3) * 0.6)
+  top: calc((((80vh - 32px) / 3) - (((80vh - 32px) / 3) * 0.6)) / 2)
+  left: calc((((80vh - 32px) / 3) - (((80vh - 32px) / 3) * 0.6)) / 2)
