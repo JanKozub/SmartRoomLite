@@ -13,8 +13,8 @@ export class DataService {
   }
 
   updateState(serviceType: String) {
-    let className: String = '.icon--' + serviceType;
-    this.booleanService.getState(serviceType)
+    let className: String = '.icon--' + serviceType.toLowerCase();
+    this.booleanService.getState(serviceType.toLowerCase())
       .subscribe(data =>
           this.setColor(data, className),
         error => console.log(error));
