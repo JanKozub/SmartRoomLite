@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {BlindsService} from "../../services/blinds.service";
 import {ServiceType} from "../../services/serviceType";
 
@@ -15,7 +15,7 @@ export class SliderComponent implements OnInit{
   serviceType: ServiceType;
   value: number;
 
-  updateValue(event) {
+  updateValue() {
     this.setPosition(this.serviceType, this.value);
   }
 

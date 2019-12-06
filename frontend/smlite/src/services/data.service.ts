@@ -23,7 +23,8 @@ export class DataService {
   updateStates() {
     for (let serviceType in ServiceType) {
       if (isNaN(Number(serviceType))) {
-        this.updateState(serviceType);
+        if (serviceType !== "Blind1" && serviceType !== "Blind2")
+          this.updateState(serviceType);
       }
     }
   }
