@@ -19,7 +19,7 @@ export class ClockSwitchComponent implements OnInit, Switch {
   }
 
   getState(): void {
-    this.dataService.updateState(ServiceType.Clock);
+    this.dataService.updateState(ServiceType.Clock.toString());
   }
 
   changeState(): void {

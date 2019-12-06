@@ -19,7 +19,7 @@ export class LightSwitchComponent implements OnInit, Switch {
   }
 
   getState(): void {
-    this.dataService.updateState(ServiceType.Light);
+    this.dataService.updateState(ServiceType.Light.toString());
   }
 
   changeState(): void {

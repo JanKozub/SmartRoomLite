@@ -12,12 +12,20 @@ export class DataService {
   constructor(private booleanService: BooleanService) {
   }
 
-  updateState(serviceType: ServiceType) {
+  updateState(serviceType: String) {
     let className: String = '.icon--' + serviceType;
     this.booleanService.getState(serviceType)
       .subscribe(data =>
           this.setColor(data, className),
         error => console.log(error));
+  }
+
+  updateStates() {
+    for (let serviceType in ServiceType) {
+      if (isNaN(Number(serviceType))) {
+        this.updateState(serviceType);
+      }
+    }
   }
 
   changeState(serviceType: ServiceType) {
