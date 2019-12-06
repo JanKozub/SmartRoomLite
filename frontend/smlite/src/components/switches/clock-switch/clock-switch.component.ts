@@ -15,7 +15,6 @@ export class ClockSwitchComponent implements OnInit, Switch {
   }
 
   ngOnInit() {
-    this.getState();
   }
 
   getState(): void {

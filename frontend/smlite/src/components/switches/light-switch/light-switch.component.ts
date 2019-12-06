@@ -15,7 +15,6 @@ export class LightSwitchComponent implements OnInit, Switch {
   }
 
   ngOnInit() {
-    this.getState();
   }
 
   getState(): void {

@@ -3,5 +3,6 @@ export enum ServiceType {
   Clock = "clock",
   Door = "door",
   Blind1 = "blind1",
-  Blind2 = "blind2"
+  Blind2 = "blind2",
+  NightMode = "nightmode"
 }

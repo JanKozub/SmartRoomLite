@@ -14,14 +14,13 @@ export class NightModeSwitchComponent implements OnInit, Switch {
   }
 
   ngOnInit() {
-    this.getState();
   }
 
   getState(): void {
-    this.dataService.updateState(ServiceType.Light);
+    this.dataService.updateState(ServiceType.NightMode);
   }
 
   changeState(): void {
-    this.dataService.changeState(ServiceType.Light);
+    this.dataService.changeState(ServiceType.NightMode);
   }
 }

@@ -15,7 +15,6 @@ export class LockSwitchComponent implements OnInit, Switch {
   }
 
   ngOnInit() {
-    this.getState();
   }
 
   getState(): void {
