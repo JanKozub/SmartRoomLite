@@ -1,5 +1,7 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'
 
+$switch-size: calc((80vh - 32px) / 3)
+$icon-size: calc(#{$switch-size} * 0.6)
 body
   background-color: rgba(0, 0, 0, 0.8)
   overflow: hidden
@@ -8,8 +10,8 @@ body
   position: fixed
 
 .switch
-  width: calc((80vh - 32px) / 3)
-  height: calc((80vh - 32px) / 3)
+  width: $switch-size
+  height: $switch-size
   background-color: rgba(0, 0, 0, 0.63)
   border-radius: 20px
   position: relative
@@ -22,19 +24,19 @@ body
 
 .switch-light
   @extend .switch
-  left: calc((100vw - (((80vh - 32px) / 3) + 16px)) / 2)
+  left: calc((100vw - #{$switch-size} + 16px) / 2)
 
 .switch-lock
   @extend .switch
-  left: calc((100vw - ((80vh - 32px) / 3)) / 2)
-  top: calc((80vh - ((80vh - 32px) / 3)) / 2)
+  left: calc((100vw - #{$switch-size}) / 2)
+  top: calc((80vh - #{$switch-size}) / 2)
 
 .icon
   position: absolute
-  height: calc(((80vh - 32px) / 3) * 0.6)
-  width: calc(((80vh - 32px) / 3) * 0.6)
-  top: calc((((80vh - 32px) / 3) - (((80vh - 32px) / 3) * 0.6)) / 2)
-  left: calc((((80vh - 32px) / 3) - (((80vh - 32px) / 3) * 0.6)) / 2)
+  height: $icon-size
+  width: $icon-size
+  top: calc((#{$switch-size} - #{$icon-size}) / 2)
+  left: calc((#{$switch-size} - #{$icon-size}) / 2)
 
 .icon--light
   @extend .icon
@@ -45,5 +47,5 @@ body
 .icon--lock
   @extend .icon
 
-.icon--nightmode
+.icon--night-mode
   @extend .icon
