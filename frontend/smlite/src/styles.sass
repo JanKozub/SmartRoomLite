@@ -2,6 +2,7 @@
 
 $switch-size: calc((80vh - 32px) / 3)
 $icon-size: calc(#{$switch-size} * 0.6)
+
 body
   background-color: rgba(0, 0, 0, 0.8)
   overflow: hidden
@@ -21,15 +22,6 @@ body
   transition: 80ms
   transition-timing-function: ease-in-out
   background-color: rgba(0, 0, 0, 0.30)
-
-.switch-light
-  @extend .switch
-  left: calc((100vw - #{$switch-size} + 16px) / 2)
-
-.switch-lock
-  @extend .switch
-  left: calc((100vw - #{$switch-size}) / 2)
-  top: calc((80vh - #{$switch-size}) / 2)
 
 .icon
   position: absolute

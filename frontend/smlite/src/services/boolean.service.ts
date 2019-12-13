@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ServiceType} from "./serviceType";
 // @ts-ignore
 import properties from '../assets/properties.json';
 
@@ -20,9 +19,9 @@ export class BooleanService {
     return this.http.get(`${url}`);
   }
 
-  changeState(serviceType: ServiceType): Observable<Object> {
+  changeState(serviceType: String): Observable<Object> {
     console.log(this.url);
-    let url: String = this.url + serviceType.toString() + "/setState";
+    let url: String = this.url + serviceType + "/setState";
     return this.http.post(`${url}`, "CHANGE");
   }
 }

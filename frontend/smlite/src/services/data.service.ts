@@ -29,7 +29,7 @@ export class DataService {
     }
   }
 
-  changeState(serviceType: ServiceType) {
+  changeState(serviceType: String) {
     let className: String = '.icon--' + serviceType;
     this.booleanService.changeState(serviceType)
       .subscribe(data =>

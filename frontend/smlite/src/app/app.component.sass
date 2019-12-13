@@ -1,3 +1,5 @@
+$switch-size: calc(((80vh - 32px) / 3) + 16px)
+
 #slider
   overflow: hidden
   position: absolute
@@ -12,8 +14,8 @@
 
 .switches
   position: absolute
-  width: 100vw
   height: 100vh
+  left: calc((100vw - #{$switch-size}) / 2)
 
 #sliders
   height: 80vh
