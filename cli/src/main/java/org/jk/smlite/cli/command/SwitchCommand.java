@@ -3,10 +3,10 @@ package org.jk.smlite.cli.command;
 import org.jk.smlite.cli.model.AbstractCommand;
 import org.jk.smlite.cli.model.Context;
 
-public class ClockCommand extends AbstractCommand {
+public class SwitchCommand extends AbstractCommand {
 
-    public ClockCommand() {
-        super("Clock");
+    public SwitchCommand() {
+        super("toggle");
     }
 
     @Override

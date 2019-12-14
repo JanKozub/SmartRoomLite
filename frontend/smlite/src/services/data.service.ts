@@ -1,22 +1,25 @@
 import {Injectable} from "@angular/core";
-import {BooleanService} from "./boolean.service";
 import {ServiceType} from "./serviceType";
 // @ts-ignore
 import * as $ from 'jquery';
+import {HttpClient} from "@angular/common/http";
+// @ts-ignore
+import properties from "../assets/properties.json";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  constructor(private booleanService: BooleanService) {
+  private url: string = properties.baseUrl;
+
+  constructor(private http: HttpClient) {
   }
 
   updateState(serviceType: String) {
-    let className: String = '.icon--' + serviceType.toLowerCase();
-    this.booleanService.getState(serviceType.toLowerCase())
+    this.http.get(this.url + "/switch/getState/" + serviceType)
       .subscribe(data =>
-          this.setColor(data, className),
+          this.setColor(data, '.icon--' + serviceType),
         error => console.log(error));
   }
 
@@ -30,10 +33,9 @@ export class DataService {
   }
 
   changeState(serviceType: String) {
-    let className: String = '.icon--' + serviceType;
-    this.booleanService.changeState(serviceType)
+    this.http.post(this.url + "/switch/setState", serviceType)
       .subscribe(data =>
-          this.setColor(data, className),
+          this.setColor(data, '.icon--' + serviceType),
         error => console.log(error));
   }
 

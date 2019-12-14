@@ -3,6 +3,8 @@ package org.jk.smlite.cli;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.jk.smlite.cli.command.*;
+import org.jk.smlite.cli.model.Command;
+import org.jk.smlite.cli.model.Context;
 
 import java.io.*;
 import java.util.List;
@@ -23,15 +25,17 @@ public class Start {
             new BlindCommand(),
             new DoorCommand(),
             new LightCommand(),
-            new ClockCommand()
+            new ClockCommand(),
+            new SwitchCommand(),
+            new GetCommand()
     );
 
-    private  Start() {
+    private Start() {
     }
 
     private void run(String[] args) throws IOException {
-        try(BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out))) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out))) {
 
             while (true) {
                 out.write("smlite>");
@@ -69,6 +73,6 @@ public class Start {
 
         CommandLine cl = new DefaultParser().parse(c.getOptions(), cmdBody.subList(1, cmdBody.size()).toArray(new String[0]));
 
-        tgtCmd.get().execute(new Context(out, cl, MY_URL));
+        tgtCmd.get().execute(new Context(out, cmdBody.get(0), cl, MY_URL));
     }
 }

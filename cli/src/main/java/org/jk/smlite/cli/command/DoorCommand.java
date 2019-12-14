@@ -1,9 +1,8 @@
 package org.jk.smlite.cli.command;
 
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-
-import java.io.IOException;
+import org.jk.smlite.cli.model.AbstractCommand;
+import org.jk.smlite.cli.model.Context;
 
 public class DoorCommand extends AbstractCommand {
     private static final Options OPTIONS = new Options()
@@ -19,14 +18,7 @@ public class DoorCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute(Context context) throws Exception {
-        repeatIfPresent(context.getCmdLine(), () -> {
-            String response = execute(context.getUrl() + "/door/getSomething");
-            try {
-                context.getOut().write(response);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+    public void execute(Context context) {
+        executeSwitch(context);
     }
 }

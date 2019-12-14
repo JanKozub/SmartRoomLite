@@ -1,23 +1,28 @@
-package org.jk.smlite.cli.command;
+package org.jk.smlite.cli.model;
 
 import org.apache.commons.cli.CommandLine;
 
 import java.io.BufferedWriter;
-import java.util.List;
 
 public class Context {
     private final BufferedWriter out;
+    private final String name;
     private final CommandLine cmdLine;
     private final String url;
 
-    public Context(BufferedWriter out, CommandLine commandLine, String url) {
+    public Context(BufferedWriter out, String name, CommandLine cmdLine, String url) {
         this.out = out;
-        this.cmdLine = commandLine;
+        this.name = name;
+        this.cmdLine = cmdLine;
         this.url = url;
     }
 
     public BufferedWriter getOut() {
         return out;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public CommandLine getCmdLine() {

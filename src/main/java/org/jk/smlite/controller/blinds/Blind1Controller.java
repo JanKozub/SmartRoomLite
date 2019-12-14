@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "${angular.server.ip}")
+//@CrossOrigin(origins = "${angular.server.ip}")
 @RestController
 @RequestMapping("/blind1")
 public class Blind1Controller {
