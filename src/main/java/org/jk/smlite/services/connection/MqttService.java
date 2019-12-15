@@ -6,6 +6,9 @@ import org.jk.smlite.exceptions.DeviceNotRecognizedException;
 import org.jk.smlite.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -18,6 +21,8 @@ public class MqttService implements MqttCallback, CommService {
     private final List<MessageListener> listeners = new CopyOnWriteArrayList<>();
 
     private final MqttClient client;
+    private @Autowired
+    ApplicationContext context;
 
     public MqttService() {
         String broker = "tcp://10.0.98.125:1883";
@@ -71,7 +76,7 @@ public class MqttService implements MqttCallback, CommService {
     @Override
     public void connectionLost(Throwable throwable) {
         log.error("Connection lost rebooting system!");
-        System.exit(1); //TODO ZAMYKAJ CONTEX SPRINGOWY ZAMYKAJ WSZYSTKIE| BEANY
+        ((ConfigurableApplicationContext) context).close();
     }
 
     @Override
@@ -91,3 +96,4 @@ public class MqttService implements MqttCallback, CommService {
         log.debug("Delivery to {} complete", (Object) iMqttDeliveryToken.getTopics());
     }
 }
+

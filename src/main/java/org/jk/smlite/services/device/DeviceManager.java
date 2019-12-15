@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.*;
@@ -26,6 +27,7 @@ public class DeviceManager {
     private final Map<DeviceType, Lock> locks = new ConcurrentHashMap<>();
 
     private List<Device> devices = new ArrayList<>();
+    private final Timer timer;
 
     DeviceManager(CommService commService) {
         this.commService = commService;
@@ -38,13 +40,18 @@ public class DeviceManager {
         devices.stream().map(device -> device.getDeviceType().getSubTopic()).forEach(commService::connect);
         commService.register(this::updateState);
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 validateStates();
             }
         }, 0, 5000);
+    }
+
+    @PreDestroy
+    private void shutdown() {
+        timer.cancel();
     }
 
     public boolean toggleDevice(DeviceType deviceType) {
