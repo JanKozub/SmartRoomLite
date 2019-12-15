@@ -1,7 +1,6 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {ServiceType} from "./serviceType";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 // @ts-ignore
 import properties from '../assets/properties.json';
 
@@ -15,13 +14,13 @@ export class BlindsService {
   constructor(private http: HttpClient) {
   }
 
-  getPosition(serviceType: ServiceType) {
-    let url: string = this.baseUrl + "/" + serviceType.toString() + "/getPosition";
+  getPosition(serviceType: String) {
+    let url: string = this.baseUrl + '/blind' + serviceType + '/getPosition';
     return this.http.get(`${url}`);
   }
 
-  setPosition(serviceType: ServiceType, position: string): Observable<Object> {
-    let url: String = this.baseUrl + "/" + serviceType.toString() + "/setPosition";
+  setPosition(serviceType: String, position: string): Observable<Object> {
+    let url: String = this.baseUrl + '/blind' + serviceType + '/setPosition';
     return this.http.post(`${url}`, position);
   }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DataService} from "../services/data.service";
+import {SwitchService} from '../services/switch.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,7 @@ import {DataService} from "../services/data.service";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: SwitchService) {
   }
 
   ngOnInit() {

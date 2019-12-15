@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BlindsService} from "../../services/blinds.service";
-import {ServiceType} from "../../services/serviceType";
+import {BlindsService} from '../../services/blinds.service';
 
 @Component({
   selector: 'app-slider',
@@ -12,7 +11,7 @@ export class SliderComponent implements OnInit{
 
   @Input() id: number;
 
-  serviceType: ServiceType;
+  serviceType: String;
   value: number;
 
   updateValue() {
@@ -23,20 +22,23 @@ export class SliderComponent implements OnInit{
   }
 
   ngOnInit() {
-    if(this.id == 1) this.serviceType = ServiceType.Blind1;
-    else this.serviceType = ServiceType.Blind2;
+    if (this.id == 1) {
+      this.serviceType = 'blind1';
+    } else {
+      this.serviceType = 'blind2';
+    }
     this.getPosition(this.serviceType);
   }
 
-  getPosition(serviceType: ServiceType) {
-    this.blindsService.getPosition(serviceType)
+  getPosition(serviceType: String) {
+    this.blindsService.getPosition(serviceType.toLowerCase().charAt(serviceType.length - 1))
       .subscribe(data => this.value = Number(data),
-      error => console.log(error));
+        error => console.log(error));
   }
 
-  setPosition(serviceType: ServiceType, newValue: number): void {
-    this.blindsService.setPosition(serviceType, newValue.toString())
-    .subscribe(data => console.log(),
-    error => console.log(error));
+  setPosition(serviceType: String, newValue: number): void {
+    this.blindsService.setPosition(serviceType.toLowerCase().charAt(serviceType.length - 1), newValue.toString())
+      .subscribe(data => console.log(),
+        error => console.log(error));
   }
 }

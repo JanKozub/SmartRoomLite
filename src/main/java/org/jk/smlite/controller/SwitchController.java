@@ -2,6 +2,8 @@ package org.jk.smlite.controller;
 
 import org.jk.smlite.services.device.DeviceManager;
 import org.jk.smlite.services.device.DeviceType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/switch")
 public class SwitchController {
+    private static final Logger log = LoggerFactory.getLogger(SwitchController.class);
     private DeviceManager deviceManager;
 
     public SwitchController(DeviceManager deviceManager) {
@@ -18,34 +21,19 @@ public class SwitchController {
 
     @GetMapping("/getState/**")
     public boolean getState(HttpServletRequest request) {
-        String urlArray[] = request.getRequestURI().split("/");
-        String device = urlArray[urlArray.length - 1];
+        String[] urlArray = request.getRequestURI().split("/");
+        String device = urlArray[urlArray.length - 1].toUpperCase();
 
-        if (device.equals("light")) {
-            return deviceManager.getState(DeviceType.LIGHT).isEnabled();
-        }
-        if (device.equals("clock")) {
-            return deviceManager.getState(DeviceType.CLOCK).isEnabled();
-        }
-        if (device.equals("door")) {
-            return deviceManager.getState(DeviceType.CLOCK).isEnabled();
-        }
-        return false;
+        return deviceManager.getState(DeviceType.valueOf(device)).isEnabled();
     }
 
     @PostMapping("/setState")
     public boolean setState(@Valid @RequestBody String body) {
-        if (body.equals("light")) {
-            return deviceManager.toggleDevice(DeviceType.LIGHT);
-        } else {
-            if (body.equals("clock")) {
-                return deviceManager.toggleDevice(DeviceType.CLOCK);
-            } else {
-                if (body.equals("door")) {
-                    return deviceManager.toggleDevice(DeviceType.DOOR);
-                }
-            }
-        } //TODO PARSE
-        return false;
+        try {
+            return deviceManager.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
+        } catch (IllegalArgumentException ex) {
+            log.error("Post mapping for device {} failed", body);
+            return false;
+        }
     }
 }

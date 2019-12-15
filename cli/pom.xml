@@ -7,7 +7,7 @@
     <parent>
         <artifactId>smlite</artifactId>
         <groupId>org.jk.smLite</groupId>
-        <version>2.0</version>
+        <version>3.0</version>
     </parent>
 
     <artifactId>cli</artifactId>

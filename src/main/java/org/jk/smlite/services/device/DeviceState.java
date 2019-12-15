@@ -32,7 +32,7 @@ public class DeviceState {
         return value;
     }
 
-    private boolean isConnected() {
+    public boolean isConnected() {
         return Duration.between(lastUpdated, Instant.now()).compareTo(timeout) < 0;
     }
 

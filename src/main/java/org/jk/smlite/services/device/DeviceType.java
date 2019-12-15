@@ -7,7 +7,7 @@ public enum DeviceType {
     DOOR("door", "doorSub", DataType.BOOLEAN),
     CLOCK("clock", "clockSub", DataType.BOOLEAN),
     BLIND1("blind1", "blind1Sub", DataType.INTEGER),
-    BLIND2("", "", DataType.INTEGER),
+    BLIND2("blind2", "blind2Sub", DataType.INTEGER),
     GATE("", "", DataType.BOOLEAN);
 
 
