@@ -1,7 +1,4 @@
-package org.jk.smlite.model;
-
-import org.jk.smlite.services.device.DeviceState;
-import org.jk.smlite.services.device.DeviceType;
+package org.jk.smlite.model.device;
 
 import java.time.Duration;
 

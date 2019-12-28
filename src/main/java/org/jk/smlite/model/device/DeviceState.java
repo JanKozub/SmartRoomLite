@@ -1,7 +1,6 @@
-package org.jk.smlite.services.device;
+package org.jk.smlite.model.device;
 
 import org.jk.smlite.model.DataType;
-import org.jk.smlite.model.Device;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -53,7 +52,7 @@ public class DeviceState {
         return output;
     }
 
-    boolean update(int state) {
+    public boolean update(int state) {
         this.lastUpdated = Instant.now();
         if (getDevice().getDeviceType().getDataType() == DataType.BOOLEAN) {
             if (this.state != (state == 1)) {

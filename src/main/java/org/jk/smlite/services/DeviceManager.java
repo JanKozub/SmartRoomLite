@@ -1,9 +1,11 @@
-package org.jk.smlite.services.device;
+package org.jk.smlite.services;
 
 import org.jk.smlite.exceptions.DeviceNotFoundException;
 import org.jk.smlite.model.DataType;
-import org.jk.smlite.model.Device;
 import org.jk.smlite.model.Message;
+import org.jk.smlite.model.device.Device;
+import org.jk.smlite.model.device.DeviceState;
+import org.jk.smlite.model.device.DeviceType;
 import org.jk.smlite.services.connection.CommService;
 import org.jk.smlite.services.connection.MessageListener;
 import org.slf4j.Logger;
@@ -71,13 +73,14 @@ public class DeviceManager {
             try {
                 commService.register(listener);
                 try {
-                    commService.sendMessage(deviceType.getPubTopic(), "TOGGLE");
+                    sendMessage(deviceType, "TOGGLE");
                     return future.get(10, TimeUnit.SECONDS);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     throw new RuntimeException();
                 } catch (ExecutionException | TimeoutException e) {
-                    throw new RuntimeException(e);
+                    log.error("{} timed out", deviceType);
+                    return false;
                 } finally {
                     commService.unregister(listener);
                 }
@@ -104,7 +107,7 @@ public class DeviceManager {
                     }
                 };
                 commService.register(listener);
-                commService.sendMessage(deviceType.getPubTopic(), position);
+                sendMessage(deviceType, position);
 
                 return Integer.parseInt(position);
             } else {
@@ -118,6 +121,17 @@ public class DeviceManager {
             log.error("{} IS NOT A INTEGER TYPE DEVICE", deviceType);
             return -1;
         }
+    }
+
+    public boolean toggleNightMode() {
+        log.info("TOGGLED NIGHT MODE");
+        if (isDeviceEnabled(DeviceType.LIGHT))
+            toggleDevice(DeviceType.LIGHT);
+        if (isDeviceEnabled(DeviceType.CLOCK))
+            toggleDevice(DeviceType.CLOCK);
+        if (!isBlindDown(DeviceType.BLIND1))
+            setBlind(DeviceType.BLIND1, "1");
+        return true;
     }
 
     private void sendMessage(DeviceType deviceType, String msg) {
@@ -157,12 +171,11 @@ public class DeviceManager {
         LocalDateTime time = LocalDateTime.now();
 
         if (time.getHour() == 5 && time.getMinute() == 0 && time.getSecond() > 0 && time.getSecond() <= 5) {
-            DeviceState deviceState = getDeviceState(DeviceType.CLOCK);
-            if (deviceState != null) {
-                if (!deviceState.isEnabled()) {
-                    sendMessage(DeviceType.CLOCK, "TOGGLE");
-                }
+            if (!isDeviceEnabled(DeviceType.CLOCK)) {
+                toggleDevice(DeviceType.CLOCK);
             }
+            if (isBlindDown(DeviceType.BLIND1))
+                setBlind(DeviceType.BLIND1, "5");
         }
     }
 
@@ -176,5 +189,21 @@ public class DeviceManager {
             log.error(ex.getMessage());
             return null;
         }
+    }
+
+    private boolean isDeviceEnabled(DeviceType deviceType) {
+        DeviceState deviceState = getDeviceState(deviceType);
+        if (deviceState != null) {
+            return deviceState.isEnabled();
+        } else return false;
+    }
+
+    private boolean isBlindDown(DeviceType deviceType) {
+        if (deviceType == DeviceType.BLIND1 || deviceType == DeviceType.BLIND2) {
+            DeviceState deviceState = getDeviceState(deviceType);
+            if (deviceState != null)
+                return deviceState.getValue() == 1;
+            else return false;
+        } else return false;
     }
 }

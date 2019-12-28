@@ -1,7 +1,7 @@
 package org.jk.smlite.controller;
 
-import org.jk.smlite.services.device.DeviceManager;
-import org.jk.smlite.services.device.DeviceType;
+import org.jk.smlite.model.device.DeviceType;
+import org.jk.smlite.services.DeviceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,11 @@ public class SwitchController {
     @PostMapping("/setState")
     public boolean setState(@Valid @RequestBody String body) {
         try {
-            return deviceManager.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
+            if (body.equals("night-mode"))
+                return deviceManager.toggleNightMode();
+            else
+                return deviceManager.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
+
         } catch (IllegalArgumentException ex) {
             log.error("Post mapping for device {} failed", body);
             return false;

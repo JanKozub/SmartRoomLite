@@ -1,4 +1,4 @@
-package org.jk.smlite.services.device;
+package org.jk.smlite.model.device;
 
 import org.jk.smlite.model.DataType;
 

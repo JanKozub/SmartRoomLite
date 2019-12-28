@@ -1,7 +1,7 @@
 package org.jk.smlite.model;
 
 import org.jk.smlite.exceptions.DeviceNotRecognizedException;
-import org.jk.smlite.services.device.DeviceType;
+import org.jk.smlite.model.device.DeviceType;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
