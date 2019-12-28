@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
 // @ts-ignore
 import properties from '../assets/properties.json';
 
@@ -20,9 +19,15 @@ export class BlindsService {
     return this.http.get(`${url}`);
   }
 
-  setPosition(serviceType: String, position: string): Observable<Object> {
+  setPosition(serviceType: String, position: string) {
     console.log('setting value of blind', serviceType, 'to', position);
     let url: String = this.baseUrl + '/blind' + serviceType + '/setPosition';
-    return this.http.post(`${url}`, position);
+    return this.http.post(`${url}`, position)
+      .subscribe((data) => {
+          if (data) {
+            this.getPosition(serviceType);
+          }
+        },
+        error => console.log(error));
   }
 }

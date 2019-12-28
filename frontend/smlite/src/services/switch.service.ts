@@ -31,13 +31,22 @@ export class SwitchService {
   changeState(serviceType: String) {
     console.log('changing state of', serviceType);
     return this.http.post(this.url + '/switch/setState', serviceType.toLowerCase())
-      .subscribe(data =>
-          this.setColor(data, '.icon--' + serviceType.toLowerCase()),
+      .subscribe(data => {
+          if (serviceType === 'night-mode') {
+            this.updateState('light');
+            this.updateState('clock');
+          } else {
+            this.setColor(data, '.icon--' + serviceType.toLowerCase());
+          }
+        },
         error => console.log(error));
   }
 
   setColor(data: Object, className: String) {
-    if (data) $(className).css("color", "#ff8b00");
-    else $(className).css("color", "rgba(0,0,0,0.46)");
+    if (data) {
+      $(className).css('color', '#ff8b00');
+    } else {
+      $(className).css('color', 'rgba(0,0,0,0.46)');
+    }
   }
 }

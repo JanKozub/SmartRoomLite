@@ -11,6 +11,7 @@ public class Message {
     private final String topic;
     private final int state;
     private final boolean isEnabled;
+    private final int value;
     private final String message;
     private final String returnMessage;
     private DeviceType deviceType;
@@ -27,30 +28,38 @@ public class Message {
             LocalDateTime now = LocalDateTime.now();
             int hour = now.getHour();
             int minute = now.getMinute();
-            if (hour < 10)
+            if (hour < 10) {
                 msg = "0";
+            }
             msg = msg + hour;
-            if (minute < 10)
+            if (minute < 10) {
                 msg = msg + "0";
+            }
             msg = msg + minute;
             this.returnMessage = msg;
         } else {
             this.returnMessage = "ACTIVE";
-            if (message.contains("relay"))
+            if (message.contains("relay")) {
                 this.deviceType = DeviceType.LIGHT;
-            else if (message.contains("door"))
+            } else if (message.contains("door")) {
                 this.deviceType = DeviceType.DOOR;
-            else if (message.contains("blind1"))
+            } else if (message.contains("blind1")) {
                 this.deviceType = DeviceType.BLIND1;
-            else if (message.contains("blind2"))
+            } else if (message.contains("blind2")) {
                 this.deviceType = DeviceType.BLIND2;
-            else {
+            } else {
                 throw new DeviceNotRecognizedException("DEVICE NOT FOUND");
             }
         }
 
-        this.state = Integer.parseInt(message.substring(deviceType.getSubTopic().length()));
-        this.isEnabled = state == 1;
+        state = Integer.parseInt(message.substring(deviceType.getSubTopic().length()));
+        if (deviceType == DeviceType.BLIND1 || deviceType == DeviceType.BLIND2) {
+            value = state;
+            isEnabled = true;
+        } else {
+            value = 1;
+            isEnabled = state == 1;
+        }
     }
 
     public Instant getTime() {
@@ -71,6 +80,10 @@ public class Message {
 
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     public String getMessage() {

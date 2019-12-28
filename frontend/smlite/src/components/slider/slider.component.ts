@@ -37,8 +37,6 @@ export class SliderComponent implements OnInit{
   }
 
   setPosition(serviceType: String, newValue: number): void {
-    this.blindsService.setPosition(serviceType.toLowerCase().charAt(serviceType.length - 1), newValue.toString())
-      .subscribe(data => console.log(),
-        error => console.log(error));
+    this.blindsService.setPosition(serviceType.toLowerCase().charAt(serviceType.length - 1), newValue.toString());
   }
 }

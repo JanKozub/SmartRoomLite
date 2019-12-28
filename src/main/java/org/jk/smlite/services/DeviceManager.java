@@ -63,7 +63,7 @@ public class DeviceManager {
             CompletableFuture<Boolean> future = new CompletableFuture<>();
             MessageListener listener = message -> {
                 if (message.getDeviceType() == deviceType) {
-                    log.info("Light state: {}", message);
+                    log.info("{} state: {}", deviceType, message);
                     future.complete(message.isEnabled());
                 }
             };
@@ -93,33 +93,40 @@ public class DeviceManager {
         }
     }
 
-    public int setBlind(DeviceType deviceType, String position) {
+    public boolean setBlind(DeviceType deviceType, String position) {
         if (deviceType.getDataType() == DataType.INTEGER) {
             log.info("SETTING {} TO {}", deviceType, position);
-            if (deviceType == DeviceType.BLIND1) {
-                MessageListener listener = new MessageListener() {
-                    @Override
-                    public void messageArrived(Message message) {
-                        if (message.getDeviceType() == deviceType) {
-                            log.info("Blind position: {}", message.getState());
-                            commService.unregister(this);
-                        }
-                    }
-                };
-                commService.register(listener);
-                sendMessage(deviceType, position);
 
-                return Integer.parseInt(position);
-            } else {
-                if (deviceType == DeviceType.BLIND2) {
-                    //TODO 2ND BLIND
+            CompletableFuture<Boolean> future = new CompletableFuture<>();
+            MessageListener listener = message -> {
+                if (message.getDeviceType() == deviceType) {
+                    log.info("{} state: {}", deviceType, message);
+                    future.complete(message.getValue() == Integer.parseInt(position));
                 }
-                log.error("{} MADE A UNHANDLED REQUEST", deviceType);
-                return -1;
+            };
+
+            Lock lock = locks.computeIfAbsent(deviceType, k -> new ReentrantLock());
+            lock.lock();
+            try {
+                commService.register(listener);
+                try {
+                    sendMessage(deviceType, position);
+                    return future.get(75, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException();
+                } catch (ExecutionException | TimeoutException e) {
+                    log.error("{} timed out", deviceType);
+                    return false;
+                } finally {
+                    commService.unregister(listener);
+                }
+            } finally {
+                lock.unlock();
             }
         } else {
-            log.error("{} IS NOT A INTEGER TYPE DEVICE", deviceType);
-            return -1;
+            log.error("{} IS NOT A BLIND", deviceType);
+            return false;
         }
     }
 

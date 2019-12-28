@@ -35,6 +35,6 @@ public class BlindController {
 
     @PostMapping("/setPosition")
     public boolean setBlind1Position(@Valid @RequestBody String value) {
-        return deviceManager.setBlind(DeviceType.BLIND1, value) != -1;
+        return deviceManager.setBlind(DeviceType.BLIND1, value);
     }
 }
