@@ -1,4 +1,4 @@
-package org.jk.smlite.controller.blinds;
+package org.jk.smlite.controller;
 
 import org.jk.smlite.services.device.DeviceManager;
 import org.jk.smlite.services.device.DeviceType;
@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/blind**")
+@CrossOrigin(origins = "${angular.server.ip}")
 public class BlindController {
     private static final Logger log = LoggerFactory.getLogger(BlindController.class);
     private final DeviceManager deviceManager;

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/switch")
+@CrossOrigin(origins = "${angular.server.ip}")
 public class SwitchController {
     private static final Logger log = LoggerFactory.getLogger(SwitchController.class);
     private DeviceManager deviceManager;

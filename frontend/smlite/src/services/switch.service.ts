@@ -15,6 +15,7 @@ export class SwitchService {
   }
 
   updateState(serviceType: String) {
+    console.log('updating state of', serviceType);
     return this.http.get(this.url + '/switch/getState/' + serviceType.toLowerCase())
       .subscribe(data =>
           this.setColor(data, '.icon--' + serviceType.toLowerCase()),
@@ -28,6 +29,7 @@ export class SwitchService {
   }
 
   changeState(serviceType: String) {
+    console.log('changing state of', serviceType);
     return this.http.post(this.url + '/switch/setState', serviceType.toLowerCase())
       .subscribe(data =>
           this.setColor(data, '.icon--' + serviceType.toLowerCase()),

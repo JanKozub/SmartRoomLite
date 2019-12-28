@@ -15,11 +15,13 @@ export class BlindsService {
   }
 
   getPosition(serviceType: String) {
+    console.log('getting value of blind', serviceType);
     let url: string = this.baseUrl + '/blind' + serviceType + '/getPosition';
     return this.http.get(`${url}`);
   }
 
   setPosition(serviceType: String, position: string): Observable<Object> {
+    console.log('setting value of blind', serviceType, 'to', position);
     let url: String = this.baseUrl + '/blind' + serviceType + '/setPosition';
     return this.http.post(`${url}`, position);
   }
