@@ -25,8 +25,8 @@ public class SwitchController {
         String[] urlArray = request.getRequestURI().split("/");
         String device = urlArray[urlArray.length - 1].toUpperCase();
         try {
-            return deviceManager.getState(DeviceType.valueOf(device)).isEnabled();
-        } catch (NullPointerException ex) {
+            return deviceManager.getState(DeviceType.valueOf(device)).getData()[0].equals("1");
+        } catch (NullPointerException | IllegalArgumentException ex) {
             log.error("GetMapping failed for switch {}", device);
             return false;
         }

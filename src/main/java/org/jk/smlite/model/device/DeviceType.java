@@ -1,6 +1,6 @@
 package org.jk.smlite.model.device;
 
-import java.util.ArrayList;
+import java.util.EnumSet;
 
 public enum DeviceType {
     LIGHT("light", "lightSub"),
@@ -9,6 +9,10 @@ public enum DeviceType {
     BLIND1("blind1", "blind1Sub"),
     BLIND2("blind2", "blind2Sub"),
     GATE("", "");
+
+
+    private static final EnumSet<DeviceType> toggleableDevices = EnumSet.of(LIGHT, CLOCK, DOOR);
+    private static final EnumSet<DeviceType> blinds = EnumSet.of(BLIND1, BLIND2);
 
     private final String subTopic;
     private final String pubTopic;
@@ -28,26 +32,10 @@ public enum DeviceType {
 
 
     public static boolean isDeviceToggle(DeviceType deviceType) {
-        return toggleDevices().contains(deviceType);
+        return toggleableDevices.contains(deviceType);
     }
 
     public static boolean isDeviceBlind(DeviceType deviceType) {
-        return blinds().contains(deviceType);
-    }
-
-
-    private static ArrayList<DeviceType> toggleDevices() {
-        ArrayList<DeviceType> devices = new ArrayList<>();
-        devices.add(LIGHT);
-        devices.add(DOOR);
-        devices.add(CLOCK);
-        return devices;
-    }
-
-    private static ArrayList<DeviceType> blinds() {
-        ArrayList<DeviceType> devices = new ArrayList<>();
-        devices.add(BLIND1);
-        devices.add(BLIND2);
-        return devices;
+        return blinds.contains(deviceType);
     }
 }

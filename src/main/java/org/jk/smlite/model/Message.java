@@ -5,11 +5,12 @@ import org.jk.smlite.model.device.DeviceType;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class Message {
     private final Instant time;
     private final String topic;
-    private final char[] data;
+    private final String[] data;
     private final String message;
     private final String returnMessage;
     private DeviceType deviceType;
@@ -19,7 +20,7 @@ public class Message {
         this.topic = topic;
         this.message = message;
 
-        String[] values = message.split("-");
+        String[] values = message.split(",");
 
         try {
             this.deviceType = DeviceType.valueOf(values[0].toUpperCase());
@@ -45,7 +46,7 @@ public class Message {
             this.returnMessage = "ACTIVE";
         }
 
-        data = values[1].toCharArray();
+        data = Arrays.copyOfRange(values, 1, values.length);
     }
 
     public Instant getTime() {
@@ -60,12 +61,6 @@ public class Message {
         return deviceType;
     }
 
-    public static String iterateData(char[] data) {
-        StringBuilder output = new StringBuilder();
-        for (char datum : data) output.append(datum);
-        return output.toString();
-    }
-
     public String getMessage() {
         return message;
     }
@@ -74,7 +69,7 @@ public class Message {
         return returnMessage;
     }
 
-    public char[] getData() {
+    public String[] getData() {
         return data;
     }
 
@@ -83,7 +78,7 @@ public class Message {
         return "Message{" +
                 "time=" + time +
                 ", topic='" + topic + '\'' +
-                ", state=" + iterateData(data) +
+                ", state=" + data +
                 ", message='" + message + '\'' +
                 ", returnMessage='" + returnMessage + '\'' +
                 ", type=" + deviceType +

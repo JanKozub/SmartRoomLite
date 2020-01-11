@@ -21,15 +21,15 @@ public class BlindController {
     }
 
     @GetMapping("/getPosition")
-    public int getBlind1Position(HttpServletRequest request) {
+    public String getBlind1Position(HttpServletRequest request) {
         String[] url = request.getRequestURI().split("/");
         String device = url[url.length - 2].toUpperCase();
 
         try {
-            return deviceManager.getState(DeviceType.valueOf(device)).getValue();
+            return deviceManager.getState(DeviceType.valueOf(device)).getData()[0];
         } catch (NullPointerException ex) {
             log.error(device + " is not connected");
-            return 0;
+            return "0";
         }
     }
 

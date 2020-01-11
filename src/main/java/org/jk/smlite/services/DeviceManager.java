@@ -63,7 +63,7 @@ public class DeviceManager {
             MessageListener listener = message -> {
                 if (message.getDeviceType() == deviceType) {
                     log.info("{} state: {}", deviceType, message);
-                    future.complete(message.getData()[0] == '1');
+                    future.complete(message.getData()[0].equals("1"));
                 }
             };
 
@@ -100,7 +100,7 @@ public class DeviceManager {
             MessageListener listener = message -> {
                 if (message.getDeviceType() == deviceType) {
                     log.info("{} state: {}", deviceType, message);
-                    future.complete(message.getData()[0] == position.toCharArray()[0]);
+                    future.complete(message.getData()[0].equals(position));
                 }
             };
 
@@ -150,11 +150,11 @@ public class DeviceManager {
     }
 
     private void updateState(Message message) {
-        char[] data = message.getData();
+        String[] data = message.getData();
         DeviceType deviceType = message.getDeviceType();
         sendMessage(deviceType, message.getReturnMessage());
 
-        log.debug("Updating state of {} to {}", deviceType, Message.iterateData(data));
+        log.debug("Updating state of {} to {}", deviceType, data);
         DeviceState deviceState = getDeviceState(deviceType);
 
         if (deviceState != null) {
@@ -200,7 +200,7 @@ public class DeviceManager {
     private boolean isDeviceEnabled(DeviceType deviceType) {
         DeviceState deviceState = getDeviceState(deviceType);
         if (deviceState != null) {
-            return deviceState.isEnabled();
+            return deviceState.getData()[0].equals("1");
         } else return false;
     }
 
@@ -208,7 +208,7 @@ public class DeviceManager {
         if (deviceType == DeviceType.BLIND1 || deviceType == DeviceType.BLIND2) {
             DeviceState deviceState = getDeviceState(deviceType);
             if (deviceState != null)
-                return deviceState.getValue() == 1;
+                return deviceState.getData()[0].equals("1");
             else return false;
         } else return false;
     }
