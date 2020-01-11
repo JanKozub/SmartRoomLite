@@ -1,24 +1,21 @@
 package org.jk.smlite.model.device;
 
-import org.jk.smlite.model.DataType;
+import java.util.ArrayList;
 
 public enum DeviceType {
-    LIGHT("relay", "relaySub", DataType.BOOLEAN),
-    DOOR("door", "doorSub", DataType.BOOLEAN),
-    CLOCK("clock", "clockSub", DataType.BOOLEAN),
-    BLIND1("blind1", "blind1Sub", DataType.INTEGER),
-    BLIND2("blind2", "blind2Sub", DataType.INTEGER),
-    GATE("", "", DataType.BOOLEAN);
-
+    LIGHT("light", "lightSub"),
+    DOOR("door", "doorSub"),
+    CLOCK("clock", "clockSub"),
+    BLIND1("blind1", "blind1Sub"),
+    BLIND2("blind2", "blind2Sub"),
+    GATE("", "");
 
     private final String subTopic;
     private final String pubTopic;
-    private final DataType dataType;
 
-    DeviceType(String subTopic, String pubTopic, DataType dataType) {
+    DeviceType(String subTopic, String pubTopic) {
         this.subTopic = subTopic;
         this.pubTopic = pubTopic;
-        this.dataType = dataType;
     }
 
     public String getSubTopic() {
@@ -29,7 +26,28 @@ public enum DeviceType {
         return pubTopic;
     }
 
-    public DataType getDataType() {
-        return dataType;
+
+    public static boolean isDeviceToggle(DeviceType deviceType) {
+        return toggleDevices().contains(deviceType);
+    }
+
+    public static boolean isDeviceBlind(DeviceType deviceType) {
+        return blinds().contains(deviceType);
+    }
+
+
+    private static ArrayList<DeviceType> toggleDevices() {
+        ArrayList<DeviceType> devices = new ArrayList<>();
+        devices.add(LIGHT);
+        devices.add(DOOR);
+        devices.add(CLOCK);
+        return devices;
+    }
+
+    private static ArrayList<DeviceType> blinds() {
+        ArrayList<DeviceType> devices = new ArrayList<>();
+        devices.add(BLIND1);
+        devices.add(BLIND2);
+        return devices;
     }
 }

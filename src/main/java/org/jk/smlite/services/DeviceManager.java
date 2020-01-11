@@ -1,7 +1,6 @@
 package org.jk.smlite.services;
 
 import org.jk.smlite.exceptions.DeviceNotFoundException;
-import org.jk.smlite.model.DataType;
 import org.jk.smlite.model.Message;
 import org.jk.smlite.model.device.Device;
 import org.jk.smlite.model.device.DeviceState;
@@ -57,14 +56,14 @@ public class DeviceManager {
     }
 
     public boolean toggleDevice(DeviceType deviceType) {
-        if (deviceType.getDataType() == DataType.BOOLEAN) {
+        if (DeviceType.isDeviceToggle(deviceType)) {
             log.info("TOGGLED DEVICE {}", deviceType);
 
             CompletableFuture<Boolean> future = new CompletableFuture<>();
             MessageListener listener = message -> {
                 if (message.getDeviceType() == deviceType) {
                     log.info("{} state: {}", deviceType, message);
-                    future.complete(message.isEnabled());
+                    future.complete(message.getData()[0] == '1');
                 }
             };
 
@@ -94,14 +93,14 @@ public class DeviceManager {
     }
 
     public boolean setBlind(DeviceType deviceType, String position) {
-        if (deviceType.getDataType() == DataType.INTEGER) {
+        if (DeviceType.isDeviceBlind(deviceType)) {
             log.info("SETTING {} TO {}", deviceType, position);
 
             CompletableFuture<Boolean> future = new CompletableFuture<>();
             MessageListener listener = message -> {
                 if (message.getDeviceType() == deviceType) {
                     log.info("{} state: {}", deviceType, message);
-                    future.complete(message.getValue() == Integer.parseInt(position));
+                    future.complete(message.getData()[0] == position.toCharArray()[0]);
                 }
             };
 
@@ -151,16 +150,16 @@ public class DeviceManager {
     }
 
     private void updateState(Message message) {
-        int state = message.getState();
+        char[] data = message.getData();
         DeviceType deviceType = message.getDeviceType();
         sendMessage(deviceType, message.getReturnMessage());
 
-        log.debug("Updating state of {} to {}", deviceType, state);
+        log.debug("Updating state of {} to {}", deviceType, Message.iterateData(data));
         DeviceState deviceState = getDeviceState(deviceType);
 
         if (deviceState != null) {
-            if (deviceState.update(state)) {
-                log.info("State changed for {} to {}. Notifying listeners", deviceType, state);
+            if (deviceState.update(data)) {
+                log.info("State changed for {} to {}. Notifying listeners", deviceType, data);
             } else {
                 log.debug("State not changed for {}.", deviceType);
             }

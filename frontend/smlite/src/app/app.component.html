@@ -4,9 +4,10 @@
 
     </div>
     <div class="page" id="page2">
-      <div class="switches" style="top: 25vh">
-        <app-switch type="lock"></app-switch>
-      </div>
+      <iron-icon [class.icon-menu]="1" class="lock-icon" icon="vaadin:lock"></iron-icon>
+      <mat-slide-toggle [checked]="doorService.lockState" id="lock-toggle"></mat-slide-toggle>
+      <iron-icon [class.icon-menu]="1" class="lock-icon" icon="vaadin:modal" id="icon-screen"></iron-icon>
+      <mat-slide-toggle [checked]="doorService.screenState" id="screen-toggle"></mat-slide-toggle>
     </div>
     <div class="page" id="page3">
       <div class="switches">
@@ -26,7 +27,8 @@
       </div>
     </div>
     <div class="page" id="page5">
-
+      <mat-slide-toggle style="height: 300px">
+      </mat-slide-toggle>
     </div>
   </div>
 

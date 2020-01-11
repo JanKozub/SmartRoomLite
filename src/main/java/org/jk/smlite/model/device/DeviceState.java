@@ -1,7 +1,5 @@
 package org.jk.smlite.model.device;
 
-import org.jk.smlite.model.DataType;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -45,24 +43,24 @@ public class DeviceState {
         String output = "DeviceState[type=" + getDevice().getDeviceType()
                 + ", connected= " + isConnected()
                 + ", lastUpdated=" + (lu == Instant.EPOCH ? "never" : LocalDateTime.ofInstant(lu, ZoneId.systemDefault()).toString());
-        if (getDevice().getDeviceType().getDataType() == DataType.BOOLEAN)
+        if (DeviceType.isDeviceToggle(getDevice().getDeviceType()))
             output = output + ", state= " + isEnabled() + "]";
         else
             output = output + ", state= " + getValue() + "]";
         return output;
     }
 
-    public boolean update(int state) {
+    public boolean update(char[] data) {
         this.lastUpdated = Instant.now();
-        if (getDevice().getDeviceType().getDataType() == DataType.BOOLEAN) {
-            if (this.state != (state == 1)) {
-                this.state = (state == 1);
+        if (DeviceType.isDeviceToggle(getDevice().getDeviceType())) {
+            if (this.state != (data[0] == '1')) {
+                this.state = (data[0] == '1');
                 return true;
             } else
                 return false;
         } else {
-            if (this.value != state) {
-                this.value = state;
+            if ((char) this.value != data[0]) {
+                this.value = (int) data[0] - 48;
                 return true;
             } else {
                 return false;

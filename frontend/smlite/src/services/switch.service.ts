@@ -25,7 +25,6 @@ export class SwitchService {
   updateStates() {
     this.updateState('light');
     this.updateState('clock');
-    this.updateState('door');
   }
 
   changeState(serviceType: String) {

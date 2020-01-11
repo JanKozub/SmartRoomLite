@@ -80,3 +80,36 @@ $switch-size: calc(((80vh - 32px) / 3) + 16px)
     height: calc((20vh - 8px) * 0.6)
     top: 1.8vh
     left: 6vw
+
+.lock-icon
+  position: absolute
+  left: calc(50vw - (40vh / 4))
+  height: calc(80vh / 4)
+  width: calc(80vh / 4)
+
+#icon-screen
+  top: 40vh
+
+#lock-toggle
+  position: absolute
+  top: 30vh
+  left: calc(50vw - 18px)
+  transform: scale(2)
+
+#screen-toggle
+  position: absolute
+  left: calc(50vw - 18px)
+  top: 65vh
+  transform: scale(2)
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar
+  background-color: rgba(0, 0, 0, 0.63) !important
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb
+  background-color: #fafafa !important
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-ripple-element
+  background-color: transparent
+
+::ng-deep .mat-slide-toggle:not(.mat-checked) .mat-ripple-element
+  background-color: transparent

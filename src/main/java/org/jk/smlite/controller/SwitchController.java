@@ -24,8 +24,13 @@ public class SwitchController {
     public boolean getState(HttpServletRequest request) {
         String[] urlArray = request.getRequestURI().split("/");
         String device = urlArray[urlArray.length - 1].toUpperCase();
+        try {
+            return deviceManager.getState(DeviceType.valueOf(device)).isEnabled();
+        } catch (NullPointerException ex) {
+            log.error("GetMapping failed for switch {}", device);
+            return false;
+        }
 
-        return deviceManager.getState(DeviceType.valueOf(device)).isEnabled();
     }
 
     @PostMapping("/setState")
