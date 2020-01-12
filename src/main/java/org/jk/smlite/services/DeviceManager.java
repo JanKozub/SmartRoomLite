@@ -92,6 +92,38 @@ public class DeviceManager {
         }
     }
 
+    public boolean toggleDoorScreen() {
+        log.info("TOGGLED DOOR SCREEN");
+
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        MessageListener listener = message -> {
+            if (message.getDeviceType() == DeviceType.DOOR) {
+                log.info("Door screen state: {}", message);
+                future.complete(message.getData()[1].equals("1"));
+            }
+        };
+
+        Lock lock = locks.computeIfAbsent(DeviceType.DOOR, k -> new ReentrantLock());
+        lock.lock();
+        try {
+            commService.register(listener);
+            try {
+                sendMessage(DeviceType.DOOR, "SCREEN");
+                return future.get(10, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new RuntimeException();
+            } catch (ExecutionException | TimeoutException e) {
+                log.error("Door screen timed out");
+                return false;
+            } finally {
+                commService.unregister(listener);
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
     public boolean setBlind(DeviceType deviceType, String position) {
         if (DeviceType.isDeviceBlind(deviceType)) {
             log.info("SETTING {} TO {}", deviceType, position);

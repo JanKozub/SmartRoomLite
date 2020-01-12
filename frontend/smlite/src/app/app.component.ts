@@ -14,8 +14,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.updateStates();
-    this.doorService.getLockState();
-    this.doorService.getScreenState();
+    this.doorService.getState('door');
+    this.doorService.getState('screen');
   }
 
   updateStates(): void {

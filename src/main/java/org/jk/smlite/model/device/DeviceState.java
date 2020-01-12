@@ -44,7 +44,7 @@ public class DeviceState {
 
     public boolean update(String[] data) {
         this.lastUpdated = Instant.now();
-        if (this.data != data) {
+        if (!Arrays.equals(this.data, data)) {
             this.data = data;
             return true;
         } else return false;

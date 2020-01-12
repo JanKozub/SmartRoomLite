@@ -16,19 +16,24 @@ export class DoorService {
   constructor(private http: HttpClient) {
   }
 
-  getLockState() {
-    console.log('updating state of lock');
-    return this.http.get(this.url + '/switch/getState/door')
+  getState(device: String) {
+    console.log('updating state of', device);
+    return this.http.get(this.url + '/switch/getState/' + device)
       .subscribe(data => {
-        this.lockState = Boolean(data);
+        if (device === 'lock') {
+          this.lockState = Boolean(data);
+        } else {
+          this.screenState = Boolean(data);
+        }
       }, error => console.log(error));
   }
 
-  getScreenState() {
-    console.log('updating state of lock screen');
-    return this.http.get(this.url + '/switch/getState/door/door_screen')
-      .subscribe(data => {
-        this.screenState = Boolean(data);
-      }, error => console.log(error));
+  toggle(device: String) {
+    console.log('changing state of', device);
+    return this.http.post(this.url + '/switch/setState', device.toLowerCase())
+      .subscribe(() => {
+          this.getState(device);
+        },
+        error => console.log(error));
   }
 }

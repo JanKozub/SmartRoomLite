@@ -25,7 +25,10 @@ public class SwitchController {
         String[] urlArray = request.getRequestURI().split("/");
         String device = urlArray[urlArray.length - 1].toUpperCase();
         try {
-            return deviceManager.getState(DeviceType.valueOf(device)).getData()[0].equals("1");
+            if (device.equals("SCREEN"))
+                return deviceManager.getState(DeviceType.DOOR).getData()[1].equals("1");
+            else
+                return deviceManager.getState(DeviceType.valueOf(device)).getData()[0].equals("1");
         } catch (NullPointerException | IllegalArgumentException ex) {
             log.error("GetMapping failed for switch {}", device);
             return false;
@@ -38,6 +41,8 @@ public class SwitchController {
         try {
             if (body.equals("night-mode"))
                 return deviceManager.toggleNightMode();
+            else if (body.equals("screen"))
+                return deviceManager.toggleDoorScreen();
             else
                 return deviceManager.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
 

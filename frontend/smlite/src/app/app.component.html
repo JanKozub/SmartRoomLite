@@ -5,9 +5,11 @@
     </div>
     <div class="page" id="page2">
       <iron-icon [class.icon-menu]="1" class="lock-icon" icon="vaadin:lock"></iron-icon>
-      <mat-slide-toggle [checked]="doorService.lockState" id="lock-toggle"></mat-slide-toggle>
+      <mat-slide-toggle (toggleChange)="doorService.toggle('door')" [checked]="doorService.lockState"
+                        id="lock-toggle"></mat-slide-toggle>
       <iron-icon [class.icon-menu]="1" class="lock-icon" icon="vaadin:modal" id="icon-screen"></iron-icon>
-      <mat-slide-toggle [checked]="doorService.screenState" id="screen-toggle"></mat-slide-toggle>
+      <mat-slide-toggle (toggleChange)="doorService.toggle('screen')" [checked]="doorService.screenState"
+                        id="screen-toggle"></mat-slide-toggle>
     </div>
     <div class="page" id="page3">
       <div class="switches">
