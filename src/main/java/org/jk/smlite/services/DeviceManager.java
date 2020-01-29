@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
-import java.time.LocalDateTime;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
@@ -30,8 +31,11 @@ public class DeviceManager {
     private List<Device> devices = new ArrayList<>();
     private final Timer timer;
 
-    DeviceManager(CommService commService) {
+    private Configuration configuration;
+
+    DeviceManager(CommService commService, Configuration configuration) {
         this.commService = commService;
+        this.configuration = configuration;
 
         devices.add(new Device(DeviceType.LIGHT));
         devices.add(new Device(DeviceType.CLOCK));
@@ -186,7 +190,7 @@ public class DeviceManager {
         DeviceType deviceType = message.getDeviceType();
         sendMessage(deviceType, message.getReturnMessage());
 
-        log.debug("Updating state of {} to {}", deviceType, data);
+        log.debug("{}: Updated state to {}", deviceType, data);
         DeviceState deviceState = getDeviceState(deviceType);
 
         if (deviceState != null) {
@@ -206,12 +210,15 @@ public class DeviceManager {
                 .collect(Collectors.joining("\n", "\nDevice statuses:\n", ""));
         log.info(message);
 
-        LocalDateTime time = LocalDateTime.now();
+        LocalTime time = LocalTime.now();
+        LocalTime timeOfToggle = LocalTime.parse(configuration.readProperty("clock.toggle_at"));
+        long duration = Duration.between(timeOfToggle, time).toMillis();
 
-        if (time.getHour() == 5 && time.getMinute() == 0 && time.getSecond() > 0 && time.getSecond() <= 5) {
-            if (!isDeviceEnabled(DeviceType.CLOCK)) {
+        log.info("Clock config = {}", timeOfToggle);
+        if (Math.abs(duration) <= 2500) {
+            if (!isDeviceEnabled(DeviceType.CLOCK))
                 toggleDevice(DeviceType.CLOCK);
-            }
+
             if (isBlindDown(DeviceType.BLIND1))
                 setBlind(DeviceType.BLIND1, "5");
         }

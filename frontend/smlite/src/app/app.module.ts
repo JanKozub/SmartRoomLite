@@ -3,19 +3,38 @@ import '../polyfills';
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterModule} from "@angular/router";
+import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material-module';
-import {SliderComponent} from '../components/slider/slider.component';
-import {SwitchComponent} from '../components/switch/switch.component';
+import {ToggleButtonModule} from '@bit/primefaces.primeng.togglebutton';
 import '@vaadin/vaadin-icons';
+import {ToggleSwitchComponent} from './components/toggle-switch/toggle-switch.component';
+import {SwitchesPageComponent} from './pages/switches-page/switches-page.component';
+import {ControlPageComponent} from './pages/control-page/control-page.component';
+import {MusicPageComponent} from './pages/music-page/music-page.component';
+import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
+import {DoubleToggleSwitchComponent} from './components/double-toggle-switch/double-toggle-switch.component';
+import {VerticalControllerComponent} from './components/vertical-controller/vertical-controller.component';
+
+const appRoutes: Routes = [
+  {path: 'switches', component: SwitchesPageComponent},
+  {path: 'control', component: ControlPageComponent},
+  {path: 'music', component: MusicPageComponent},
+  {path: 'settings', component: SettingsPageComponent},
+  {path: '**', pathMatch: 'full', redirectTo: '/switches'}
+];
 
 @NgModule({
-  imports: [BrowserModule,
+  imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      {enableTracing: true}
+    ),
+    BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
@@ -23,13 +42,19 @@ import '@vaadin/vaadin-icons';
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     MaterialModule,
-    RouterModule],
+    RouterModule,
+    ToggleButtonModule],
   declarations: [
     AppComponent,
-    SliderComponent,
-    SwitchComponent
+    ToggleSwitchComponent,
+    SwitchesPageComponent,
+    ControlPageComponent,
+    MusicPageComponent,
+    SettingsPageComponent,
+    DoubleToggleSwitchComponent,
+    VerticalControllerComponent
   ],
-  entryComponents: [SliderComponent],
+  entryComponents: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
   providers: []

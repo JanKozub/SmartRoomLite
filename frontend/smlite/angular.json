@@ -35,9 +35,7 @@
             "styles": [
               "src/styles.sass"
             ],
-            "scripts": [
-              "src/touchHandler.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

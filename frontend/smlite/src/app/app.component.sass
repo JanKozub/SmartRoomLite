@@ -1,115 +1,68 @@
-$switch-size: calc(((80vh - 32px) / 3) + 16px)
+$top-width: calc(10vh - 1px)
 
-#slider
-  overflow: hidden
-  position: absolute
-
-.page
-  position: relative
-  height: 80vh
+#wrapper
   width: 100vw
-  text-align: center
-  font-size: 100px
-  transition: 50ms
-
-.switches
-  position: absolute
   height: 100vh
-  left: calc((100vw - #{$switch-size}) / 2)
+  overflow: hidden
 
-#sliders
+#top
+  width: 100vw
+  height: $top-width
+  border-bottom: 1px solid #ff8b00
+
+#middle
+  width: 100vw
   height: 80vh
+
+#bottom
   width: 100vw
+  height: 10vh
   position: absolute
-  display: flex
+  bottom: 0
 
-.sliderContainer
-  width: 50%
-  height: 63vh
-  margin: 1.5% 2% 2%
-
-#menu
-  width: 100vw
-  height: 20vh
+.icon-top
+  width: 8vh
+  height: 8vh
   position: absolute
-  top: 80vh
+  top: calc(((10vh - 1px) - 8vh) / 2)
+  left: calc((100vw - 8vh) / 2)
+  color: #ff8b00
 
-.menu-item
-  width: calc(20vw - 8px)
-  height: calc(18vh - 8px)
-  position: relative
-  top: 2vh
-  margin: 4px
+.option
+  width: 25vw
+  height: 10vh
   display: inline-block
-  background-color: rgba(0, 0, 0, 0.63)
-  transition: 50ms
-  border-radius: 10px
+  text-align: center
 
-.icon-menu
-  width: calc((20vw - 8px) * 0.8)
-  height: calc((20vw - 8px) * 0.8)
+  .option-text
+    color: rgb(67, 67, 67)
+
+  .option-icon
+    color: rgb(67, 67, 67)
+
+.option.active
+  .option-text
+    color: #ff8b00
+
+  .option-icon
+    color: #ff8b00
+
+.option:focus
+  outline: inherit
+
+.option-icon
+  width: 4.5vh
+  height: 4.5vh
   position: relative
-  left: calc((20vw - 8px) * 0.1)
-  top: calc((calc(18vh - 8px) - (20vw - 8px) * 0.8) / 2)
-  color: rgb(255, 139, 0)
+  top: 3px
 
-#item3
-  transform: translateY(-2vh)
+.option-text
+  position: relative
+  font-size: 17px
+  bottom: 6px
 
-#page1
-  left: -100vw
-
-#page2
-  top: -80vh
-  left: -100vw
-
-#page3
-  top: -160vh
-
-#page4
-  top: -240vh
-  left: 100vw
-
-#page5
-  top: -320vh
-  left: 100vw
-
-@media only screen and (orientation: landscape)
-  .icon-menu
-    width: calc((20vh - 8px) * 0.6)
-    height: calc((20vh - 8px) * 0.6)
-    top: 1.8vh
-    left: 6vw
-
-.lock-icon
+::ng-deep router-outlet ~ *
   position: absolute
-  left: calc(50vw - (40vh / 4))
-  height: calc(80vh / 4)
-  width: calc(80vh / 4)
-
-#icon-screen
-  top: 40vh
-
-#lock-toggle
-  position: absolute
-  top: 30vh
-  left: calc(50vw - 18px)
-  transform: scale(2)
-
-#screen-toggle
-  position: absolute
-  left: calc(50vw - 18px)
-  top: 65vh
-  transform: scale(2)
-
-::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar
-  background-color: rgba(0, 0, 0, 0.63) !important
-
-::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb
-  background-color: #fafafa !important
-
-::ng-deep .mat-slide-toggle.mat-checked .mat-ripple-element
-  background-color: transparent
-
-::ng-deep .mat-slide-toggle:not(.mat-checked) .mat-ripple-element
-  background-color: transparent
+  width: 100vw
+  height: 80vh
+  overflow: hidden

@@ -1,24 +1,26 @@
 import {Component, OnInit} from '@angular/core';
+import {fadeAnimation} from '../animations/fade.animation';
 import {SwitchService} from '../services/switch.service';
-import {DoorService} from '../services/door.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.sass'],
+  animations: [fadeAnimation]
 })
 export class AppComponent implements OnInit {
 
-  constructor(private dataService: SwitchService, private doorService: DoorService) {
+  constructor(private switchService: SwitchService) {
+    switchService.updateStates();
+    // interval(1000).subscribe(() => {
+    //   console.log('dupa');
+    // });
   }
 
   ngOnInit() {
-    this.updateStates();
-    this.doorService.getState('door');
-    this.doorService.getState('screen');
   }
 
-  updateStates(): void {
-    this.dataService.updateStates();
+  public getRouterOutletState(outlet) {
+    return outlet.isActivated ? outlet.activatedRoute : '';
   }
 }

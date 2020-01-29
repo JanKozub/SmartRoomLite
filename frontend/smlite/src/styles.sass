@@ -1,43 +1,20 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'
 
-$switch-size: calc((80vh - 32px) / 3)
-$icon-size: calc(#{$switch-size} * 0.6)
-
 body
-  background-color: rgba(0, 0, 0, 0.8)
-  overflow: hidden
   margin: 0
-  padding: 0
-  position: fixed
+  background-color: black
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif
 
-.switch
-  width: $switch-size
-  height: $switch-size
-  background-color: rgba(0, 0, 0, 0.63)
-  border-radius: 20px
+.toggle-wrapper
+  width: 48vw
+  height: 48vw
   position: relative
-  margin: 8px
+  background-color: rgba(49, 51, 55, 0.7)
+  margin: 1vw
+  border-radius: 3px
+  text-align: center
 
-.switch:active
-  transition: 80ms
-  transition-timing-function: ease-in-out
-  background-color: rgba(0, 0, 0, 0.30)
-
-.icon
-  position: absolute
-  height: $icon-size
-  width: $icon-size
-  top: calc((#{$switch-size} - #{$icon-size}) / 2)
-  left: calc((#{$switch-size} - #{$icon-size}) / 2)
-
-.icon--light
-  @extend .icon
-
-.icon--clock
-  @extend .icon
-
-.icon--lock
-  @extend .icon
-
-.icon--night-mode
-  @extend .icon
+.grid
+  display: grid
+  grid-template-columns: 50% 50%
+  grid-template-rows: 50% 50%

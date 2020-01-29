@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import * as $ from 'jquery';
 import {HttpClient} from '@angular/common/http';
 // @ts-ignore
 import properties from '../assets/properties.json';
@@ -43,9 +42,7 @@ export class SwitchService {
 
   setColor(data: Object, className: String) {
     if (data) {
-      $(className).css('color', '#ff8b00');
     } else {
-      $(className).css('color', 'rgba(0,0,0,0.46)');
     }
   }
 }

@@ -44,7 +44,7 @@ public class MqttService implements MqttCallback, CommService {
 
     public void connect(String topic) {
         try {
-            log.debug("Subscribing to {}", topic);
+            log.debug("{}: Subscribed", topic);
             client.subscribe(topic);
         } catch (MqttException ex) {
             log.error("Cannot subscribe to topic {}", topic, ex);
@@ -54,7 +54,7 @@ public class MqttService implements MqttCallback, CommService {
 
     public void sendMessage(String topic, String msg) {
         try {
-            log.debug("Sending message to {}: {}", topic, msg);
+            log.debug("{}: Message send: {}", topic, msg);
             MqttMessage message = new MqttMessage(msg.getBytes());
             message.setQos(2);
             client.publish(topic, message);
@@ -81,7 +81,7 @@ public class MqttService implements MqttCallback, CommService {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) {
-        log.debug("Received message from {}: {}", topic, message);
+        log.debug("{}: Received message: {}", topic, message);
         listeners.forEach(l -> {
             try {
                 l.messageArrived(new Message(Instant.now(), topic, message.toString()));
@@ -93,7 +93,7 @@ public class MqttService implements MqttCallback, CommService {
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-        log.debug("Delivery to {} complete", (Object) iMqttDeliveryToken.getTopics());
+        log.debug("{}: Delivery completed", (Object) iMqttDeliveryToken.getTopics());
     }
 }
 
