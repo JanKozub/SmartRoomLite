@@ -10,7 +10,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material-module';
-import {ToggleButtonModule} from '@bit/primefaces.primeng.togglebutton';
 import '@vaadin/vaadin-icons';
 import {ToggleSwitchComponent} from './components/toggle-switch/toggle-switch.component';
 import {SwitchesPageComponent} from './pages/switches-page/switches-page.component';
@@ -42,8 +41,7 @@ const appRoutes: Routes = [
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     MaterialModule,
-    RouterModule,
-    ToggleButtonModule],
+    RouterModule],
   declarations: [
     AppComponent,
     ToggleSwitchComponent,

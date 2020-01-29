@@ -23,7 +23,6 @@
     "@angular/pwa": "^0.803.22",
     "@angular/router": "^8.2.14",
     "@angular/service-worker": "~8.2.14",
-    "@bit/primefaces.primeng.togglebutton": "^8.0.2",
     "@syncfusion/ej2-angular-inputs": "^17.4.41",
     "@types/angular": "^1.6.57",
     "@vaadin/vaadin-icons": "^4.3.1",
