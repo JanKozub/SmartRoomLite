@@ -11,7 +11,7 @@ import {SwitchService} from '../services/switch.service';
 export class AppComponent implements OnInit {
 
   constructor(private switchService: SwitchService) {
-    switchService.updateStates();
+    // switchService.updateStates();
     // interval(1000).subscribe(() => {
     //   console.log('dupa');
     // });

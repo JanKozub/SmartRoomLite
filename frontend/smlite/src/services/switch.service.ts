@@ -16,33 +16,22 @@ export class SwitchService {
   updateState(serviceType: String) {
     console.log('updating state of', serviceType);
     return this.http.get(this.url + '/switch/getState/' + serviceType.toLowerCase())
-      .subscribe(data =>
-          this.setColor(data, '.icon--' + serviceType.toLowerCase()),
+      .subscribe(data => this.setColor(data, serviceType.toLowerCase()),
         error => console.log(error));
-  }
-
-  updateStates() {
-    this.updateState('light');
-    this.updateState('clock');
   }
 
   changeState(serviceType: String) {
     console.log('changing state of', serviceType);
     return this.http.post(this.url + '/switch/setState', serviceType.toLowerCase())
-      .subscribe(data => {
-          if (serviceType === 'night-mode') {
-            this.updateState('light');
-            this.updateState('clock');
-          } else {
-            this.setColor(data, '.icon--' + serviceType.toLowerCase());
-          }
-        },
+      .subscribe(data => this.setColor(data, serviceType.toLowerCase()),
         error => console.log(error));
   }
 
-  setColor(data: Object, className: String) {
+  setColor(data: Object, type: String) {
     if (data) {
+      document.getElementById('icon-' + type).style.color = '#ff8b00';
     } else {
+      document.getElementById('icon-' + type).style.color = '#111111';
     }
   }
 }

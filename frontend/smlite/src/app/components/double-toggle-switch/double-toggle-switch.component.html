@@ -1,12 +1,12 @@
 <div class="toggle-wrapper">
-  <div id="toggle-left">
+  <div (click)="switchService.changeState('door')" id="toggle-left">
     <div class="icon-wrapper">
-      <iron-icon class="toggle-icon" icon="vaadin:{{iconLeft}}"></iron-icon>
+      <iron-icon class="toggle-icon" icon="vaadin:{{iconLeft}}" id="icon-door"></iron-icon>
     </div>
   </div>
-  <div id="toggle-right">
+  <div (click)="switchService.changeState('screen')" id="toggle-right">
     <div class="icon-wrapper">
-      <iron-icon class="toggle-icon" icon="vaadin:{{iconRight}}"></iron-icon>
+      <iron-icon class="toggle-icon" icon="vaadin:{{iconRight}}" id="icon-screen"></iron-icon>
     </div>
   </div>
 </div>

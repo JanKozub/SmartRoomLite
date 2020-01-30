@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {SwitchService} from '../../../services/switch.service';
 
 @Component({
   selector: 'app-double-toggle-switch',
@@ -13,10 +14,12 @@ export class DoubleToggleSwitchComponent implements OnInit {
   @Input()
   private iconRight: string;
 
-  constructor() {
+  constructor(private switchService: SwitchService) {
   }
 
   ngOnInit() {
+    this.switchService.updateState('door');
+    this.switchService.updateState('screen');
   }
 
 }

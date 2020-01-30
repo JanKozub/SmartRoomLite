@@ -29,10 +29,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(
-      appRoutes,
-      {enableTracing: true}
-    ),
+    RouterModule.forRoot(appRoutes),
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,

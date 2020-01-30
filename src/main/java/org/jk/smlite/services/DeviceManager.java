@@ -214,7 +214,7 @@ public class DeviceManager {
         LocalTime timeOfToggle = LocalTime.parse(configuration.readProperty("clock.toggle_at"));
         long duration = Duration.between(timeOfToggle, time).toMillis();
 
-        log.info("Clock config = {}", timeOfToggle);
+//        log.info("Clock config = {}", timeOfToggle);
         if (Math.abs(duration) <= 2500) {
             if (!isDeviceEnabled(DeviceType.CLOCK))
                 toggleDevice(DeviceType.CLOCK);

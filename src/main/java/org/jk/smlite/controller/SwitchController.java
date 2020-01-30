@@ -39,12 +39,16 @@ public class SwitchController {
     @PostMapping("/setState")
     public boolean setState(@Valid @RequestBody String body) {
         try {
-            if (body.equals("night-mode"))
-                return deviceManager.toggleNightMode();
-            else if (body.equals("screen"))
-                return deviceManager.toggleDoorScreen();
-            else
-                return deviceManager.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
+            switch (body) {
+                case "night-mode":
+                    return deviceManager.toggleNightMode();
+                case "screen":
+                    return !deviceManager.toggleDoorScreen();
+                case "door":
+                    return !deviceManager.toggleDevice(DeviceType.DOOR);
+                default:
+                    return deviceManager.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
+            }
 
         } catch (IllegalArgumentException ex) {
             log.error("Post mapping for device {} failed", body);
