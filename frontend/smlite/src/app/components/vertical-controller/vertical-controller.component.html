@@ -4,14 +4,14 @@
       <iron-icon class="controller-icon" icon="vaadin:{{icon}}"></iron-icon>
     </div>
   </div>
-  <div id="arrow-up-wrapper">
+  <div (click)="goUp()" id="arrow-up-wrapper">
     <iron-icon class="arrow-icon" icon="vaadin:chevron-up"></iron-icon>
   </div>
   <div id="info-wrapper">
-    <p>{{type}}</p>
-    <p>ID: {{id}}</p>
+    <p>{{type}}({{id}})</p>
+    <p>Pos: {{position}}</p>
   </div>
-  <div id="arrow-down-wrapper">
+  <div (click)="goDown()" id="arrow-down-wrapper">
     <iron-icon class="arrow-icon" icon="vaadin:chevron-down"></iron-icon>
   </div>
 </div>
