@@ -1,1 +1,59 @@
-<p>settings-page works!</p>
+<h1 id="header">Night Mode</h1>
+<div id="night-mode-settings">
+  <ul>
+    <li>
+      <div class="setting-toggle-wrapper">
+        <mat-checkbox
+          (change)="changeValue('blinds.morning_toggle', $event.checked.toString())"
+          [checked]="setBlindsState">
+          Set blinds up
+        </mat-checkbox>
+      </div>
+      <input [format]="24" [ngxTimepicker]="blindsTimePicker" [value]="blindsUpHour" class="timePicker"
+             placeholder="Set Time">
+      <ngx-material-timepicker #blindsTimePicker
+                               (timeSet)="changeValue('blinds.toggle_hour', $event)"
+                               [theme]="appTheme">
+      </ngx-material-timepicker>
+    </li>
+    <li>
+      <div class="setting-toggle-wrapper">
+        <mat-checkbox
+          (change)="changeValue('clock.morning_toggle', $event.checked.toString())"
+          [checked]="toggleClockState">
+          Toggle clock
+        </mat-checkbox>
+      </div>
+      <input [format]="24" [ngxTimepicker]="clockTimePicker" [value]="clockToggleHour" class="timePicker"
+             placeholder="Set Time">
+      <ngx-material-timepicker #clockTimePicker
+                               (timeSet)="changeValue('clock.toggle_hour', $event)"
+                               [theme]="appTheme">
+      </ngx-material-timepicker>
+    </li>
+    <li>
+      <div class="setting-toggle-wrapper">
+        <mat-checkbox
+          (change)="changeValue('door.lock_on_nightMode', $event.checked.toString())"
+          [checked]="lockDoorState">
+          Lock door
+        </mat-checkbox>
+      </div>
+    </li>
+    <li>
+      <div class="setting-toggle-wrapper">
+        <mat-checkbox
+          (change)="changeValue('door.morning_screen_toggle', $event.checked.toString())"
+          [checked]="toggleDoorScreenState">
+          Toggle door screen
+        </mat-checkbox>
+      </div>
+      <input [format]="24" [ngxTimepicker]="screenLockPicker" [value]="doorScreenToggleHour" class="timePicker"
+             placeholder="Set Time">
+      <ngx-material-timepicker #screenLockPicker
+                               (timeSet)="changeValue('door.screen_toggle_hour', $event)"
+                               [theme]="appTheme">
+      </ngx-material-timepicker>
+    </li>
+  </ul>
+</div>

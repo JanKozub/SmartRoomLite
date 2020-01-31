@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
-import java.time.Duration;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
@@ -209,19 +207,18 @@ public class DeviceManager {
                 .map(Object::toString)
                 .collect(Collectors.joining("\n", "\nDevice statuses:\n", ""));
         log.info(message);
-
-        LocalTime time = LocalTime.now();
-        LocalTime timeOfToggle = LocalTime.parse(configuration.readProperty("clock.toggle_at"));
-        long duration = Duration.between(timeOfToggle, time).toMillis();
+//        LocalTime time = LocalTime.now();
+//        LocalTime timeOfToggle = LocalTime.parse(configuration.readProperty("clock.toggle_hour"));
+//        long duration = Duration.between(timeOfToggle, time).toMillis();
 
 //        log.info("Clock config = {}", timeOfToggle);
-        if (Math.abs(duration) <= 2500) {
-            if (!isDeviceEnabled(DeviceType.CLOCK))
-                toggleDevice(DeviceType.CLOCK);
-
-            if (isBlindDown(DeviceType.BLIND1))
-                setBlind(DeviceType.BLIND1, "5");
-        }
+//        if (Math.abs(duration) <= 2500) {
+//            if (!isDeviceEnabled(DeviceType.CLOCK))
+//                toggleDevice(DeviceType.CLOCK);
+//
+//            if (isBlindDown(DeviceType.BLIND1))
+//                setBlind(DeviceType.BLIND1, "5");
+//        }
     }
 
     private DeviceState getDeviceState(DeviceType deviceType) {
@@ -250,5 +247,9 @@ public class DeviceManager {
                 return deviceState.getData()[0].equals("1");
             else return false;
         } else return false;
+    }
+
+    public boolean getNightModeState() {
+        return configuration.readProperty("nightMode.toggled").equals("true");
     }
 }

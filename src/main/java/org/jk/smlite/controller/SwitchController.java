@@ -2,6 +2,7 @@ package org.jk.smlite.controller;
 
 import org.jk.smlite.model.device.DeviceType;
 import org.jk.smlite.services.DeviceManager;
+import org.jk.smlite.services.UrlHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -22,18 +23,21 @@ public class SwitchController {
 
     @GetMapping("/getState/**")
     public boolean getState(HttpServletRequest request) {
-        String[] urlArray = request.getRequestURI().split("/");
-        String device = urlArray[urlArray.length - 1].toUpperCase();
+        String device = UrlHandler.getLastElementOfUrl(request).toUpperCase();
+        ;
         try {
-            if (device.equals("SCREEN"))
-                return deviceManager.getState(DeviceType.DOOR).getData()[1].equals("1");
-            else
-                return deviceManager.getState(DeviceType.valueOf(device)).getData()[0].equals("1");
+            switch (device) {
+                case "SCREEN":
+                    return deviceManager.getState(DeviceType.DOOR).getData()[1].equals("1");
+                case "NIGHT-MODE":
+                    return deviceManager.getNightModeState();
+                default:
+                    return deviceManager.getState(DeviceType.valueOf(device)).getData()[0].equals("1");
+            }
         } catch (NullPointerException | IllegalArgumentException ex) {
             log.error("GetMapping failed for switch {}", device);
             return false;
         }
-
     }
 
     @PostMapping("/setState")

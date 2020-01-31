@@ -14,15 +14,14 @@ import '@vaadin/vaadin-icons';
 import {ToggleSwitchComponent} from './components/toggle-switch/toggle-switch.component';
 import {SwitchesPageComponent} from './pages/switches-page/switches-page.component';
 import {ControlPageComponent} from './pages/control-page/control-page.component';
-import {MusicPageComponent} from './pages/music-page/music-page.component';
 import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
 import {DoubleToggleSwitchComponent} from './components/double-toggle-switch/double-toggle-switch.component';
 import {VerticalControllerComponent} from './components/vertical-controller/vertical-controller.component';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 const appRoutes: Routes = [
   {path: 'switches', component: SwitchesPageComponent},
   {path: 'control', component: ControlPageComponent},
-  {path: 'music', component: MusicPageComponent},
   {path: 'settings', component: SettingsPageComponent},
   {path: '**', pathMatch: 'full', redirectTo: '/switches'}
 ];
@@ -38,13 +37,13 @@ const appRoutes: Routes = [
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     MaterialModule,
-    RouterModule],
+    RouterModule,
+    NgxMaterialTimepickerModule],
   declarations: [
     AppComponent,
     ToggleSwitchComponent,
     SwitchesPageComponent,
     ControlPageComponent,
-    MusicPageComponent,
     SettingsPageComponent,
     DoubleToggleSwitchComponent,
     VerticalControllerComponent
