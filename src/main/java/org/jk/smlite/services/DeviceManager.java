@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
@@ -165,13 +167,9 @@ public class DeviceManager {
 
     public boolean toggleNightMode() {
         log.info("TOGGLED NIGHT MODE");
-        if (isDeviceEnabled(DeviceType.LIGHT))
-            toggleDevice(DeviceType.LIGHT);
-        if (isDeviceEnabled(DeviceType.CLOCK))
-            toggleDevice(DeviceType.CLOCK);
-        if (!isBlindDown(DeviceType.BLIND1))
-            setBlind(DeviceType.BLIND1, "1");
-        return true;
+        boolean currentState = getNightModeState();
+        executeNightMode(currentState);
+        return currentState;
     }
 
     private void sendMessage(DeviceType deviceType, String msg) {
@@ -207,18 +205,12 @@ public class DeviceManager {
                 .map(Object::toString)
                 .collect(Collectors.joining("\n", "\nDevice statuses:\n", ""));
         log.info(message);
-//        LocalTime time = LocalTime.now();
-//        LocalTime timeOfToggle = LocalTime.parse(configuration.readProperty("clock.toggle_hour"));
-//        long duration = Duration.between(timeOfToggle, time).toMillis();
 
-//        log.info("Clock config = {}", timeOfToggle);
-//        if (Math.abs(duration) <= 2500) {
-//            if (!isDeviceEnabled(DeviceType.CLOCK))
-//                toggleDevice(DeviceType.CLOCK);
-//
-//            if (isBlindDown(DeviceType.BLIND1))
-//                setBlind(DeviceType.BLIND1, "5");
-//        }
+        if (getNightModeToggleDuration() <= 2500) {
+            if (getNightModeState()) {
+                executeNightMode(getNightModeState());
+            }
+        }
     }
 
     private DeviceState getDeviceState(DeviceType deviceType) {
@@ -240,16 +232,39 @@ public class DeviceManager {
         } else return false;
     }
 
-    private boolean isBlindDown(DeviceType deviceType) {
-        if (deviceType == DeviceType.BLIND1 || deviceType == DeviceType.BLIND2) {
-            DeviceState deviceState = getDeviceState(deviceType);
-            if (deviceState != null)
-                return deviceState.getData()[0].equals("1");
-            else return false;
-        } else return false;
+    private long getNightModeToggleDuration() {
+        LocalTime time = LocalTime.now();
+        LocalTime clockToggleTime = LocalTime.parse(configuration.readProperty("nightMode.toggle_hour"));
+        long duration = Duration.between(clockToggleTime, time).toMillis();
+        return Math.abs(duration);
     }
 
     public boolean getNightModeState() {
         return configuration.readProperty("nightMode.toggled").equals("true");
+    }
+
+    private void executeNightMode(boolean currentState) {
+        configuration.setProperty("nightMode.toggled", String.valueOf(currentState));
+        if (currentState) {
+            if (configuration.readProperty("blinds.morning_toggle").equals("true"))
+                setBlind(DeviceType.BLIND1, "1");
+            if (configuration.readProperty("clock.morning_toggle").equals("true"))
+                if (isDeviceEnabled(DeviceType.CLOCK)) toggleDevice(DeviceType.CLOCK);
+            if (configuration.readProperty("door.lock_on_nightMode").equals("true"))
+                if (isDeviceEnabled(DeviceType.DOOR)) toggleDevice(DeviceType.DOOR);
+            if (configuration.readProperty("door.morning_screen_toggle").equals("true"))
+                if (Objects.requireNonNull(getDeviceState(DeviceType.DOOR)).getData()[1].equals("1"))
+                    toggleDoorScreen();
+        } else {
+            if (configuration.readProperty("blinds.morning_toggle").equals("true"))
+                setBlind(DeviceType.BLIND1, "5");
+            if (configuration.readProperty("clock.morning_toggle").equals("true"))
+                if (!isDeviceEnabled(DeviceType.CLOCK)) toggleDevice(DeviceType.CLOCK);
+            if (configuration.readProperty("door.lock_on_nightMode").equals("true"))
+                if (!isDeviceEnabled(DeviceType.DOOR)) toggleDevice(DeviceType.DOOR);
+            if (configuration.readProperty("door.morning_screen_toggle").equals("true"))
+                if (Objects.requireNonNull(getDeviceState(DeviceType.DOOR)).getData()[1].equals("0"))
+                    toggleDoorScreen();
+        }
     }
 }

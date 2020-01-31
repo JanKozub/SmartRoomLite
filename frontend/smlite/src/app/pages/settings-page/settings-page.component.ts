@@ -29,9 +29,7 @@ export class SettingsPageComponent implements OnInit {
   private lockDoorState = false;
   private toggleDoorScreenState = false;
 
-  private blindsUpHour: string;
-  private clockToggleHour: string;
-  private doorScreenToggleHour: string;
+  private nightModeToggleHour: string;
 
   constructor(private settingsService: SettingsService) {
   }
@@ -51,16 +49,10 @@ export class SettingsPageComponent implements OnInit {
       .subscribe(data => this.toggleDoorScreenState = data['value'] == 'true',
         error => console.log(error));
 
-    //GETTING INPUTS STATES
+    //GET INPUT STATE
 
-    this.settingsService.getProperty('blinds.toggle_hour')
-      .subscribe(data => this.blindsUpHour = data['value'],
-        error => console.log(error));
-    this.settingsService.getProperty('clock.toggle_hour')
-      .subscribe(data => this.clockToggleHour = data['value'],
-        error => console.log(error));
-    this.settingsService.getProperty('door.screen_toggle_hour')
-      .subscribe(data => this.doorScreenToggleHour = data['value'],
+    this.settingsService.getProperty('nightMode.toggle_hour')
+      .subscribe(data => this.nightModeToggleHour = data['value'],
         error => console.log(error));
   }
 
