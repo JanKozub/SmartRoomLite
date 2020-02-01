@@ -24,7 +24,6 @@ export class VerticalControllerComponent implements OnInit {
 
   ngOnInit() {
     this.getPosition('1');
-    console.log(this.position);
   }
 
   getPosition(serviceType: String) {

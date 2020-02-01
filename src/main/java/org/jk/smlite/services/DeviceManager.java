@@ -178,7 +178,7 @@ public class DeviceManager {
     }
 
     public DeviceState getState(DeviceType deviceType) {
-        log.info("GETTING STATE OF {}", deviceType);
+        log.debug("GETTING STATE OF {}", deviceType);
         return getDeviceState(deviceType);
     }
 
@@ -266,6 +266,14 @@ public class DeviceManager {
             if (configuration.readProperty("door.morning_screen_toggle").equals("true"))
                 if (Objects.requireNonNull(getDeviceState(DeviceType.DOOR)).getData()[1].equals("0"))
                     toggleDoorScreen();
+        }
+    }
+
+    public String getData(DeviceType deviceType, int dataIndex) {
+        try {
+            return getState(deviceType).getData()[dataIndex];
+        } catch (NullPointerException ex) {
+            return null;
         }
     }
 }

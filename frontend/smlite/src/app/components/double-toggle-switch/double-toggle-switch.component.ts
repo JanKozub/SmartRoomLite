@@ -18,8 +18,6 @@ export class DoubleToggleSwitchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.switchService.updateState('door');
-    this.switchService.updateState('screen');
   }
 
 }

@@ -18,7 +18,6 @@ export class ToggleSwitchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.switchService.updateState(this.type);
   }
 
   changeState(): void {

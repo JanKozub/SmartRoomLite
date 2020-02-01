@@ -6,16 +6,23 @@ import properties from '../assets/properties.json';
 @Injectable({
   providedIn: 'root'
 })
-export class SettingsService {
+export class PropertiesService {
 
   private url: string = properties.baseUrl;
 
   constructor(private http: HttpClient) {
   }
 
-  getProperty(property: String) {
-    console.log('updating property: ', property);
-    return this.http.get(this.url + '/settings/getProperty/' + property);
+  getSwitchesProperties() {
+    return this.http.get(this.url + '/properties/getProperties/switches');
+  }
+
+  getControlProperties() {
+    return this.http.get(this.url + '/properties/getProperties/control');
+  }
+
+  getSettingsProperties() {
+    return this.http.get(this.url + '/properties/getProperties/settings');
   }
 
   setProperty(property: String, value: String) {
