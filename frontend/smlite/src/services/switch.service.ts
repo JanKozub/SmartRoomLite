@@ -20,10 +20,4 @@ export class SwitchService {
       .subscribe(data => this.colorService.setColor(data, serviceType.toLowerCase()),
         error => console.log(error));
   }
-
-  toggleThermometer() {
-    return this.http.post(this.url + '/thermometer/toggle', 'toggle')
-      .subscribe(() => {
-      }, error => console.log(error));
-  }
 }

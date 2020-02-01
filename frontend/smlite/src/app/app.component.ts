@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   }
 
   public toggleThermometer() {
-    this.switchService.toggleThermometer();
+    this.switchService.changeState('thermometer');
   }
 
   private refreshSwitches() {

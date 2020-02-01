@@ -20,17 +20,6 @@ public class SettingsController {
         this.configuration = configuration;
     }
 
-    @GetMapping("/getProperty/**")
-    public String getProperty(HttpServletRequest request) {
-        String property = UrlHandler.getLastElementOfUrl(request);
-        try {
-            return "{ \"value\": \"" + configuration.readProperty(property) + "\" }";
-        } catch (NullPointerException | IllegalArgumentException ex) {
-            log.error("GetMapping failed for property {}", property);
-            return "";
-        }
-    }
-
     @PostMapping("/setProperty/**")
     public boolean setProperty(@Valid @RequestBody String body, HttpServletRequest request) {
         String property = UrlHandler.getLastElementOfUrl(request);
