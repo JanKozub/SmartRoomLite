@@ -24,7 +24,6 @@ public class SwitchController {
     @GetMapping("/getState/**")
     public boolean getState(HttpServletRequest request) {
         String device = UrlHandler.getLastElementOfUrl(request).toUpperCase();
-        ;
         try {
             switch (device) {
                 case "SCREEN":

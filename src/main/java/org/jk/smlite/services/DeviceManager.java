@@ -41,6 +41,7 @@ public class DeviceManager {
         devices.add(new Device(DeviceType.CLOCK));
         devices.add(new Device(DeviceType.DOOR));
         devices.add(new Device(DeviceType.BLIND1));
+        devices.add(new Device(DeviceType.THERMOMETER));
 
         devices.stream().map(device -> device.getDeviceType().getSubTopic()).forEach(commService::connect);
         commService.register(this::updateState);

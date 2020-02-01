@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {fadeAnimation} from '../animations/fade.animation';
-import {SwitchService} from '../services/switch.service';
+import {ThermometerService} from '../services/thermometer.service';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +11,27 @@ import {SwitchService} from '../services/switch.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private switchService: SwitchService) {
+  private temperature: string;
+  private humidity: string;
+
+  constructor(private thermometerService: ThermometerService) {
+    console.log('updating values');
     // switchService.updateStates();
-    // interval(1000).subscribe(() => {
-    //   console.log('dupa');
-    // });
+    interval(5000).subscribe(() => {
+      this.thermometerService.getTemperature()
+        .subscribe(data => this.temperature = String(data['value']).slice(0, -1),
+          error => console.log(error));
+      this.thermometerService.getHumidity()
+        .subscribe(data => this.humidity = data['value'],
+          error => console.log(error));
+    });
   }
 
   ngOnInit() {
+  }
+
+  public toggleThermometer() {
+    this.thermometerService.toggleThermometer();
   }
 
   public getRouterOutletState(outlet) {

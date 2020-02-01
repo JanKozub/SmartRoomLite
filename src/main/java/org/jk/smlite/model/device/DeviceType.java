@@ -8,10 +8,11 @@ public enum DeviceType {
     CLOCK("clock", "clockSub"),
     BLIND1("blind1", "blind1Sub"),
     BLIND2("blind2", "blind2Sub"),
+    THERMOMETER("thermometer", "thermometerSub"),
     GATE("", "");
 
 
-    private static final EnumSet<DeviceType> toggleableDevices = EnumSet.of(LIGHT, CLOCK, DOOR);
+    private static final EnumSet<DeviceType> toggleableDevices = EnumSet.of(LIGHT, CLOCK, DOOR, THERMOMETER);
     private static final EnumSet<DeviceType> blinds = EnumSet.of(BLIND1, BLIND2);
 
     private final String subTopic;
