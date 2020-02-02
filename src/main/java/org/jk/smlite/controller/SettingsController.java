@@ -1,7 +1,7 @@
 package org.jk.smlite.controller;
 
 import org.jk.smlite.services.Configuration;
-import org.jk.smlite.services.UrlHandler;
+import org.jk.smlite.services.handlers.UrlHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package org.jk.smlite.services;
+package org.jk.smlite.services.handlers;
 
 import javax.servlet.http.HttpServletRequest;
 

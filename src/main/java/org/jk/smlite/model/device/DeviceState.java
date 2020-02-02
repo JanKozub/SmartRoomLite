@@ -21,8 +21,12 @@ public class DeviceState {
         return device;
     }
 
-    public String[] getData() {
-        return data;
+    public String getData(int dataIndex) {
+        try {
+            return data[dataIndex];
+        } catch (NullPointerException ex) {
+            return null;
+        }
     }
 
     public boolean isConnected() {
@@ -35,11 +39,21 @@ public class DeviceState {
 
     @Override
     public String toString() {
+        StringBuilder dataStr = new StringBuilder("[");
+        if (data != null) {
+            for (int i = 0; i < data.length; i++) {
+                dataStr.append(getData(i));
+                dataStr.append(" | ");
+            }
+            dataStr.delete(dataStr.length() - 3, dataStr.length());
+            dataStr.append("]");
+        } else dataStr = null;
+
         Instant lu = getLastUpdated();
         return "DeviceState[type=" + getDevice().getDeviceType()
                 + ", connected= " + isConnected()
                 + ", lastUpdated=" + (lu == Instant.EPOCH ? "never" : LocalDateTime.ofInstant(lu, ZoneId.systemDefault()).toString())
-                + ", data= " + Arrays.toString(getData());
+                + ", data= " + dataStr;
     }
 
     public boolean update(String[] data) {

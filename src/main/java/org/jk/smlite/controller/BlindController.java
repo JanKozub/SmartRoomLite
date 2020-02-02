@@ -1,7 +1,7 @@
 package org.jk.smlite.controller;
 
 import org.jk.smlite.model.device.DeviceType;
-import org.jk.smlite.services.DeviceManager;
+import org.jk.smlite.services.device.DeviceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class BlindController {
         String device = url[url.length - 2].toUpperCase();
 
         try {
-            return deviceManager.getState(DeviceType.valueOf(device)).getData()[0];
+            return deviceManager.getDeviceState(DeviceType.valueOf(device)).getData(0);
         } catch (NullPointerException ex) {
             log.error(device + " is not connected");
             return "0";
@@ -35,6 +35,6 @@ public class BlindController {
 
     @PostMapping("/setPosition")
     public boolean setBlind1Position(@Valid @RequestBody String value) {
-        return deviceManager.deviceController.setBlind(DeviceType.BLIND1, value);
+        return deviceManager.deviceCommander.setBlind(DeviceType.BLIND1, value);
     }
 }

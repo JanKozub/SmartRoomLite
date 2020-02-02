@@ -1,4 +1,4 @@
-package org.jk.smlite.services;
+package org.jk.smlite.services.device;
 
 import org.jk.smlite.model.device.DeviceType;
 import org.jk.smlite.services.connection.CommService;
@@ -11,17 +11,15 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class DeviceController {
+public class DeviceCommander {
 
-    private static final Logger log = LoggerFactory.getLogger(DeviceController.class);
+    private static final Logger log = LoggerFactory.getLogger(DeviceCommander.class);
     private final Map<DeviceType, Lock> locks = new ConcurrentHashMap<>();
 
     private final CommService commService;
-    private final DeviceManager deviceManager;
 
-    public DeviceController(CommService commService, DeviceManager deviceManager) {
+    public DeviceCommander(CommService commService) {
         this.commService = commService;
-        this.deviceManager = deviceManager;
     }
 
     public boolean toggleDevice(DeviceType deviceType) {
@@ -41,7 +39,7 @@ public class DeviceController {
             try {
                 commService.register(listener);
                 try {
-                    deviceManager.sendMessage(deviceType, "TOGGLE");
+                    sendMessage(deviceType, "TOGGLE");
                     return future.get(10, TimeUnit.SECONDS);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -77,7 +75,7 @@ public class DeviceController {
         try {
             commService.register(listener);
             try {
-                deviceManager.sendMessage(DeviceType.DOOR, "SCREEN");
+                sendMessage(DeviceType.DOOR, "SCREEN");
                 return future.get(10, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -110,7 +108,7 @@ public class DeviceController {
             try {
                 commService.register(listener);
                 try {
-                    deviceManager.sendMessage(deviceType, position);
+                    sendMessage(deviceType, position);
                     return future.get(75, TimeUnit.SECONDS);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -128,5 +126,9 @@ public class DeviceController {
             log.error("{} IS NOT A BLIND", deviceType);
             return false;
         }
+    }
+
+    protected void sendMessage(DeviceType deviceType, String msg) {
+        commService.sendMessage(deviceType.getPubTopic(), msg);
     }
 }

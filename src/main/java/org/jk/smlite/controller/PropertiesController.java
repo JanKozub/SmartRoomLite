@@ -2,7 +2,7 @@ package org.jk.smlite.controller;
 
 import org.jk.smlite.model.device.DeviceType;
 import org.jk.smlite.services.Configuration;
-import org.jk.smlite.services.DeviceManager;
+import org.jk.smlite.services.device.DeviceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,12 +26,12 @@ public class PropertiesController {
     @GetMapping("/getProperties/switches")
     public String getSwitchesProperties() {
         return "{\n" +
-                "\"temp\": " + deviceManager.getData(DeviceType.THERMOMETER, 1) + ", \n" +
-                "\"hum\": " + deviceManager.getData(DeviceType.THERMOMETER, 2) + ", \n" +
-                "\"light\": " + deviceManager.getData(DeviceType.LIGHT, 0) + ", \n" +
-                "\"clock\": " + deviceManager.getData(DeviceType.CLOCK, 0) + ", \n" +
-                "\"lock\": " + deviceManager.getData(DeviceType.DOOR, 0) + ", \n" +
-                "\"doorScreen\": " + deviceManager.getData(DeviceType.DOOR, 1) + ", \n" +
+                "\"temp\": " + deviceManager.getDeviceState(DeviceType.THERMOMETER).getData(1) + ", \n" +
+                "\"hum\": " + deviceManager.getDeviceState(DeviceType.THERMOMETER).getData(2) + ", \n" +
+                "\"light\": " + deviceManager.getDeviceState(DeviceType.LIGHT).getData(0) + ", \n" +
+                "\"clock\": " + deviceManager.getDeviceState(DeviceType.CLOCK).getData(0) + ", \n" +
+                "\"lock\": " + deviceManager.getDeviceState(DeviceType.DOOR).getData(0) + ", \n" +
+                "\"doorScreen\": " + deviceManager.getDeviceState(DeviceType.DOOR).getData(1) + ", \n" +
                 "\"nightMode\": " + configuration.readProperty("nightMode.toggled") +
                 "}";
     }
@@ -39,7 +39,7 @@ public class PropertiesController {
     @GetMapping("/getProperties/control")
     public String getControlProperties() {
         return "{\n" +
-                "\"blind1\": " + deviceManager.getData(DeviceType.BLIND1, 0) +
+                "\"blind1\": " + deviceManager.getDeviceState(DeviceType.BLIND1).getData(0) +
                 "}";
     }
 

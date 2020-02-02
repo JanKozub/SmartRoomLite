@@ -1,7 +1,7 @@
 package org.jk.smlite.controller;
 
 import org.jk.smlite.model.device.DeviceType;
-import org.jk.smlite.services.DeviceManager;
+import org.jk.smlite.services.device.DeviceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +24,13 @@ public class SwitchController {
         try {
             switch (body) {
                 case "night-mode":
-                    return deviceManager.toggleNightMode();
+                    return deviceManager.nightModeHandler.toggleNightMode();
                 case "screen":
-                    return deviceManager.deviceController.toggleDoorScreen();
+                    return deviceManager.deviceCommander.toggleDoorScreen();
                 case "door":
-                    return !deviceManager.deviceController.toggleDevice(DeviceType.DOOR);
+                    return !deviceManager.deviceCommander.toggleDevice(DeviceType.DOOR);
                 default:
-                    return deviceManager.deviceController.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
+                    return deviceManager.deviceCommander.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
             }
 
         } catch (IllegalArgumentException ex) {
