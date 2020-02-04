@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
       this.colorService.setColor(data['clock'], 'clock');
       this.colorService.setColor(data['lock'], 'door');
       this.colorService.setColor(data['doorScreen'], 'screen');
+      this.colorService.setColor(data['nightMode'], 'night-mode');
       this.temperature = data['temp'];
       this.humidity = data['hum'];
     }, error => console.log(error));
