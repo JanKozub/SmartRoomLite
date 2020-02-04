@@ -28,6 +28,7 @@ export class SettingsPageComponent implements OnInit {
   private toggleClockState = false;
   private lockDoorState = false;
   private toggleDoorScreenState = false;
+  private toggleThermometerScreenState = false;
 
   private nightModeToggleHour: string;
 
@@ -41,6 +42,8 @@ export class SettingsPageComponent implements OnInit {
       this.toggleClockState = data['toggleClock'];
       this.lockDoorState = data['lockDoor'];
       this.toggleDoorScreenState = data['toggleDoorScreen'];
+      this.toggleThermometerScreenState = data['thermometerScreen'];
+      console.log(data);
     }, error => console.log(error));
   }
 

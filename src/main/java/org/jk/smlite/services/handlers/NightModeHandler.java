@@ -28,9 +28,10 @@ public class NightModeHandler {
 
     public boolean toggleNightMode() {
         log.info("TOGGLED NIGHT MODE");
-        boolean currentState = getNightModeState();
-        executeNightMode(currentState);
-        return currentState;
+        boolean newState = !getNightModeState();
+        configuration.setProperty("nightMode.toggled", Boolean.toString(newState));
+        executeNightMode(newState);
+        return newState;
     }
 
     public long getNightModeToggleDuration() {
@@ -57,6 +58,8 @@ public class NightModeHandler {
             if (configuration.readProperty("door.morning_screen_toggle").equals("true"))
                 if (Objects.requireNonNull(deviceManager.getDeviceState(DeviceType.DOOR)).getData(1).equals("1"))
                     deviceCommander.toggleDoorScreen();
+            if (configuration.readProperty("thermometer.morning_screen_toggle").equals("true"))
+                if (isDeviceEnabled(DeviceType.THERMOMETER)) deviceCommander.toggleDevice(DeviceType.THERMOMETER);
         } else {
             if (configuration.readProperty("blinds.morning_toggle").equals("true"))
                 deviceCommander.setBlind(DeviceType.BLIND1, "5");
@@ -64,6 +67,8 @@ public class NightModeHandler {
                 if (!isDeviceEnabled(DeviceType.CLOCK)) deviceCommander.toggleDevice(DeviceType.CLOCK);
             if (configuration.readProperty("door.lock_on_nightMode").equals("true"))
                 if (!isDeviceEnabled(DeviceType.DOOR)) deviceCommander.toggleDevice(DeviceType.DOOR);
+            if (configuration.readProperty("thermometer.morning_screen_toggle").equals("true"))
+                if (!isDeviceEnabled(DeviceType.THERMOMETER)) deviceCommander.toggleDevice(DeviceType.THERMOMETER);
             if (configuration.readProperty("door.morning_screen_toggle").equals("true"))
                 if (Objects.requireNonNull(deviceManager.getDeviceState(DeviceType.DOOR)).getData(1).equals("0"))
                     deviceCommander.toggleDoorScreen();

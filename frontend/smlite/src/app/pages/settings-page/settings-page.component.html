@@ -48,5 +48,14 @@
         </mat-checkbox>
       </div>
     </li>
+    <li>
+      <div class="setting-toggle-wrapper">
+        <mat-checkbox
+          (change)="changeValue('thermometer.morning_screen_toggle', $event.checked.toString())"
+          [checked]="toggleThermometerScreenState">
+          Toggle thermometer screen
+        </mat-checkbox>
+      </div>
+    </li>
   </ul>
 </div>

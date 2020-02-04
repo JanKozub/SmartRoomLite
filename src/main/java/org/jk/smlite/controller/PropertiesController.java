@@ -32,6 +32,7 @@ public class PropertiesController {
                 "\"clock\": " + deviceManager.getDeviceState(DeviceType.CLOCK).getData(0) + ", \n" +
                 "\"lock\": " + deviceManager.getDeviceState(DeviceType.DOOR).getData(0) + ", \n" +
                 "\"doorScreen\": " + deviceManager.getDeviceState(DeviceType.DOOR).getData(1) + ", \n" +
+                "\"thermometerScreen\": " + deviceManager.getDeviceState(DeviceType.THERMOMETER).getData(0) + ", \n" +
                 "\"nightMode\": " + configuration.readProperty("nightMode.toggled") +
                 "}";
     }
@@ -50,6 +51,7 @@ public class PropertiesController {
                 "\"setBlindsUp\": " + configuration.readProperty("blinds.morning_toggle") + ", \n" +
                 "\"toggleClock\": " + configuration.readProperty("clock.morning_toggle") + ", \n" +
                 "\"lockDoor\": " + configuration.readProperty("door.lock_on_nightMode") + ", \n" +
+                "\"thermometerScreen\": " + configuration.readProperty("thermometer.morning_screen_toggle") + ", \n" +
                 "\"toggleDoorScreen\": " + configuration.readProperty("door.morning_screen_toggle") +
                 "}";
     }
