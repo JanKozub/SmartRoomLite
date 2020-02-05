@@ -43,7 +43,6 @@ export class SettingsPageComponent implements OnInit {
       this.lockDoorState = data['lockDoor'];
       this.toggleDoorScreenState = data['toggleDoorScreen'];
       this.toggleThermometerScreenState = data['thermometerScreen'];
-      console.log(data);
     }, error => console.log(error));
   }
 

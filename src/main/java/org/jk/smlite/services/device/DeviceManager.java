@@ -76,11 +76,9 @@ public class DeviceManager {
                 .collect(Collectors.joining("\n", "\nDevice statuses:\n", ""));
         log.info(message);
 
-        if (nightModeHandler.getNightModeToggleDuration() <= 2500) {
-            if (nightModeHandler.getNightModeState()) {
-                nightModeHandler.executeNightMode(nightModeHandler.getNightModeState());
-            }
-        }
+        if (nightModeHandler.getNightModeToggleDuration() <= 2500)
+            if (nightModeHandler.getNightModeState())
+                nightModeHandler.toggleNightMode();
     }
 
     public DeviceState getDeviceState(DeviceType deviceType) {
