@@ -7,7 +7,6 @@ import org.jk.smlite.model.device.DeviceState;
 import org.jk.smlite.model.device.DeviceType;
 import org.jk.smlite.services.Configuration;
 import org.jk.smlite.services.connection.CommService;
-import org.jk.smlite.services.handlers.NightModeHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -23,10 +22,10 @@ import java.util.stream.Collectors;
 public class DeviceManager {
     private static final Logger log = LoggerFactory.getLogger(DeviceManager.class);
 
-    public final DeviceCommander deviceCommander;
-    public final NightModeHandler nightModeHandler;
+    private final DeviceCommander deviceCommander;
+    private final NightModeHandler nightModeHandler;
 
-    private List<Device> devices = new ArrayList<>();
+    private final List<Device> devices = new ArrayList<>();
     private final Timer timer;
 
     DeviceManager(CommService commService, Configuration configuration) {
@@ -49,6 +48,14 @@ public class DeviceManager {
                 validateStates();
             }
         }, 0, 5000);
+    }
+
+    public DeviceCommander getDeviceCommander() {
+        return deviceCommander;
+    }
+
+    public NightModeHandler getNightModeHandler() {
+        return nightModeHandler;
     }
 
     private void updateState(Message message) {

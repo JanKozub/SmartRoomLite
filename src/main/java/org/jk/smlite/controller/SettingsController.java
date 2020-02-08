@@ -1,7 +1,6 @@
 package org.jk.smlite.controller;
 
 import org.jk.smlite.services.Configuration;
-import org.jk.smlite.services.handlers.UrlHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +19,14 @@ public class SettingsController {
         this.configuration = configuration;
     }
 
+    private static String getLastElementOfUrl(HttpServletRequest request) {
+        String[] urlArray = request.getRequestURI().split("/");
+        return urlArray[urlArray.length - 1];
+    }
+
     @PostMapping("/setProperty/**")
     public boolean setProperty(@Valid @RequestBody String body, HttpServletRequest request) {
-        String property = UrlHandler.getLastElementOfUrl(request);
+        String property = getLastElementOfUrl(request);
         try {
             configuration.setProperty(property, body);
             return true;

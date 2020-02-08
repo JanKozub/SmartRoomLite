@@ -1,7 +1,9 @@
 package org.jk.smlite.controller;
 
 import org.jk.smlite.model.device.DeviceType;
+import org.jk.smlite.services.device.DeviceCommander;
 import org.jk.smlite.services.device.DeviceManager;
+import org.jk.smlite.services.device.NightModeHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +15,12 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "${angular.server.ip}")
 public class SwitchController {
     private static final Logger log = LoggerFactory.getLogger(SwitchController.class);
-    private DeviceManager deviceManager;
+    private final DeviceCommander deviceCommander;
+    private final NightModeHandler nightModeHandler;
 
     public SwitchController(DeviceManager deviceManager) {
-        this.deviceManager = deviceManager;
+        deviceCommander = deviceManager.getDeviceCommander();
+        nightModeHandler = deviceManager.getNightModeHandler();
     }
 
     @PostMapping("/setState")
@@ -24,13 +28,13 @@ public class SwitchController {
         try {
             switch (body) {
                 case "night-mode":
-                    return deviceManager.nightModeHandler.toggleNightMode();
+                    return nightModeHandler.toggleNightMode();
                 case "screen":
-                    return deviceManager.deviceCommander.toggleDoorScreen();
+                    return deviceCommander.toggleDoorScreen();
                 case "door":
-                    return !deviceManager.deviceCommander.toggleDevice(DeviceType.DOOR);
+                    return !deviceCommander.toggleDevice(DeviceType.DOOR);
                 default:
-                    return deviceManager.deviceCommander.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
+                    return deviceCommander.toggleDevice(DeviceType.valueOf(body.toUpperCase()));
             }
 
         } catch (IllegalArgumentException ex) {
