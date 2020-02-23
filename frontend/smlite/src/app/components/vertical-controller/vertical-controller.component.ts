@@ -23,7 +23,7 @@ export class VerticalControllerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getPosition('1');
+    this.getPosition(this.id);
   }
 
   getPosition(serviceType: String) {
@@ -35,14 +35,14 @@ export class VerticalControllerComponent implements OnInit {
   goUp() {
     if (this.position < 5) {
       this.position = this.position + 1;
-      this.blindsService.setPosition('1', String(this.position));
+      this.blindsService.setPosition(this.id, String(this.position));
     }
   }
 
   goDown() {
     if (this.position > 1) {
       this.position = this.position - 1;
-      this.blindsService.setPosition('1', String(this.position));
+      this.blindsService.setPosition(this.id, String(this.position));
     }
   }
 }

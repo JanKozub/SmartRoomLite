@@ -15,13 +15,13 @@ export class BlindsService {
 
   getPosition(serviceType: String) {
     console.log('getting value of blind', serviceType);
-    let url: string = this.baseUrl + '/blind' + serviceType + '/getPosition';
+    let url: string = this.baseUrl + '/blind/getPosition/blind' + serviceType;
     return this.http.get(`${url}`);
   }
 
   setPosition(serviceType: String, position: string) {
     console.log('setting value of blind', serviceType, 'to', position);
-    let url: String = this.baseUrl + '/blind' + serviceType + '/setPosition';
+    let url: String = this.baseUrl + '/blind/setPosition/blind' + serviceType;
     return this.http.post(`${url}`, position)
       .subscribe((data) => {
           if (data) {
