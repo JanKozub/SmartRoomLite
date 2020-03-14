@@ -28,8 +28,10 @@ public class NightModeHandler {
         boolean setNightMode = !getNightModeState();
         configuration.setProperty("nightMode.toggled", Boolean.toString(setNightMode));
 
-        if (isSet("blinds.morning_toggle"))
+        if (isSet("blinds.morning_toggle")) {
             deviceCommander.setBlind(DeviceType.BLIND1, getBlindMode(setNightMode));
+            deviceCommander.setBlind(DeviceType.BLIND2, getBlindMode(setNightMode));
+        }
 
         if (isSet("clock.morning_toggle"))
             if (isNotInCorrectMode(setNightMode, DeviceType.CLOCK)) deviceCommander.toggleDevice(DeviceType.CLOCK);
