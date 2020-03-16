@@ -38,6 +38,7 @@ public class DeviceManager {
         devices.add(new Device(DeviceType.BLIND1));
         devices.add(new Device(DeviceType.BLIND2));
         devices.add(new Device(DeviceType.THERMOMETER));
+        devices.add(new Device(DeviceType.MICROPHONE));
 
         devices.stream().map(device -> device.getDeviceType().getSubTopic()).forEach(commService::connect);
         commService.register(this::updateState);

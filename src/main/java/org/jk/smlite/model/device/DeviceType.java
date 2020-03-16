@@ -9,6 +9,7 @@ public enum DeviceType {
     BLIND1("blind1", "blind1Sub"),
     BLIND2("blind2", "blind2Sub"),
     THERMOMETER("thermometer", "thermometerSub"),
+    MICROPHONE("microphone", "microphoneSub"),
     GATE("", "");
 
 
