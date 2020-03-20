@@ -15,6 +15,7 @@ public enum DeviceType {
 
     private static final EnumSet<DeviceType> toggleableDevices = EnumSet.of(LIGHT, CLOCK, DOOR, THERMOMETER);
     private static final EnumSet<DeviceType> blinds = EnumSet.of(BLIND1, BLIND2);
+    private static final EnumSet<DeviceType> inputDevices = EnumSet.of(MICROPHONE);
 
     private final String subTopic;
     private final String pubTopic;
@@ -40,4 +41,9 @@ public enum DeviceType {
     public static boolean isDeviceBlind(DeviceType deviceType) {
         return blinds.contains(deviceType);
     }
+
+    public static boolean isDeviceInputType(DeviceType deviceType) {
+        return inputDevices.contains(deviceType);
+    }
+
 }
