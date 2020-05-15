@@ -93,13 +93,14 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.2.2.RELEASE</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
                 <configuration>
                     <mainClass>org.jk.smlite.SmLiteApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
+<!--mvn clean install exec:java -Dexec.mainClass="org.jk.smlite.SmLiteApplication"-->
     </build>
 </project>
