@@ -25,7 +25,7 @@ public class MqttService implements MqttCallback, CommService {
     ApplicationContext context;
 
     public MqttService() {
-        String broker = "tcp://192.168.0.125:1883";
+        String broker = "tcp://10.0.98.125:1883";
         String clientId = "user";
 
         try {
