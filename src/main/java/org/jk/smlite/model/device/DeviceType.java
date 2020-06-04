@@ -10,10 +10,11 @@ public enum DeviceType {
     BLIND2("blind2", "blind2Sub"),
     THERMOMETER("thermometer", "thermometerSub"),
     MICROPHONE("microphone", "microphoneSub"),
+    SPEAKERS("speakers", "speakersSub"),
     GATE("", "");
 
 
-    private static final EnumSet<DeviceType> toggleableDevices = EnumSet.of(LIGHT, CLOCK, DOOR, THERMOMETER);
+    private static final EnumSet<DeviceType> toggleableDevices = EnumSet.of(LIGHT, CLOCK, DOOR, THERMOMETER, SPEAKERS);
     private static final EnumSet<DeviceType> blinds = EnumSet.of(BLIND1, BLIND2);
     private static final EnumSet<DeviceType> inputDevices = EnumSet.of(MICROPHONE);
 

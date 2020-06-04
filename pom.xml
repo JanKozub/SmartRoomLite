@@ -101,6 +101,6 @@
                 </configuration>
             </plugin>
         </plugins>
-<!--mvn clean install exec:java -Dexec.mainClass="org.jk.smlite.SmLiteApplication"-->
+<!--*-->
     </build>
 </project>

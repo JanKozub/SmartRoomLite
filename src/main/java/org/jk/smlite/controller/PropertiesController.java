@@ -40,7 +40,8 @@ public class PropertiesController {
     @GetMapping("/getProperties/control")
     public String getControlProperties() {
         return "{\n" +
-                "\"blind1\": " + deviceManager.getDeviceState(DeviceType.BLIND1).getData(0) +
+                "\"speakers\": " + deviceManager.getDeviceState(DeviceType.SPEAKERS).getData(0) + ", \n" +
+                "\"gate\": " + "0" +
                 "}";
     }
 

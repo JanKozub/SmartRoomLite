@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.refreshSwitches();
+    console.info('updating properties');
     interval(2000).subscribe(() => {
       console.debug('updating properties');
       this.refreshSwitches();

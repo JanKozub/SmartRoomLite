@@ -78,7 +78,7 @@ public class Message {
         return "Message{" +
                 "time=" + time +
                 ", topic='" + topic + '\'' +
-                ", state=" + data +
+                ", state=" + Arrays.toString(data) +
                 ", message='" + message + '\'' +
                 ", returnMessage='" + returnMessage + '\'' +
                 ", type=" + deviceType +
