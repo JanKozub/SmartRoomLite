@@ -23,10 +23,6 @@ export class AppComponent implements OnInit {
     return document.location.href.split("/").pop() === url;
   }
 
-  public toggleThermometer() {
-    this.switchService.changeState('thermometer');
-  }
-
   private refreshSwitches() {
     this.propertiesService.getSwitchesProperties().subscribe(data => {
       this.colorService.setColor(data['light'], 'light');
@@ -39,6 +35,13 @@ export class AppComponent implements OnInit {
     }, error => console.log(error));
   }
 
+  private refreshControl() {
+    this.propertiesService.getControlProperties().subscribe(data => {
+      this.colorService.setColor(data['speakers'], 'speakers');
+      this.colorService.setColor(data['gate'], 'gate');
+    }, error => console.log(error));
+  }
+
   ngOnInit() {
     this.updateColors();
 
@@ -47,15 +50,12 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public getRouterOutletState(outlet) {
-    return outlet.isActivated ? outlet.activatedRoute : '';
+  public toggleThermometer() {
+    this.switchService.changeState('thermometer');
   }
 
-  private refreshControl() {
-    this.propertiesService.getControlProperties().subscribe(data => {
-      this.colorService.setColor(data['speakers'], 'speakers');
-      this.colorService.setColor(data['gate'], 'gate');
-    }, error => console.log(error));
+  public getRouterOutletState(outlet) {
+    return outlet.isActivated ? outlet.activatedRoute : '';
   }
 
   private updateColors(): void {
@@ -63,7 +63,9 @@ export class AppComponent implements OnInit {
     if (AppComponent.checkUrl("switches")) {
       this.refreshSwitches();
     } else {
-      this.refreshControl();
+      if (AppComponent.checkUrl("control")) {
+        this.refreshControl();
+      }
     }
   }
 }
