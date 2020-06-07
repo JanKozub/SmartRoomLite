@@ -8,7 +8,7 @@ export class ColorService {
   constructor() {
   }
 
-  setColor(data: Boolean, name: String) {
+  setColor(data: Object, name: String) {
     if (data != null) {
       const icon = document.getElementById('icon-' + name);
       if (icon != null) {
