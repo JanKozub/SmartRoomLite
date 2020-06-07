@@ -10,11 +10,11 @@
   </div>
 
   <div id="bottom">
-    <div class="option" routerLink="/switches" routerLinkActive="active">
+    <div (click)="refreshSwitches()" class="option" routerLink="/switches" routerLinkActive="active">
       <iron-icon class="option-icon" icon="vaadin:controller"></iron-icon>
       <p class="option-text">Switches</p>
     </div>
-    <div class="option" routerLink="/control" routerLinkActive="active">
+    <div (click)="refreshControl()" class="option" routerLink="/control" routerLinkActive="active">
       <iron-icon class="option-icon" icon="vaadin:arrows"></iron-icon>
       <p class="option-text">Control</p>
     </div>

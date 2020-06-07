@@ -19,13 +19,8 @@ export class AppComponent implements OnInit {
   constructor(private colorService: ColorService, private propertiesService: PropertiesService, private switchService: SwitchService) {
   }
 
-  ngOnInit() {
-    this.refreshSwitches();
-    console.info('updating properties');
-    interval(2000).subscribe(() => {
-      console.debug('updating properties');
-      this.refreshSwitches();
-    });
+  private static checkUrl(url: string): Boolean {
+    return document.location.href.split("/").pop() === url;
   }
 
   public toggleThermometer() {
@@ -44,7 +39,31 @@ export class AppComponent implements OnInit {
     }, error => console.log(error));
   }
 
+  ngOnInit() {
+    this.updateColors();
+
+    interval(2000).subscribe(() => {
+      this.updateColors();
+    });
+  }
+
   public getRouterOutletState(outlet) {
     return outlet.isActivated ? outlet.activatedRoute : '';
+  }
+
+  private refreshControl() {
+    this.propertiesService.getControlProperties().subscribe(data => {
+      this.colorService.setColor(data['speakers'], 'speakers');
+      this.colorService.setColor(data['gate'], 'gate');
+    }, error => console.log(error));
+  }
+
+  private updateColors(): void {
+    console.debug('updating properties');
+    if (AppComponent.checkUrl("switches")) {
+      this.refreshSwitches();
+    } else {
+      this.refreshControl();
+    }
   }
 }

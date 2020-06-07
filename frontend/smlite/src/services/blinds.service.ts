@@ -14,7 +14,7 @@ export class BlindsService {
   }
 
   getPosition(serviceType: String) {
-    console.log('getting value of blind', serviceType);
+    console.debug('getting value of blind', serviceType);
     let url: string = this.baseUrl + '/blind/getPosition/blind' + serviceType;
     return this.http.get(`${url}`);
   }
