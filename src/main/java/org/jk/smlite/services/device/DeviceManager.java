@@ -28,6 +28,8 @@ public class DeviceManager {
     private final List<Device> devices = new ArrayList<>();
     private final Timer timer;
 
+    private long stateValidationCounter;
+
     DeviceManager(CommService commService, Configuration configuration) {
         this.deviceCommander = new DeviceCommander(commService);
         this.nightModeHandler = new NightModeHandler(configuration, this, deviceCommander);
@@ -72,6 +74,8 @@ public class DeviceManager {
         if (deviceState != null) {
             if (deviceState.update(data)) {
                 log.info("State changed for {} to {}. Notifying listeners", deviceType, data);
+
+                deviceCommander.handleDoubleClap(deviceType, stateValidationCounter);
             } else {
                 log.debug("State not changed for {}.", deviceType);
             }
@@ -89,6 +93,8 @@ public class DeviceManager {
         if (nightModeHandler.getNightModeToggleDuration() <= 2500)
             if (nightModeHandler.getNightModeState())
                 nightModeHandler.toggleNightMode();
+
+        stateValidationCounter = stateValidationCounter + 1;
     }
 
     public DeviceState getDeviceState(DeviceType deviceType) {

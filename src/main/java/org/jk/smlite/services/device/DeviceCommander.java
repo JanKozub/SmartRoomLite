@@ -90,4 +90,10 @@ public class DeviceCommander {
             lock.unlock();
         }
     }
+
+    public void handleDoubleClap(DeviceType device, long stateValidationCounter) {
+        if (device == DeviceType.MICROPHONE && stateValidationCounter > 3) {
+            sendMessage(DeviceType.LIGHT, "TOGGLE");
+        }
+    }
 }
