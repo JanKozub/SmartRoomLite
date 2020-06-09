@@ -8,7 +8,7 @@ public class Device {
 
     public Device(DeviceType deviceType) {
         this.deviceType = deviceType;
-        this.deviceState = new DeviceState(this, Duration.ofSeconds(3));
+        this.deviceState = new DeviceState(this, Duration.ofSeconds(5));
     }
 
     public Device(DeviceType deviceType, Duration timeout) {

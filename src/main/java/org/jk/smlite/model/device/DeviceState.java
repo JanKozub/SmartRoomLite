@@ -42,19 +42,19 @@ public class DeviceState {
         Instant lu = getLastUpdated();
         LocalDateTime dateTime = LocalDateTime.ofInstant(lu, ZoneId.systemDefault());
         int second = dateTime.getSecond();
-        String secondVal = "" + second;
+        String secondVal = second + ", ";
         if (second < 10)
             secondVal = "0" + second + ", ";
 
         int month = dateTime.getMonthValue();
-        String monthVal = "" + month;
+        String monthVal = month + ".";
         if (month < 10)
             monthVal = "0" + month + ".";
 
         String date = dateTime.getHour() + ":" +
                 dateTime.getMinute() + ":" + secondVal +
                 dateTime.getDayOfMonth() + "." + monthVal +
-                dateTime.getYear();
+                dateTime.getYear() + "r.";
 
         String dataStr = Arrays.toString(data);
         if (!dataStr.equals("null"))
