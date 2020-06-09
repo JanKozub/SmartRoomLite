@@ -87,7 +87,9 @@ public class DeviceManager {
     private void validateStates() {
         String message = devices.stream()
                 .map(Object::toString)
-                .collect(Collectors.joining("\n", "\nDevice statuses:\n", ""));
+                .collect(Collectors.joining("\n",
+                        "\nDevice statuses:\n|Device:         |Connected:|Last updated:            |Data\n",
+                        "\n"));
         log.info(message);
 
         if (nightModeHandler.getNightModeToggleDuration() <= 2500)
