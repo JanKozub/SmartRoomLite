@@ -12,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -76,7 +73,7 @@ public class DeviceManager {
                 if (deviceType != DeviceType.THERMOMETER) {
                     log.info("State changed for {} to {}. Notifying listeners", deviceType, data);
                 } else {
-                    log.debug("Temperature changed to {}", data);
+                    log.debug("Temperature changed to {}", Arrays.toString(data));
                 }
 
                 deviceCommander.handleDoubleClap(deviceType, stateValidationCounter);

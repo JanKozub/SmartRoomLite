@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "${angular.server.ip}")
 public class SettingsController {
     private static final Logger log = LoggerFactory.getLogger(SettingsController.class);
-    private Configuration configuration;
+    private final Configuration configuration;
 
     public SettingsController(Configuration configuration) {
         this.configuration = configuration;

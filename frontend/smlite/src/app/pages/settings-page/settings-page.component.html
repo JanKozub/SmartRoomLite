@@ -5,8 +5,10 @@
       <div class="setting-toggle-wrapper">
         <p>NightMode toggle hour</p>
       </div>
-      <input [format]="24" [ngxTimepicker]="blindsTimePicker" [value]="nightModeToggleHour" class="timePicker"
-             placeholder="Set Time">
+      <label>
+        <input [format]="24" [ngxTimepicker]="blindsTimePicker" [value]="nightModeToggleHour" class="timePicker"
+               placeholder="Set Time">
+      </label>
       <ngx-material-timepicker #blindsTimePicker
                                (timeSet)="changeValue('nightMode.toggle_hour', $event)"
                                [theme]="appTheme">

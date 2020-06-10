@@ -11,11 +11,6 @@ public class Device {
         this.deviceState = new DeviceState(this, Duration.ofSeconds(5));
     }
 
-    public Device(DeviceType deviceType, Duration timeout) {
-        this.deviceType = deviceType;
-        this.deviceState = new DeviceState(this, timeout);
-    }
-
     public DeviceType getDeviceType() {
         return deviceType;
     }
