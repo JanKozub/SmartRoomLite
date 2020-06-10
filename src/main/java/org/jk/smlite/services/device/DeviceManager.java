@@ -73,7 +73,11 @@ public class DeviceManager {
 
         if (deviceState != null) {
             if (deviceState.update(data)) {
-                log.info("State changed for {} to {}. Notifying listeners", deviceType, data);
+                if (deviceType != DeviceType.THERMOMETER) {
+                    log.info("State changed for {} to {}. Notifying listeners", deviceType, data);
+                } else {
+                    log.debug("Temperature changed to {}", data);
+                }
 
                 deviceCommander.handleDoubleClap(deviceType, stateValidationCounter);
             } else {

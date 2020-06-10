@@ -65,7 +65,7 @@ public class DeviceCommander {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         MessageListener listener = msg -> {
             if (msg.getDeviceType() == deviceType) {
-                log.info("{} state: {}", deviceType, msg);
+                log.debug("Send message to {}, msg -> {}", deviceType, msg);
                 future.complete(predicate.test(msg));
             }
         };
