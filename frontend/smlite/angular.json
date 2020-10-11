@@ -35,9 +35,7 @@
             "styles": [
               "src/styles.sass"
             ],
-            "scripts": [
-              "../node_modules/popper.js/dist/esm/popper.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
