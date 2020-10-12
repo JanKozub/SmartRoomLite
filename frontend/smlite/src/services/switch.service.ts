@@ -14,10 +14,10 @@ export class SwitchService {
   constructor(private http: HttpClient, private colorService: ColorService) {
   }
 
-  changeState(serviceType: String) {
-    console.log('changing state of', serviceType);
+  changeState(serviceType: string) {
+    console.log('switch', serviceType, 'toggled');
     return this.http.post(this.url + '/switch/setState', serviceType.toLowerCase())
       .subscribe(data => this.colorService.setColor(data, serviceType.toLowerCase()),
-        error => console.log(error));
+        () => console.error('Error occurred while toggling switch', serviceType + '.', 'Check your network connection.'));
   }
 }

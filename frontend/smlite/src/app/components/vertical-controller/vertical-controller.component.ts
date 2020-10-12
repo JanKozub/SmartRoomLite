@@ -15,9 +15,10 @@ export class VerticalControllerComponent implements OnInit {
   private id: string;
 
   @Input()
-  private icon: string;
+  public icon: string;
 
-  private position: number;
+  @Input()
+  public value: string;
 
   constructor(private blindsService: BlindsService) {
   }
@@ -26,23 +27,13 @@ export class VerticalControllerComponent implements OnInit {
     this.getPosition(this.id);
   }
 
-  getPosition(serviceType: String) {
+  getPosition(serviceType: string) {
     this.blindsService.getPosition(serviceType.toLowerCase().charAt(serviceType.length - 1))
-      .subscribe(data => this.position = Number(data),
-        error => console.log(error));
+      .subscribe(data => this.value = String(data),
+        () => console.warn('Couldn\'t get position of Blind!'));
   }
 
-  goUp() {
-    if (this.position < 5) {
-      this.position = this.position + 1;
-      this.blindsService.setPosition(this.id, String(this.position));
-    }
-  }
-
-  goDown() {
-    if (this.position > 1) {
-      this.position = this.position - 1;
-      this.blindsService.setPosition(this.id, String(this.position));
-    }
+  onChange() {
+    this.blindsService.setPosition(this.id, String(this.value));
   }
 }

@@ -25,10 +25,10 @@ export class PropertiesService {
     return this.http.get(this.url + '/properties/getProperties/settings');
   }
 
-  setProperty(property: String, value: String) {
+  setProperty(property: string, value: string) {
     console.log('changing property', property, ' to ', value);
     this.http.post(this.url + '/settings/setProperty/' + property, value)
       .subscribe(() => {
-      }, error => console.log(error));
+      }, () => console.error('Couldn\'t set properties(properties.service:28)!'));
   }
 }

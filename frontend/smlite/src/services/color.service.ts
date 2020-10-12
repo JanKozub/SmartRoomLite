@@ -8,7 +8,7 @@ export class ColorService {
   constructor() {
   }
 
-  setColor(data: Object, name: String) {
+  setColor(data: object, name: string) {
     if (data != null) {
       const icon = document.getElementById('icon-' + name);
       if (icon != null) {
@@ -18,7 +18,7 @@ export class ColorService {
           icon.style.color = '#111111';
         }
       } else {
-        console.error("Error occurred while setting color: " + data + " for: " + name + " | err: " + icon);
+        console.error('Error occurred while setting color: ' + data + ' for: ' + name + ' | err: ' + icon);
       }
     }
   }

@@ -24,15 +24,15 @@ export class SettingsPageComponent implements OnInit {
     }
   };
 
-  private setBlindsUpState = false;
-  private toggleClockState = false;
-  private lockDoorState = false;
-  private toggleDoorScreenState = false;
-  private toggleThermometerScreenState = false;
+  public setBlindsUpState = false;
+  public toggleClockState = false;
+  public lockDoorState = false;
+  public toggleDoorScreenState = false;
+  public toggleThermometerScreenState = false;
 
-  private nightModeToggleHour: string;
+  public nightModeToggleHour: string;
 
-  constructor(private propertiesService: PropertiesService) {
+  constructor(public propertiesService: PropertiesService) {
   }
 
   ngOnInit() {
@@ -43,10 +43,10 @@ export class SettingsPageComponent implements OnInit {
       this.lockDoorState = data['lockDoor'];
       this.toggleDoorScreenState = data['toggleDoorScreen'];
       this.toggleThermometerScreenState = data['thermometerScreen'];
-    }, error => console.log(error));
+    }, () => console.warn('Couldn\'t get properties for settings! Check your connection.'));
   }
 
-  changeValue(property: String, value: String) {
+  changeValue(property: string, value: string) {
     this.propertiesService.setProperty(property, value);
   }
 }

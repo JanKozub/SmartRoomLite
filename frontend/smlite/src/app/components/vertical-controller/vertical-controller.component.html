@@ -1,17 +1,21 @@
 <div class="toggle-wrapper grid">
-  <div id="icon-background">
-    <div id="icon-wrapper">
+  <div class="icon-background">
+    <div class="icon-wrapper">
       <iron-icon class="controller-icon" icon="vaadin:{{icon}}"></iron-icon>
     </div>
   </div>
-  <div (click)="goUp()" id="arrow-up-wrapper">
-    <iron-icon class="arrow-icon" icon="vaadin:chevron-up"></iron-icon>
-  </div>
-  <div id="info-wrapper">
-    <p>{{type}}({{id}})</p>
-    <p>Pos: {{position}}</p>
-  </div>
-  <div (click)="goDown()" id="arrow-down-wrapper">
-    <iron-icon class="arrow-icon" icon="vaadin:chevron-down"></iron-icon>
+  <mat-form-field class="level-select" appearance="fill">
+    <label>
+      <select matNativeControl [(ngModel)]="value" (ngModelChange)="onChange()">
+        <option value="1"> 1</option>
+        <option value="2"> 2</option>
+        <option value="3"> 3</option>
+        <option value="4"> 4</option>
+        <option value="5"> 5</option>
+      </select>
+    </label>
+  </mat-form-field>
+  <div class="state-wrapper">
+
   </div>
 </div>

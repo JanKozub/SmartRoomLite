@@ -13,21 +13,21 @@ export class BlindsService {
   constructor(private http: HttpClient) {
   }
 
-  getPosition(serviceType: String) {
+  getPosition(serviceType: string) {
     console.debug('getting value of blind', serviceType);
-    let url: string = this.baseUrl + '/blind/getPosition/blind' + serviceType;
+    const url: string = this.baseUrl + '/blind/getPosition/blind' + serviceType;
     return this.http.get(`${url}`);
   }
 
-  setPosition(serviceType: String, position: string) {
-    console.log('setting value of blind', serviceType, 'to', position);
-    let url: String = this.baseUrl + '/blind/setPosition/blind' + serviceType;
+  setPosition(serviceType: string, position: string) {
+    console.log('Blind, id=', serviceType, ', newState=', position);
+    const url: string = this.baseUrl + '/blind/setPosition/blind' + serviceType;
     return this.http.post(`${url}`, position)
       .subscribe((data) => {
           if (data) {
             this.getPosition(serviceType);
           }
         },
-        error => console.log(error));
+        () => console.error('Error occurred while setting new blind state! Check your network connection.'));
   }
 }

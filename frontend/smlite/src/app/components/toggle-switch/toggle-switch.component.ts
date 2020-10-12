@@ -9,10 +9,10 @@ import {SwitchService} from '../../../services/switch.service';
 export class ToggleSwitchComponent implements OnInit {
 
   @Input()
-  private type: string;
+  public type: string;
 
   @Input()
-  private icon: string;
+  public icon: string;
 
   constructor(private switchService: SwitchService) {
   }

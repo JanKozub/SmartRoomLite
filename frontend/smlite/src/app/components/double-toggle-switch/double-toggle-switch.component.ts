@@ -9,12 +9,12 @@ import {SwitchService} from '../../../services/switch.service';
 export class DoubleToggleSwitchComponent implements OnInit {
 
   @Input()
-  private iconLeft: string;
+  public iconLeft: string;
 
   @Input()
-  private iconRight: string;
+  public iconRight: string;
 
-  constructor(private switchService: SwitchService) {
+  constructor(public switchService: SwitchService) {
   }
 
   ngOnInit() {
