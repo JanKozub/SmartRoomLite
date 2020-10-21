@@ -38,8 +38,10 @@ export class AppComponent implements OnInit {
   public refreshControl() {
     this.propertiesService.getControlProperties().subscribe(data => {
       this.colorService.setColor(data['speakers'], 'speakers');
-      this.colorService.setColor(data['gate'], 'gate');
-    }, () => console.warn('Couldn\'t refresh control! Most likely network error :('));
+      this.colorService.setColor(data['thermometerScreen'], 'thermometer');
+      this.temperature = data['temp'];
+      this.humidity = data['hum'];
+    }, e => console.warn('Couldn\'t refresh control! Most likely network error :(' + e.toString()));
   }
 
   ngOnInit() {
@@ -48,10 +50,6 @@ export class AppComponent implements OnInit {
     interval(2000).subscribe(() => {
       this.updateColors();
     });
-  }
-
-  public toggleThermometer() {
-    this.switchService.changeState('thermometer');
   }
 
   public getRouterOutletState(outlet) {

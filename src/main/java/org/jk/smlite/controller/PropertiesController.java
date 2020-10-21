@@ -29,7 +29,6 @@ public class PropertiesController {
                 "\"clock\": " + deviceManager.getDeviceState(DeviceType.CLOCK).getData(0) + ", \n" +
                 "\"lock\": " + deviceManager.getDeviceState(DeviceType.DOOR).getData(0) + ", \n" +
                 "\"doorScreen\": " + deviceManager.getDeviceState(DeviceType.DOOR).getData(1) + ", \n" +
-                "\"thermometerScreen\": " + deviceManager.getDeviceState(DeviceType.THERMOMETER).getData(0) + ", \n" +
                 "\"nightMode\": " + configuration.readProperty("nightMode.toggled") +
                 "}";
     }
@@ -37,14 +36,18 @@ public class PropertiesController {
     @GetMapping("/getProperties/control")
     public String getControlProperties() {
         return "{\n" +
+                "\"temp\": " + deviceManager.getDeviceState(DeviceType.THERMOMETER).getData(1) + ", \n" +
+                "\"hum\": " + deviceManager.getDeviceState(DeviceType.THERMOMETER).getData(2) + ", \n" +
                 "\"speakers\": " + deviceManager.getDeviceState(DeviceType.SPEAKERS).getData(0) + ", \n" +
-                "\"gate\": " + "0" +
+                "\"thermometerScreen\": " + deviceManager.getDeviceState(DeviceType.THERMOMETER).getData(0) +
                 "}";
     }
 
     @GetMapping("/getProperties/settings")
     public String getSettingsProperties() {
         return "{\n" +
+                "\"temp\": " + deviceManager.getDeviceState(DeviceType.THERMOMETER).getData(1) + ", \n" +
+                "\"hum\": " + deviceManager.getDeviceState(DeviceType.THERMOMETER).getData(2) + ", \n" +
                 "\"nightModeToggleHour\": \"" + configuration.readProperty("nightMode.toggle_hour") + "\", \n" +
                 "\"setBlindsUp\": " + configuration.readProperty("blinds.morning_toggle") + ", \n" +
                 "\"toggleClock\": " + configuration.readProperty("clock.morning_toggle") + ", \n" +
