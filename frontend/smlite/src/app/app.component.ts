@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
 
   public refreshSwitches() {
     this.propertiesService.getSwitchesProperties().subscribe(data => {
+      console.log(data)
       this.colorService.setColor(data['light'], 'light');
       this.colorService.setColor(data['clock'], 'clock');
       this.colorService.setColor(data['lock'], 'door');

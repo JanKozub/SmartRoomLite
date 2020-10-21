@@ -9,17 +9,19 @@ export class ColorService {
   }
 
   setColor(data: object, name: string) {
-    if (data != null) {
       const icon = document.getElementById('icon-' + name);
       if (icon != null) {
-        if (data) {
-          icon.style.color = '#ff8b00';
+        if (data != null) {
+          if (data) {
+            icon.style.color = '#ff8b00';
+          } else {
+            icon.style.color = '#111111';
+          }
         } else {
-          icon.style.color = '#111111';
+          icon.style.color = '#797979';
         }
       } else {
         console.error('Error occurred while setting color: ' + data + ' for: ' + name + ' | err: ' + icon);
       }
-    }
   }
 }
