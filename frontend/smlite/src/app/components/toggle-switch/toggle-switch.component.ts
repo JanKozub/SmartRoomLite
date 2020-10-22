@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SwitchService} from '../../../services/switch.service';
+import {Component, Input} from '@angular/core';
+import {SwitchService} from 'src/app/services/switch.service';
 
 @Component({
   selector: 'app-toggle-switch',
   templateUrl: './toggle-switch.component.html',
   styleUrls: ['./toggle-switch.component.sass']
 })
-export class ToggleSwitchComponent implements OnInit {
+export class ToggleSwitchComponent {
 
   @Input()
   public type: string;
@@ -15,9 +15,6 @@ export class ToggleSwitchComponent implements OnInit {
   public icon: string;
 
   constructor(private switchService: SwitchService) {
-  }
-
-  ngOnInit() {
   }
 
   changeState(): void {

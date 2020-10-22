@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgxMaterialTimepickerTheme} from 'ngx-material-timepicker';
-import {PropertiesService} from '../../../services/properties.service';
+import {PropertiesService} from 'src/app/services/properties.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -35,7 +35,7 @@ export class SettingsPageComponent implements OnInit {
   constructor(public propertiesService: PropertiesService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.propertiesService.getSettingsProperties().subscribe(data => {
       this.nightModeToggleHour = data['nightModeToggleHour'];
       this.setBlindsUpState = data['setBlindsUp'];
@@ -46,7 +46,7 @@ export class SettingsPageComponent implements OnInit {
     }, () => console.warn('Couldn\'t get properties for settings! Check your connection.'));
   }
 
-  changeValue(property: string, value: string) {
+  changeValue(property: string, value: string): void {
     this.propertiesService.setProperty(property, value);
   }
 }

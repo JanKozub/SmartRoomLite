@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 // @ts-ignore
-import properties from '../assets/properties.json';
+import properties from 'src/assets/properties.json';
+import {Observable, Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,13 @@ export class BlindsService {
   constructor(private http: HttpClient) {
   }
 
-  getPosition(serviceType: string) {
+  getPosition(serviceType: string): Observable<any> {
     console.debug('getting value of blind', serviceType);
     const url: string = this.baseUrl + '/blind/getPosition/blind' + serviceType;
     return this.http.get(`${url}`);
   }
 
-  setPosition(serviceType: string, position: string) {
+  setPosition(serviceType: string, position: string): Subscription {
     console.log('Blind, id=', serviceType, ', newState=', position);
     const url: string = this.baseUrl + '/blind/setPosition/blind' + serviceType;
     return this.http.post(`${url}`, position)

@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 // @ts-ignore
-import properties from '../assets/properties.json';
+import properties from 'src/assets/properties.json';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +14,19 @@ export class PropertiesService {
   constructor(private http: HttpClient) {
   }
 
-  getSwitchesProperties() {
+  getSwitchesProperties(): Observable<any> {
     return this.http.get(this.url + '/properties/getProperties/switches');
   }
 
-  getControlProperties() {
+  getControlProperties(): Observable<any> {
     return this.http.get(this.url + '/properties/getProperties/control');
   }
 
-  getSettingsProperties() {
+  getSettingsProperties(): Observable<any> {
     return this.http.get(this.url + '/properties/getProperties/settings');
   }
 
-  setProperty(property: string, value: string) {
+  setProperty(property: string, value: string): void {
     console.log('changing property', property, ' to ', value);
     this.http.post(this.url + '/settings/setProperty/' + property, value)
       .subscribe(() => {

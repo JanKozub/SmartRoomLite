@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BlindsService} from '../../../services/blinds.service';
+import {BlindsService} from 'src/app/services/blinds.service';
 
 @Component({
   selector: 'app-vertical-controller',
@@ -23,17 +23,17 @@ export class VerticalControllerComponent implements OnInit {
   constructor(private blindsService: BlindsService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getPosition(this.id);
   }
 
-  getPosition(serviceType: string) {
+  getPosition(serviceType: string): void {
     this.blindsService.getPosition(serviceType.toLowerCase().charAt(serviceType.length - 1))
       .subscribe(data => this.value = String(data),
         () => console.warn('Couldn\'t get position of Blind!'));
   }
 
-  onChange() {
+  onChange(): void {
     this.blindsService.setPosition(this.id, String(this.value));
   }
 }

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {fadeAnimation} from '../animations/fade.animation';
+import {fadeAnimation} from 'src/app/animations/fade.animation';
+import '@vaadin/vaadin-icons/vaadin-icons.js';
+import {PropertiesService} from './services/properties.service';
+import {ColorService} from './services/color.service';
 import {interval} from 'rxjs';
-import {PropertiesService} from '../services/properties.service';
-import {ColorService} from '../services/color.service';
-import {SwitchService} from '../services/switch.service';
 
 @Component({
   selector: 'app-root',
@@ -13,17 +13,19 @@ import {SwitchService} from '../services/switch.service';
 })
 export class AppComponent implements OnInit {
 
+  title = 'smlite';
+
   public temperature: string;
   public humidity: string;
 
-  constructor(private colorService: ColorService, private propertiesService: PropertiesService, private switchService: SwitchService) {
+  constructor(private propertiesService: PropertiesService, private colorService: ColorService) {
   }
 
   private static checkUrl(url: string): boolean {
     return document.location.href.split('/').pop() === url;
   }
 
-  public refreshSwitches() {
+  public refreshSwitches(): void {
     this.propertiesService.getSwitchesProperties().subscribe(data => {
       this.colorService.setColor(data['light'], 'light');
       this.colorService.setColor(data['clock'], 'clock');
@@ -35,7 +37,7 @@ export class AppComponent implements OnInit {
     }, () => console.warn('Couldn\'t refresh switches! Most likely network error :('));
   }
 
-  public refreshControl() {
+  public refreshControl(): void {
     this.propertiesService.getControlProperties().subscribe(data => {
       this.colorService.setColor(data['speakers'], 'speakers');
       this.colorService.setColor(data['thermometerScreen'], 'thermometer');
@@ -44,7 +46,7 @@ export class AppComponent implements OnInit {
     }, e => console.warn('Couldn\'t refresh control! Most likely network error :(' + e.toString()));
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.updateColors();
 
     interval(2000).subscribe(() => {
@@ -52,7 +54,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public getRouterOutletState(outlet) {
+  public getRouterOutletState(outlet): any {
     return outlet.isActivated ? outlet.activatedRoute : '';
   }
 
@@ -67,3 +69,4 @@ export class AppComponent implements OnInit {
     }
   }
 }
+

@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SwitchService} from '../../../services/switch.service';
+import {Component, Input} from '@angular/core';
+import {SwitchService} from 'src/app/services/switch.service';
 
 @Component({
   selector: 'app-double-toggle-switch',
   templateUrl: './double-toggle-switch.component.html',
   styleUrls: ['./double-toggle-switch.component.sass']
 })
-export class DoubleToggleSwitchComponent implements OnInit {
+export class DoubleToggleSwitchComponent {
 
   @Input()
   public iconLeft: string;
@@ -15,9 +15,6 @@ export class DoubleToggleSwitchComponent implements OnInit {
   public iconRight: string;
 
   constructor(public switchService: SwitchService) {
-  }
-
-  ngOnInit() {
   }
 
 }

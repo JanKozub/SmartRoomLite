@@ -1,23 +1,21 @@
-import '../polyfills';
-
 import {BrowserModule} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
-import {ServiceWorkerModule} from '@angular/service-worker';
-import {environment} from '../environments/environment';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterModule, Routes} from '@angular/router';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule} from './material-module';
-import '@vaadin/vaadin-icons';
 import {ToggleSwitchComponent} from './components/toggle-switch/toggle-switch.component';
 import {SwitchesPageComponent} from './pages/switches-page/switches-page.component';
 import {ControlPageComponent} from './pages/control-page/control-page.component';
 import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
+import {RouterModule, Routes} from '@angular/router';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http';
 import {DoubleToggleSwitchComponent} from './components/double-toggle-switch/double-toggle-switch.component';
 import {VerticalControllerComponent} from './components/vertical-controller/vertical-controller.component';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const appRoutes: Routes = [
   {path: 'switches', component: SwitchesPageComponent},
@@ -29,29 +27,29 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(appRoutes),
+    RouterModule,
+    BrowserModule,
+    NgxMaterialTimepickerModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    FormsModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    MaterialModule,
-    RouterModule,
-    NgxMaterialTimepickerModule],
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    FormsModule
+  ],
   declarations: [
     AppComponent,
     ToggleSwitchComponent,
     SwitchesPageComponent,
     ControlPageComponent,
-    SettingsPageComponent,
+    VerticalControllerComponent,
     DoubleToggleSwitchComponent,
-    VerticalControllerComponent
+    SettingsPageComponent
   ],
-  entryComponents: [],
+  providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  bootstrap: [AppComponent],
-  providers: []
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
