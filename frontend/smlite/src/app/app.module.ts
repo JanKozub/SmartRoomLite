@@ -18,12 +18,13 @@ import {FormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 const appRoutes: Routes = [
   {path: 'switches', component: SwitchesPageComponent},
   {path: 'control', component: ControlPageComponent},
   {path: 'settings', component: SettingsPageComponent},
-  {path: '**', pathMatch: 'full', redirectTo: '/switches'}
+  {path: '**', pathMatch: 'full', redirectTo: 'switches'}
 ];
 
 @NgModule({
@@ -50,7 +51,7 @@ const appRoutes: Routes = [
     DoubleToggleSwitchComponent,
     SettingsPageComponent
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
