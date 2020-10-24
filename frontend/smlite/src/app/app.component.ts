@@ -15,8 +15,8 @@ export class AppComponent implements OnInit {
 
   title = 'smlite';
 
-  public temperature: string;
-  public humidity: string;
+  public temperature = '20';
+  public humidity = '20';
 
   constructor(private propertiesService: PropertiesService, private colorService: ColorService) {
   }
@@ -32,8 +32,8 @@ export class AppComponent implements OnInit {
       this.colorService.setColor(data['lock'], 'door');
       this.colorService.setColor(data['doorScreen'], 'screen');
       this.colorService.setColor(data['nightMode'], 'night-mode');
-      this.temperature = data['temp'];
-      this.humidity = data['hum'];
+      this.temperature = Math.floor(data['temp']).toString();
+      this.humidity = Math.floor(data['hum']).toString();
     }, () => console.warn('Couldn\'t refresh switches! Most likely network error :('));
   }
 
