@@ -17,7 +17,7 @@
     <artifactId>smlite</artifactId>
     <version>3.0</version>
     <name>smLite</name>
-    <description>Lite version of smartRoom programme</description>
+    <description>Lite version of smartRoom program</description>
 
     <properties>
         <java.version>11</java.version>

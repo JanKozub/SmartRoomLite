@@ -40,10 +40,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatCheckboxModule,
     FormsModule,
-    ServiceWorkerModule.register("ngsw-worker.js", {
-      enabled: environment.production,
-      registrationStrategy: "registerImmediately"
-    })
+    ServiceWorkerModule.register("ngsw-worker.js", {enabled: environment.production})
   ],
   declarations: [
     AppComponent,
