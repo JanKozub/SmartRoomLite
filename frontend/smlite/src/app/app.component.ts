@@ -29,21 +29,9 @@ export class AppComponent implements OnInit {
     this.propertiesService.getSwitchesProperties().subscribe(data => {
       this.colorService.setColor(data['light'], 'light');
       this.colorService.setColor(data['clock'], 'clock');
-      this.colorService.setColor(data['lock'], 'door');
-      this.colorService.setColor(data['doorScreen'], 'screen');
-      this.colorService.setColor(data['nightMode'], 'night-mode');
       this.temperature = Math.floor(data['temp']).toString();
       this.humidity = Math.floor(data['hum']).toString();
     }, () => console.warn('Couldn\'t refresh switches! Most likely network error :('));
-  }
-
-  public refreshControl(): void {
-    this.propertiesService.getControlProperties().subscribe(data => {
-      this.colorService.setColor(data['speakers'], 'speakers');
-      this.colorService.setColor(data['thermometerScreen'], 'thermometer');
-      this.temperature = data['temp'];
-      this.humidity = data['hum'];
-    }, e => console.warn('Couldn\'t refresh control! Most likely network error :(' + e.toString()));
   }
 
   ngOnInit(): void {
@@ -62,10 +50,6 @@ export class AppComponent implements OnInit {
     console.debug('updating properties');
     if (AppComponent.checkUrl('switches')) {
       this.refreshSwitches();
-    } else {
-      if (AppComponent.checkUrl('control')) {
-        this.refreshControl();
-      }
     }
   }
 }
