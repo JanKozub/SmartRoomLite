@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
     this.propertiesService.getSwitchesProperties().subscribe(data => {
       this.colorService.setColor(data['light'], 'light');
       this.colorService.setColor(data['clock'], 'clock');
+      this.colorService.setColor(data['nightMode'], 'night-mode');
       this.temperature = Math.floor(data['temp']).toString();
       this.humidity = Math.floor(data['hum']).toString();
     }, () => console.warn('Couldn\'t refresh switches! Most likely network error :('));
