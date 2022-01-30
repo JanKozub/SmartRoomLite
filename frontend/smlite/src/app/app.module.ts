@@ -4,7 +4,6 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {ToggleSwitchComponent} from './components/toggle-switch/toggle-switch.component';
 import {SwitchesPageComponent} from './pages/switches-page/switches-page.component';
-import {ControlPageComponent} from './pages/control-page/control-page.component';
 import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
 import {RouterModule, Routes} from '@angular/router';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -22,7 +21,6 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 const appRoutes: Routes = [
   {path: 'switches', component: SwitchesPageComponent},
-  {path: 'control', component: ControlPageComponent},
   {path: 'settings', component: SettingsPageComponent},
   {path: '**', pathMatch: 'full', redirectTo: 'switches'}
 ];
@@ -46,7 +44,6 @@ const appRoutes: Routes = [
     AppComponent,
     ToggleSwitchComponent,
     SwitchesPageComponent,
-    ControlPageComponent,
     VerticalControllerComponent,
     DoubleToggleSwitchComponent,
     SettingsPageComponent

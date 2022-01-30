@@ -9,6 +9,8 @@ $top-width: calc(10vh - 1px)
   width: 100vw
   height: $top-width
   border-bottom: 1px solid #ff8b00
+  position: relative
+  top: -18px
 
 .thermometer-prop
   position: absolute
@@ -31,7 +33,14 @@ $top-width: calc(10vh - 1px)
   width: 100vw
   height: 10vh
   position: absolute
+  bottom: 15px
+
+#home-bar
+  width: 100vw
+  height: 20px
+  position: absolute
   bottom: 0
+  background-color: #272727
 
 .icon-top
   width: 6vh
@@ -42,10 +51,11 @@ $top-width: calc(10vh - 1px)
   color: #ff8b00
 
 .option
-  width: calc(100vw / 3)
+  width: calc(100vw / 2)
   height: 10vh
   display: inline-block
   text-align: center
+  position: relative
 
   .option-text
     color: #959595
