@@ -1,5 +1,5 @@
 # SmartRoomLite
-Lite version of smartRoom with implemented angular frontend
+Lite version of smartRoom with implemented angular frontend. Demo bellow shows only the basic layout. All of the features work.
 
 <p align="center">
   <img alt="Light" src="https://user-images.githubusercontent.com/32803118/209453394-7745c0cf-d935-45c0-8ab3-422b5749e2e0.jpg" width="45%">
